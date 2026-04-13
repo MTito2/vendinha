@@ -1,0 +1,6 @@
+@Vendinha_HostAddress = https://localhost:5216
+
+GET {{Vendinha_HostAddress}}/product
+
+###
+

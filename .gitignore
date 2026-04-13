@@ -1,0 +1,49 @@
+## Build (sempre ignorar)
+bin/
+obj/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Configurações locais (não subir)
+appsettings.Development.json
+
+## Banco SQLite (local)
+vendinha.sqlite
+vendinha.sqlite-shm
+vendinha.sqlite-wal
+*.sqlite
+*.db
+
+## Logs e temporários
+*.log
+*.tmp
+*.temp
+
+## Arquivos de publish
+publish/
+
+## Certificados / segurança
+*.pfx
+*.key
+
+## IDEs
+.vscode/
+.idea/
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Testes
+TestResults/
+coverage/
+
+## Node (caso você use no futuro)
+node_modules/
+dist/
+build/
