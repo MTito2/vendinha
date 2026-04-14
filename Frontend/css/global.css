@@ -12,6 +12,10 @@ p {
     font-size: 14px;
 }
 
+#arrow-ico {
+    width: 15px;
+    margin: 0 auto;
+}
 
 .btn-arrow {
     background-color: #007D78;
@@ -23,7 +27,40 @@ p {
     height: 62px;
 }
 
-#arrow-ico {
-    width: 15px;
-    margin: 0 auto;
+.btn-arrow:active {
+    transform: scale(0.9);
+}
+
+.btn-back {
+    text-decoration: none;
+    color: #007D78;
+    font-size: 14px;
+}
+
+
+#wave {
+    max-height: 200px;
+    width: 100%;
+    object-fit: cover;
+    
+}
+
+.header {
+    background-color: #007D78;
+    padding: 30px;
+}
+
+.main {
+    margin-top: -30px;
+    background-color: #fff;
+}
+
+.title {
+    color: #FFC000;
+    font-size: 20px;
+}
+
+.subtitle {
+    font-size: 10px;
+    color: #fff;
 }
