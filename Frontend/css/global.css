@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Istok Web", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+p {
+    color: #007D78;
+    font-size: 14px;
+}
+
+
+.btn-arrow {
+    background-color: #007D78;
+    display: flex;
+    border: none;
+    padding: 20px;
+    border-radius: 50%;
+    width: 62px;
+    height: 62px;
+}
+
+#arrow-ico {
+    width: 15px;
+    margin: 0 auto;
+}
