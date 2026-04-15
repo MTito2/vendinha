@@ -37,6 +37,15 @@ p {
     font-size: 14px;
 }
 
+.btn-next {
+    background-color: #007D78;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 17px 33px;
+    border-radius: 50px;
+    font-weight: 600;
+}
 
 #wave {
     max-height: 200px;
@@ -63,4 +72,8 @@ p {
 .subtitle {
     font-size: 10px;
     color: #fff;
+}
+
+#desc {
+    color: #007D78;
 }

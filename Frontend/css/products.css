@@ -1,0 +1,25 @@
+.grid-container {
+    border: solid 2px pink;
+    width: 100% ;
+}
+
+.product-img {
+    width: 68px;
+    border-radius: 100px;
+    object-fit: cover;
+    border: #808080d7 solid 1px;
+}
+
+.card-body .product-name {
+    color: #007D78;
+    font-size: 14px;
+}
+
+.card-body .product-price {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.container {
+    max-height: 425px;
+}
