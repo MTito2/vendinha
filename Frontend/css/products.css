@@ -23,3 +23,11 @@
 .container {
     max-height: 425px;
 }
+
+.btn-product:active {
+    transform: scale(0.9);
+}
+
+.btn-product:hover {
+    cursor: pointer;
+}
