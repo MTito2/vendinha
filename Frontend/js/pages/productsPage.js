@@ -1,5 +1,7 @@
 import { getProducts } from '../api/productApi.js';
 const productsContainer = document.getElementById('products-container');
+const btnNext = document.getElementById('btn-next');
+let qtdProducts = 0;
 
 // Formatar o preço para o formato brasileiro (R$ 10,00)
 let response = await getProducts();
@@ -17,15 +19,32 @@ for (let product of formattedProducts) {
     productsContainer.appendChild(productCard);
 }
 
+// Adicionar eventos aos botões de adicionar e subtrair quantidade
 const btnProducts = document.querySelectorAll('.btn-product'); 
-
-
 for (let btn of btnProducts) {
     btn.addEventListener('click', (e) => { 
         const action = e.target.dataset.action;
         const qtdElement = e.target.parentElement.querySelector('.qtd');
-        qtdElement.textContent = action === 'add' ? parseInt(qtdElement.textContent) + 1 : Math.max(0, parseInt(qtdElement.textContent) - 1);
+
+        const qtd = action === 'add'
+            ? parseInt(qtdElement.textContent) + 1
+            : Math.max(0, parseInt(qtdElement.textContent) - 1);
+
+        qtdElement.textContent = qtd;
+
+        // Atualizar o texto do botão "Continuar" com a quantidade total de produtos selecionados
+        let total = totalProducts();
+        btnNext.innerText = `Continuar (${total})`;
     })};
+
+function totalProducts() {
+    qtdProducts = 0;
+    const qtdElement = document.querySelectorAll('.qtd');
+    for (let element of qtdElement) {
+        qtdProducts += parseInt(element.textContent)    
+    };
+    return qtdProducts;
+};
 
 // Função para criar o card do produto
 function createProductCard(product) {
