@@ -1,0 +1,24 @@
+.p {
+    font-size: 12px;
+}
+
+#title-about {
+    font-size: 12px;
+    color: #007D78;
+    font-weight: 600;
+}
+
+#title-total{
+    font-size: 16px;
+    color: #007D78;
+    font-weight: 600;
+}
+
+.division {
+    border-bottom: #007D78 solid 3px;
+    width: 95%;
+}
+
+.container {
+    max-height:110px;
+}

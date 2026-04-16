@@ -1,0 +1,19 @@
+.img {
+    width: 144px;
+    height: 254;
+}
+
+.logo {
+    width: 65px;
+}
+
+.items {
+    height: calc(100vh - 200px);
+}
+
+.desc {
+    font-weight: 600;
+    text-align: center;
+    max-width: 300px;
+    line-height: 17px;
+}

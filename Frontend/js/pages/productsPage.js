@@ -1,6 +1,11 @@
 import { getProducts } from '../api/productApi.js';
+import { setStorage } from '../services/storage.js';
+import { getStorage } from '../services/storage.js';
+
 const productsContainer = document.getElementById('products-container');
+const listProucts = []
 const btnNext = document.getElementById('btn-next');
+let counter = 0;
 let qtdProducts = 0;
 
 // Formatar o preço para o formato brasileiro (R$ 10,00)
@@ -15,9 +20,13 @@ const formattedProducts = products.map(product => {
 
 // Criar os cards dos produtos e adicioná-los ao container
 for (let product of formattedProducts) {
-    const productCard = createProductCard(product);
+    counter++;
+
+    const productCard = createProductCard(product, counter);
     productsContainer.appendChild(productCard);
 }
+
+totalProducts();    
 
 // Adicionar eventos aos botões de adicionar e subtrair quantidade
 const btnProducts = document.querySelectorAll('.btn-product'); 
@@ -33,9 +42,37 @@ for (let btn of btnProducts) {
         qtdElement.textContent = qtd;
 
         // Atualizar o texto do botão "Continuar" com a quantidade total de produtos selecionados
-        let total = totalProducts();
-        btnNext.innerText = `Continuar (${total})`;
+        totalProducts();
+
     })};
+
+// Adicionar evento ao botão "Continuar" para salvar os produtos selecionados no localStorage
+btnNext.addEventListener('click', () => {
+    for (let product of productsContainer.children) {
+        const productName = product.querySelector('.product-name').textContent;
+        const productPrice = product.querySelector('.product-price').textContent;
+        const productQtd = product.querySelector('.qtd').textContent;
+        const productId = product.children[0].id.split('-')[1];
+
+        console.log(`Id: ${productId}, Produto: ${productName}, Preço: ${productPrice}, Quantidade: ${productQtd}`);
+
+        if (productQtd > 0) {       
+            const productData = {
+                id: productId,
+                name: productName,
+                price: productPrice,
+                quantity: productQtd
+            };
+            
+            listProucts.push(productData);
+        }
+    }
+    // Salvar a lista de produtos selecionados no localStorage
+    localStorage.removeItem("products");
+    setStorage("products", listProucts);
+    console.log(getStorage("products"))
+
+});
 
 function totalProducts() {
     qtdProducts = 0;
@@ -43,16 +80,20 @@ function totalProducts() {
     for (let element of qtdElement) {
         qtdProducts += parseInt(element.textContent)    
     };
-    return qtdProducts;
+    btnNext.innerText = `Continuar (${qtdProducts})`;
 };
 
 // Função para criar o card do produto
-function createProductCard(product) {
+function createProductCard(product, id) {
+    const productsInStorage = getStorage("products") || [];
+    const productInStorage = productsInStorage.find(p => parseInt(p.id) === parseInt(id));
+    const initialQtd = productInStorage ? productInStorage.quantity : 0;
+
     const card = document.createElement('div');
     card.className = 'border-0 card mb-3 w-100';
 
     card.innerHTML = `
-        <div class="row g-0 align-items-center">
+        <div id="product-${id}" class="product row g-0 align-items-center">
             <div class="col-3 d-flex align-items-center flex-column">
                 <img class="product-img" src="${product.img}">
             </div>
@@ -66,7 +107,7 @@ function createProductCard(product) {
             
             <div class="col-3 d-flex align-items-start justify-content-around gap-3">
                 <img class="btn-product" data-action="sub" src="../assets/icons/less.svg" alt="">
-                <p class="qtd text-dark">0</p>
+                <p class="qtd text-dark">${initialQtd}</p>
                 <img class="btn-product" data-action="add" src="../assets/icons/add.svg" alt="">
             </div>
         </div>
@@ -74,4 +115,3 @@ function createProductCard(product) {
 
     return card;
 }
-
