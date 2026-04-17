@@ -29,9 +29,7 @@ const formattedProducts = products.map(product => {
 
 // Criar os cards dos produtos e adicioná-los ao container
 for (let product of formattedProducts) {
-    counter++;
-
-    const productCard = createProductCard(product, counter);
+    const productCard = createProductCard(product, product.id);
     productsContainer.appendChild(productCard);
 }
 
@@ -66,8 +64,6 @@ btnNext.addEventListener('click', () => {
             alertDiv.style.display = "none";
             }, 3000); 
 
-
- 
      }
      else { window.location.href = "../pages/payment.html"; }
 
@@ -111,14 +107,14 @@ function totalProducts() {
 // Função para criar o card do produto
 function createProductCard(product, id) {
     const productsInStorage = getStorage("products") || [];
-    const productInStorage = productsInStorage.find(p => parseInt(p.id) === parseInt(id));
+    const productInStorage = productsInStorage.find(p => p.id === id);
     const initialQtd = productInStorage ? productInStorage.quantity : 0;
 
     const card = document.createElement('div');
     card.className = 'card-produto border-0 card mb-3 w-100';
 
     card.innerHTML = `
-        <div id="product-${id}" class="product row g-0 align-items-center">
+        <div id="product-${product.id}" class="product row g-0 align-items-center">
             <div class="col-3 d-flex align-items-center flex-column">
                 <img class="product-img" src="${product.img}">
             </div>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Vendinha.Data;
 
@@ -10,18 +11,20 @@ using Vendinha.Data;
 namespace Vendinha.Migrations
 {
     [DbContext(typeof(VendinhaContext))]
-    partial class VendinhaContextModelSnapshot : ModelSnapshot
+    [Migration("20260417180008_EditIdProduct")]
+    partial class EditIdProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
             modelBuilder.Entity("Vendinha.Models.OutflowModel", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClientName")
                         .IsRequired()
@@ -30,10 +33,13 @@ namespace Vendinha.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PlaceId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("PlaceId")
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("ProductId")
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProductId1")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("Quantity")
@@ -41,7 +47,7 @@ namespace Vendinha.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId1");
 
                     b.ToTable("Outflows");
                 });
@@ -72,9 +78,7 @@ namespace Vendinha.Migrations
                 {
                     b.HasOne("Vendinha.Models.ProductModel", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId1");
 
                     b.Navigation("Product");
                 });

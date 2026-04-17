@@ -2,14 +2,13 @@
 {
     public class ProductModel
     {
-        public Guid Id {  get; init; }
+        public int Id {  get; init; }
         public string Name { get; private set; }
         public float Price { get; set; }
         public string Img { get; set; }
 
         public ProductModel(string name, float price, string img)
         {
-            Id = Guid.NewGuid();
             Name = name;
             Price = price;
             Img = img;

@@ -29,7 +29,7 @@ namespace Vendinha.Routes
 
             route.MapPut("{id:guid}",
                 
-                async (Guid id, ProductRequest req, VendinhaContext context) =>
+                async (int id, ProductRequest req, VendinhaContext context) =>
             {
                 var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -47,7 +47,7 @@ namespace Vendinha.Routes
                 return Results.Ok(product);
             });
 
-            route.MapDelete("{id:guid}", async (Guid id, VendinhaContext context) =>
+            route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
             {
                 var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
                 
