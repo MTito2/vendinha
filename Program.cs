@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<VendinhaContext>();
+builder.WebHost.UseUrls("http://localhost:5216");
 
 builder.Services.AddCors(options =>
 {
