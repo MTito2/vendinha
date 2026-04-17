@@ -6,6 +6,7 @@ namespace Vendinha.Data
     public class VendinhaContext : DbContext
     {
         public DbSet<ProductModel> Products { get; set; }
+        public DbSet<OutflowModel> Outflows { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=vendinha.sqlite");
@@ -13,4 +14,3 @@ namespace Vendinha.Data
         }
     }
 }
-    
