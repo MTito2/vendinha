@@ -26,8 +26,12 @@ registerBtn.addEventListener("click", (e) => {
 
         // Exibir mensagem de erro se algum campo estiver vazio
         if (nameInput.value === "" || lastNameInput.value === "") {
-        alertDiv.textContent = "Por favor, preencha todos os campos.";
-        alertDiv.style.display = "block";   
+            alertDiv.textContent = "Por favor, preencha todos os campos.";
+            alertDiv.style.display = "block";
+
+            setTimeout(() => {
+                alertDiv.style.display = "none";
+            }, 3000); 
      }
     }
 });

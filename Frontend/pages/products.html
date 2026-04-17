@@ -25,12 +25,13 @@
         <h2 id="desc" class="h6 fw-bold w-75 text-center lh-sm mt-4 mb-5">Selecione os produtos</h2>
 
         <div class="border-0 card mb-3 w-100">
-            <div id="products-container" class="container vh-100 overflow-auto">
+            <div id="products-container" class="container vh-100 overflow-auto ">
+                <span id="spinner" class="spinner-border  text-center position-absolute top-50 start-50 text-success role="status" aria-hidden="true"></span>
                 <!-- HTML será injetado via JS -->
             </div>
         </div>
 
-        <a href="../pages/payment.html" id="btn-next" class="btn-next m-5 mt-auto">Continuar (0)</a>
+        <a href="#" id="btn-next" class="btn-next m-5 mt-auto">Continuar (0)</a>
     </main>
     <script src="../js/libs/axios.min.js"></script>
     <script type="module" src="../js/pages/productsPage.js"></script>

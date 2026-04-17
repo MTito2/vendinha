@@ -21,7 +21,7 @@
 }
 
 .container {
-    max-height: 425px;
+    max-height: 500px;
 }
 
 .btn-product:active {
@@ -30,4 +30,10 @@
 
 .btn-product:hover {
     cursor: pointer;
+}
+
+#alert-div {
+    bottom: 100px;
+    font-size: 12px;
+    background: rgb(239, 149, 149);
 }

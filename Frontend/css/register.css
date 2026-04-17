@@ -25,3 +25,10 @@
     font-size: 10px;
     color: #fff;
 }
+
+
+#alert-div {
+    bottom: 130px;
+    font-size: 12px;
+    background: rgb(239, 149, 149);
+}

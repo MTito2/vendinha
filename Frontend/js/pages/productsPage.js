@@ -5,8 +5,17 @@ import { getStorage } from '../services/storage.js';
 const productsContainer = document.getElementById('products-container');
 const listProucts = []
 const btnNext = document.getElementById('btn-next');
+const spinner = document.getElementById('spinner');
 let counter = 0;
 let qtdProducts = 0;
+
+const alertDiv = document.createElement("div");
+alertDiv.className = "alert alert-danger position-absolute text-center p-2";
+alertDiv.id = "alert-div";
+alertDiv.style.display = "none";
+btnNext.parentElement.appendChild(alertDiv);
+
+activeSpinner();
 
 // Formatar o preço para o formato brasileiro (R$ 10,00)
 let response = await getProducts();
@@ -48,7 +57,23 @@ for (let btn of btnProducts) {
 
 // Adicionar evento ao botão "Continuar" para salvar os produtos selecionados no localStorage
 btnNext.addEventListener('click', () => {
-    for (let product of productsContainer.children) {
+
+    if (qtdProducts === 0) {
+        alertDiv.textContent = "Por favor, selecione ao menos um produto.";
+        alertDiv.style.display = "block";  
+
+        setTimeout(() => {
+            alertDiv.style.display = "none";
+            }, 3000); 
+
+
+ 
+     }
+     else { window.location.href = "../pages/payment.html"; }
+
+    const allProducts = productsContainer.querySelectorAll('.card-produto');
+
+    for (let product of allProducts) {
         const productName = product.querySelector('.product-name').textContent;
         const productPrice = product.querySelector('.product-price').textContent;
         const productQtd = product.querySelector('.qtd').textContent;
@@ -60,7 +85,7 @@ btnNext.addEventListener('click', () => {
             const productData = {
                 id: productId,
                 name: productName,
-                price: productPrice,
+                price: productPrice.replace('R$ ', '').replace(',', '.'),
                 quantity: productQtd
             };
             
@@ -90,7 +115,7 @@ function createProductCard(product, id) {
     const initialQtd = productInStorage ? productInStorage.quantity : 0;
 
     const card = document.createElement('div');
-    card.className = 'border-0 card mb-3 w-100';
+    card.className = 'card-produto border-0 card mb-3 w-100';
 
     card.innerHTML = `
         <div id="product-${id}" class="product row g-0 align-items-center">
@@ -114,4 +139,13 @@ function createProductCard(product, id) {
     `;
 
     return card;
+}
+
+async function activeSpinner() {
+    const response = await getProducts();
+     spinner.classList.remove('d-none');
+    let products = response;
+    if (products != null) { 
+        spinner.classList.add('d-none');
+    }
 }

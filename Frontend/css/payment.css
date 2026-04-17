@@ -14,6 +14,12 @@
     font-weight: 600;
 }
 
+#title-total-price{
+    font-size: 16px;
+    color: #007D78;
+    font-weight: 600;
+}
+
 .division {
     border-bottom: #007D78 solid 3px;
     width: 95%;
