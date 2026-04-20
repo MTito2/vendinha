@@ -8,7 +8,35 @@
 }
 
 main {
-    height: calc(100vh - 53px);
+    height: calc(100vh - 66px);
+}
+
+thead {
+    border-bottom: 3px solid #3f414628;
+}
+
+th {
+    font-size: 12px;
+    font-weight: 800;
+    color: #3f4146 !important;
+}
+
+td {
+    font-size: 12px;
+    color: #464d5c !important;
+}
+
+.btn-trash {
+    background: none;
+    border: none;
+}
+
+.icon-trash:hover{
+    stroke: rgba(223, 22, 22, 0.856);
+}
+
+.icon-trash {
+    stroke: #464d5c;
 }
 
 .navbar-options {
@@ -35,8 +63,11 @@ main {
     background-color: #007D78;
     color: #fff;
     text-decoration: none;
+    font-size: 14px;
     border: none;
-    padding: 12px 33px;
+    padding: 8px 28px;
     border-radius: 50px;
     font-weight: 600;
 }
+
+
