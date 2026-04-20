@@ -34,7 +34,6 @@ export class PaymentController {
 
     renderTotal() {
         const totalElement = document.getElementById('title-total-price');
-        console.log(totalElement);
         totalElement.textContent = `R$ ${this.priceTotal()}`;
     }
 

@@ -1,4 +1,9 @@
 setTimeout(() => {
-    window.location.href = "../index.html";
-    localStorage.clear();
+    const local = localStorage.getItem("local");
+    window.location.href = `../index.html?local=${local}`;
+
+    localStorage.removeItem("name");
+    localStorage.removeItem("lastName");
+    localStorage.removeItem("products");
+
 }, 4000);
