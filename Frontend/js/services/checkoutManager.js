@@ -38,19 +38,7 @@ export class OrderService {
                 placeId: this.#placeid
             };
 
-            console.log("Order Data:", orderData); // Log the order data for debugging
             await sendOutflow(orderData);
         }
     }
 }
-
-
-
-// {
-//   "date": "2026-04-20T10:50:19.022Z",
-//   "clientName": "string",
-//   "productId": 1,
-//   "quantity": 0,
-//   "placeId": 1
-// }
-

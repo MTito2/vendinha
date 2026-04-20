@@ -1,5 +1,5 @@
 setTimeout(() => {
-    const local = localStorage.getItem("local");
+    const local = JSON.parse(localStorage.getItem("local")) || "";
     window.location.href = `../index.html?local=${local}`;
 
     localStorage.removeItem("name");

@@ -4,6 +4,7 @@
     height: 50px;
     width: 260px;
     padding: 20px;
+    color: #313131d7;
 }
 
 .input::placeholder {
@@ -14,6 +15,7 @@
 .input:focus{
     outline: none;
     border: solid 1px #808080d7;
+    color: #313131d7;
 }
 
 #title {
