@@ -4,6 +4,7 @@ export async function sendOutflow(orderData) {
       date: orderData.date,
       clientName: orderData.clientName,
       productId: orderData.productId,
+      totalPrice: orderData.totalPrice,
       quantity: orderData.quantity,
       placeId: orderData.placeId
     });

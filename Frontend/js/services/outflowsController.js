@@ -20,6 +20,7 @@ export class OutflowsView {
             const tableDataClientName = document.createElement("td");
             const tableDataProduct = document.createElement("td");
             const tableDataPrice = document.createElement("td");
+            const tableDataTotalPrice = document.createElement("td");
             const tableDataQuantity = document.createElement("td");
             const tableDataBtnTrash = document.createElement("td");
 
@@ -28,6 +29,7 @@ export class OutflowsView {
             tableDataClientName.textContent = outflow.clientName;
             tableDataProduct.textContent = outflow.product.name;
             tableDataPrice.textContent = this.formatPrice(outflow.product.price);
+            tableDataTotalPrice.textContent = this.formatPrice(outflow.totalPrice);
             tableDataQuantity.textContent = outflow.quantity;
             tableDataBtnTrash.innerHTML = `
             <button class="btn-trash">
@@ -56,6 +58,7 @@ export class OutflowsView {
             tableRow.appendChild(tableDataClientName);
             tableRow.appendChild(tableDataProduct);
             tableRow.appendChild(tableDataPrice);
+            tableRow.appendChild(tableDataTotalPrice);
             tableRow.appendChild(tableDataQuantity);
             tableRow.appendChild(tableDataBtnTrash);
 

@@ -3,6 +3,7 @@ import { sendOutflow } from "../api/outflowApi.js";
 export class OrderService {
     #date = "";
     #products = [];
+    #totalPrice = 0;
     #name = "";
     #lastName = "";
     #fullName = "";
@@ -12,7 +13,6 @@ export class OrderService {
         this.#date = new Date().toISOString();
         this.#products = JSON.parse(localStorage.getItem("products")) || [];
         this.#fullName = this.formatName();
-
 
         const local = JSON.parse(localStorage.getItem("local")) || "";
         this.#placeid = local == "dr" ? 1 : local === "cg" ? 2 : 0;
@@ -34,6 +34,7 @@ export class OrderService {
                 date: this.#date,
                 clientName: this.#fullName,
                 productId: parseInt(product.id),
+                totalPrice: parseFloat(product.price) * parseInt(product.quantity),
                 quantity: parseInt(product.quantity),
                 placeId: this.#placeid
             };

@@ -11,4 +11,5 @@ paymentController.renderTotal();
 
 btnCheckout.addEventListener("click", async () => {
     await orderService.sendOrder();
+    window.location.href = "../pages/grateful.html";
 });
