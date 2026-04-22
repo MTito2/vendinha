@@ -26,6 +26,10 @@ td {
     color: #464d5c !important;
 }
 
+.table-container {
+    width: 90%;
+}
+
 .btn-trash {
     background: none;
     border: none;
@@ -68,6 +72,45 @@ td {
     padding: 8px 28px;
     border-radius: 50px;
     font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.btn-place {
+    background-color: transparent;
+    border: none;
+    color: #464d5c;
+    font-size: 12px;
+}
+
+.btn-place:hover {
+    background-color: transparent;
+    border: none;
+    color: #464d5c;
+}
+
+.btn-place:active {
+    background-color: transparent !important;
+    border: none;
+    color: #464d5c;
+}
+
+.btn-place:focus {
+    background-color: transparent !important;
+    border: none;
+    color: #464d5c;
+}
+
+.dropdown-menu {
+    border: solid 1px #464d5c12 !important;
+}
+
+.dropdown-item {
+    font-size: 12px;
+}
+
+.dropdown-item:active {
+    font-size: 12px;
+    background-color: transparent !important;
 }
 
 

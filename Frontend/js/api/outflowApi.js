@@ -12,3 +12,22 @@ export async function sendOutflow(orderData) {
     console.error(error);
   }
 }
+
+export async function getOutflows() {
+    try {
+      const response = await axios.get("http://localhost:5216/api/outflows")
+      return response.data
+    }
+    catch (error){
+      console.error(error);
+    }
+}
+
+export async function deleteOutflow(id) {
+    try {
+      const response = await axios.delete(`http://localhost:5216/api/outflows/${id}`)
+    }
+    catch (error){
+      console.error(error);
+    }
+}

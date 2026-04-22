@@ -11,7 +11,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../../css_users/bootstrap.min.css">
     <link rel="stylesheet" href="../../css_admin/global.css">
-    <link rel="stylesheet" href="../../css_admin/outflows.css">
+    <link rel="stylesheet" href="../../css_admin/tablesort.css">
     <title>Vendinha Solidária</title>
 </head>
 
@@ -44,327 +44,46 @@
         </nav>
     </header>
 
-    <main class="d-flex align-items-center flex-column">
+    <main class="d-flex align-items-center flex-column position-relative">
 
         <h1 class="fw-bold h5 my-5">Saídas</h1>
 
-        <div class="table-responsive overflow-auto mb-5 w-75">
-            <table class="table table-hover text-center">
-                <thead class="table-light">
+        <div class="dropdown position-absolute top-0 end-0 my-3 mx-5">
+            <button class="btn-place btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Doutor
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item text-center" href="#">Campo Grande</a>
+            </div>
+        </div>
+
+        <div class="table-container table-responsive overflow-auto mb-5">
+            <table id="table" class="table table-hover text-center">
+                <thead class="table-light sticky-top">
                     <tr>
                         <th scope="col">Data</th>
                         <th scope="col">Nome</th>
                         <th scope="col">Produto</th>
-                        <th scope="col">Valor</th>
+                        <th scope="col">Valor (un)</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>05/01/2026</td>
-                        <td>Bruno Costa de Souza</td>
-                        <td>Biscoito Passatempo Morango</td>
-                        <td>3,50</td>
-                        <td>2</td>
-                        <td>
-                            <button class="btn-trash">
-                                <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    viewBox="0 0 24 24" fill="none" stroke="#464d5c" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="lucide lucide-trash2-icon lucide-trash-2">
-                                    <path d="M10 11v6" />
-                                    <path d="M14 11v6" />
-                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                    <path d="M3 6h18" />
-                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-
+                <tbody> 
+                    <!-- Rows will be populated by JavaScript -->
                 </tbody>
             </table>
         </div>
 
-        <a class="btn-green" href="../../pages/admin/home.html">Download Excel</a>
+        <a class="btn-green" href="#">Download Excel</a>
         
     </main>
 
-    <script src="../../js/libs/bootstrap.bundle.min.js"> </script>
+    <script src="../../js/libs/bootstrap.bundle.min.js"></script>
+    <script src="../../js/libs/axios.min.js"></script>
+    <script type="module" src="../../js/pages/outflowsPage.js"></script>
+    <script src="../../js/libs/tablesort.min.js"></script>
+    <script src="../../js/libs/tablesort.number.js"></script>
 </body>
 
 </html>
