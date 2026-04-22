@@ -1,13 +1,19 @@
 import { getOutflows } from "../api/outflowApi.js";
+import { deleteOutflow } from "../api/outflowApi.js";
 
 export class OutflowsView {
     constructor() {
         this.outflows = [];
+        this.placesDropdown = [];
     }
 
     async loadOutflows() {
-        this.outflows = await getOutflows();
+        this.outflows = await getOutflows(2);
+        this.placesDropdown = ["Campo Grande"];
         this.render();
+        this.btnTrashListener();
+        this.initDropdownButton();
+        this.placeDropdownConfig();
     }
 
     render() {
@@ -67,6 +73,64 @@ export class OutflowsView {
 
         table.appendChild(tableBody);
 
+    }
+
+    btnTrashListener() {
+        const btnTrash = document.querySelectorAll(".btn-trash");
+        btnTrash.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const row = btn.closest("tr");
+                const id = parseInt(row.getAttribute("id"));
+
+                deleteOutflow(id);
+                row.remove();
+            });
+        });
+    }
+
+    placeDropdownConfig() {
+        const dropdownMenu = document.getElementById("dropdown-menu");
+        const btnPlace = document.getElementById("btn-place");
+        const btnTextPlace = document.getElementById("btn-text-place");
+
+        dropdownMenu.innerHTML = "";
+
+        this.placesDropdown.forEach(place => {
+            const dropdownItem = document.createElement("p");
+            const arrowImg = document.getElementById("arrow-img");
+
+
+            dropdownItem.classList.add("place-name");
+            dropdownItem.textContent = place;
+
+            dropdownItem.addEventListener("click", () => {
+
+                let placeActive = btnPlace.textContent.trim();
+                btnTextPlace.textContent = place;
+
+                this.placesDropdown.push(placeActive);
+                const activeIndex = this.placesDropdown.indexOf(place);
+                this.placesDropdown.splice(activeIndex, 1);
+
+                this.placesDropdown.sort();
+                dropdownMenu.classList.remove("show"); 
+                arrowImg.classList.remove("rotate");
+                this.placeDropdownConfig();
+            });
+
+            dropdownMenu.appendChild(dropdownItem);
+        });
+    }
+
+    initDropdownButton() {
+        const btnPlace = document.getElementById("btn-place");
+        const dropdownMenu = document.getElementById("dropdown-menu");
+        const arrowImg = document.getElementById("arrow-img");
+
+        btnPlace.addEventListener("click", () => {
+            dropdownMenu.classList.toggle("show");
+            arrowImg.classList.toggle("rotate");
+        });
     }
 
     formatDate(dateString) {

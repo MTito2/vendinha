@@ -14,9 +14,9 @@ export async function sendOutflow(orderData) {
   }
 }
 
-export async function getOutflows() {
+export async function getOutflows(placeId) {
     try {
-      const response = await axios.get("http://localhost:5216/api/outflows")
+      const response = await axios.get(`http://localhost:5216/api/outflows/place/${placeId}`)
       return response.data
     }
     catch (error){
