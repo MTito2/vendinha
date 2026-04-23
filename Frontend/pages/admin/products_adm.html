@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css_users/bootstrap.min.css">
     <link rel="stylesheet" href="../../css_admin/global.css">
-    <link rel="stylesheet" href="../../css_admin/products_manager.css">
+    <link rel="stylesheet" href="../../css_admin/tablesort.css">
     <title>Vendinha Solidária</title>
 </head>
 <body>
@@ -39,10 +39,28 @@
         </nav>
     </header>
 
-    <main class="d-flex align-items-center justify-content-center flex-column">
-        <img class="img-fluid mb-5 p-5" src="../../assets/imgs/logo-vendinha.png" alt="">
+    <main class="d-flex align-items-center justify-content-start flex-column">
+        <h1 class="fw-bold h5 my-5">Produtos</h1>
+
+        <div class="table-container table-responsive overflow-auto mb-5">
+            <table id="table" class="table table-hover text-center">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th scope="col">Imagem</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Valor (un)</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
     </main>
     
     <script src="../../js/libs/bootstrap.bundle.min.js"> </script>
+    <script src="../../js/libs/tablesort.min.js"></script>
+    <script src="../../js/libs/tablesort.number.js"></script>
+    <script type="module" src="../../js/pages/productsAdmPage.js"></script>
+    <script src="../../js/libs/axios.min.js" ></script>
 </body>
 </html>

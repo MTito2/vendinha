@@ -1,5 +1,6 @@
 import { getOutflows } from "../api/outflowApi.js";
 import { deleteOutflow } from "../api/outflowApi.js";
+import { formatPrice } from "../utils/formatPrice.js";
 
 export class OutflowsView {
     constructor() {
@@ -35,8 +36,8 @@ export class OutflowsView {
             tableDataDate.textContent = this.formatDate(outflow.date);
             tableDataClientName.textContent = outflow.clientName;
             tableDataProduct.textContent = outflow.product.name;
-            tableDataPrice.textContent = this.formatPrice(outflow.product.price);
-            tableDataTotalPrice.textContent = this.formatPrice(outflow.totalPrice);
+            tableDataPrice.textContent = formatPrice(outflow.product.price);
+            tableDataTotalPrice.textContent = formatPrice(outflow.totalPrice);
             tableDataQuantity.textContent = outflow.quantity;
             tableDataBtnTrash.innerHTML = `
             <button class="btn-trash">
@@ -155,9 +156,5 @@ export class OutflowsView {
         const minutes = String(date.getMinutes()).padStart(2, '0'); 
         const seconds = String(date.getSeconds()).padStart(2, '0');    
         return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
-    }
-
-    formatPrice(price) {
-        return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 }
