@@ -101,3 +101,8 @@ td {
 .place-name {
     border-bottom: solid 1px #464d5c34;
 }
+
+.place-name:hover {
+    border-bottom: solid 1px #464d5c34;
+    cursor: pointer;
+}

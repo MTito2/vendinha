@@ -5,19 +5,20 @@ export class OutflowsView {
     constructor() {
         this.outflows = [];
         this.placesDropdown = [];
+        this.activePlaceId = 1;
     }
 
     async loadOutflows() {
-        this.outflows = await getOutflows(2);
+        this.outflows = await getOutflows(this.activePlaceId);
         this.placesDropdown = ["Campo Grande"];
-        this.render();
-        this.btnTrashListener();
+        this.renderTable();
         this.initDropdownButton();
         this.placeDropdownConfig();
     }
 
-    render() {
+    renderTable() {
         const tableBody = document.createElement("tbody");
+        tableBody.setAttribute("id", "table-body");
         const table = document.getElementById("table");
 
         for (const outflow of this.outflows) {
@@ -72,6 +73,7 @@ export class OutflowsView {
         }
 
         table.appendChild(tableBody);
+        this.btnTrashListener();
 
     }
 
@@ -79,6 +81,7 @@ export class OutflowsView {
         const btnTrash = document.querySelectorAll(".btn-trash");
         btnTrash.forEach(btn => {
             btn.addEventListener("click", () => {
+                console.log("clicou");
                 const row = btn.closest("tr");
                 const id = parseInt(row.getAttribute("id"));
 
@@ -103,9 +106,19 @@ export class OutflowsView {
             dropdownItem.classList.add("place-name");
             dropdownItem.textContent = place;
 
-            dropdownItem.addEventListener("click", () => {
+            dropdownItem.addEventListener("click", async () => {
+
+                this.activePlaceId = dropdownItem.textContent === "Doutor" ? 1 : dropdownItem.textContent === "Campo Grande" ? 2 : 0;
+                this.outflows = await getOutflows(this.activePlaceId);
+                const tableBody = document.getElementById("table-body");
+                if (tableBody) {
+                    tableBody.remove();
+                }
+                this.renderTable();
 
                 let placeActive = btnPlace.textContent.trim();
+                dropdownItem.textContent = placeActive;
+
                 btnTextPlace.textContent = place;
 
                 this.placesDropdown.push(placeActive);
