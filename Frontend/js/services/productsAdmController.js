@@ -25,15 +25,21 @@ export class ProductsAdmView {
             const tableDataPrice = document.createElement("td");
             const tableDataBtnTrash = document.createElement("td");
 
+            tableDataBtnTrash.classList.add("table-cell", "align-middle", "text-center");
+
+            tableDataProduct.classList.add("table-cell", "align-middle");
             tableDataProduct.setAttribute("contenteditable", "true");
             tableDataProduct.setAttribute("data-field", "name");
+
+            tableDataPrice.classList.add("table-cell", "align-middle");
             tableDataPrice.setAttribute("contenteditable", "true");
+            tableDataPrice.setAttribute("data-sort", product.price);
             tableDataPrice.setAttribute("data-field", "price");
 
-            tableDataImg.innerHTML = `<img src="${product.imageUrl}" alt="${product.name}" class="img-fluid">`;
+            tableDataImg.innerHTML = `<img src="${product.img}" alt="${product.name}" class="img-fluid img-product"">`;
             tableDataProduct.textContent = product.name;
             tableDataPrice.textContent = formatPrice(product.price);
-             tableDataBtnTrash.innerHTML = `
+            tableDataBtnTrash.innerHTML = `
             <button class="btn-trash">
                 <svg 
                 class="icon-trash" 
@@ -120,4 +126,15 @@ export class ProductsAdmView {
             });
         });
         }
+    
+    imgListener() {
+        const imgElements = document.querySelectorAll(".img-product");
+        imgElements.forEach(img => {
+            img.addEventListener("click", () => {
+                const row = img.closest("tr");
+                const id = parseInt(row.getAttribute("id"));
+                console.log(id);
+            });
+        })
+    }
 }

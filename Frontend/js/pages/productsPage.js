@@ -15,7 +15,7 @@ alertDiv.id = "alert-div";
 alertDiv.style.display = "none";
 btnNext.parentElement.appendChild(alertDiv);
 
-activeSpinner();
+await activeSpinner();
 
 // Formatar o preço para o formato brasileiro (R$ 10,00)
 let response = await getProducts();

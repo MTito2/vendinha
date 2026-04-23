@@ -43,19 +43,53 @@
         <h1 class="fw-bold h5 my-5">Produtos</h1>
 
         <div class="table-container table-responsive overflow-auto mb-5">
+            
             <table id="table" class="table table-hover text-center">
                 <thead class="table-light sticky-top">
                     <tr>
                         <th scope="col">Imagem</th>
                         <th scope="col">Produto</th>
                         <th scope="col">Valor (un)</th>
-                        <th scope="col"></th>
+                        <th data-sort-method="none" scope="col"></th>
                     </tr>
                 </thead>
+
             </table>
         </div>
 
+                <!-- 1. O BOTÃO GATILHO QUE FAZ O MODAL APARECER -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImagem">
+        Abrir Modal com Imagem
+        </button>
+
+        <!-- 2. A ESTRUTURA DO MODAL (Fica invisível até o botão ser clicado) -->
+        <div class="modal fade" id="modalImagem" tabindex="-1" aria-labelledby="modalImagemLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            
+            <!-- Cabeçalho do Modal -->
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalImagemLabel">Ação Necessária</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Corpo do Modal com a sua imagem -->
+            <div class="modal-body text-center">
+                <!-- Substitua pelo caminho real da sua imagem -->
+                <img src="../../assets/imgs/logo-vendinha.png" class="img-fluid rounded" alt="Imagem de demonstração">
+            </div>
+            
+            <!-- Rodapé com as duas opções -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary">Confirmar</button>
+            </div>
+
+            </div>
+        </div>
+        </div>
     </main>
+
     
     <script src="../../js/libs/bootstrap.bundle.min.js"> </script>
     <script src="../../js/libs/tablesort.min.js"></script>
