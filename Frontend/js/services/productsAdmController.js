@@ -6,6 +6,7 @@ import { formatPrice } from "../utils/formatPrice.js";
 export class ProductsAdmView {
     constructor() {
         this.products = [];
+        this.imgSelected = null;
     }
 
     async loadProducts() {
@@ -188,8 +189,18 @@ export class ProductsAdmView {
             const file = inputFile.files[0];
             if (file) {
                 const modalImg = document.querySelector(".img-product-modal");
+                imgSelected = file;
                 modalImg.src = URL.createObjectURL(file);
             }
+        });
+    }
+
+    btnConfirmListener() {
+        const btnConfirm = document.getElementById("btn-confirm");
+        const formData = new FormData();
+
+        btnConfirm.addEventListener("click", async () => {
+            formData.append("img", imgSelected);
         });
     }
 }

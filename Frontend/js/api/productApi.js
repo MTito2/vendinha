@@ -27,3 +27,16 @@ export async function updateProduct(id, field, value) {
         console.error(error);
     }
 }
+
+export async function sendImage(formData) {
+       try {
+            const resposta = await axios.post("URL_DA_SUA_API/produtos", formData);
+
+            // O Axios já converte a resposta da API automaticamente (fica disponível em resposta.data)
+            console.log("Imagem enviada com sucesso!", resposta.data);
+
+        } catch (erro) {
+            // O Axios cai no catch automaticamente se a API retornar um erro (400, 404, 500...)
+            console.error("Erro na comunicação com a API:", erro);
+        }
+    }
