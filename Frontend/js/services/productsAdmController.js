@@ -36,7 +36,7 @@ export class ProductsAdmView {
             tableDataPrice.setAttribute("data-sort", product.price);
             tableDataPrice.setAttribute("data-field", "price");
 
-            tableDataImg.innerHTML = `<img src="${product.img}" alt="${product.name}" class="img-fluid img-product"">`;
+            tableDataImg.innerHTML = `<img src="${product.img}" alt="${product.name}" class="img-fluid img-product" data-bs-toggle="modal" data-bs-target="#modalImg">`;
             tableDataProduct.textContent = product.name;
             tableDataPrice.textContent = formatPrice(product.price);
             tableDataBtnTrash.innerHTML = `
@@ -72,6 +72,7 @@ export class ProductsAdmView {
         table.appendChild(tableBody);
         this.btnTrashListener();
         this.updateProductListener()
+        this.imgListener();
     }
 
     updateProductListener() {
@@ -96,7 +97,6 @@ export class ProductsAdmView {
 
                     cell.textContent = formatPrice(parseFloat(value));
                 }
-
 
                 if (actualText != value) {
                     try {
@@ -131,10 +131,65 @@ export class ProductsAdmView {
         const imgElements = document.querySelectorAll(".img-product");
         imgElements.forEach(img => {
             img.addEventListener("click", () => {
+                const modalBody = document.getElementById("modal-body");   
+                modalBody.classList.add("position-relative"); 
+                modalBody.innerHTML = "";
+                
+                const modalImg = document.createElement("img");
+
+                const inputLabel = document.createElement("label");
+                inputLabel.setAttribute("for", "inputImagem");
+                inputLabel.classList.add("edit-icon", "position-absolute", "top-0", "start-0", "m-2");
+                inputLabel.innerHTML = `
+                <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="16" 
+                    height="16" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    stroke-width="2" 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    class="lucide lucide-pencil-icon lucide-pencil"
+                >
+                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+                `;
+        
+                const inputFile = document.createElement("input");
+                inputFile.setAttribute("type", "file");
+                inputFile.setAttribute("id", "inputImagem");
+                inputFile.setAttribute("accept", "image/*");
+                inputFile.hidden = true;
+
+                modalBody.appendChild(inputLabel);
+                modalBody.appendChild(inputFile);
+
+                modalImg.classList.add("img-fluid", "rounded", "img-product-modal");
+                modalImg.setAttribute("src", img.src);
+                modalImg.setAttribute("alt", img.alt);      
+        
+                modalBody.appendChild(modalImg);
+
                 const row = img.closest("tr");
                 const id = parseInt(row.getAttribute("id"));
-                console.log(id);
+
+                this.fileInputListener();
             });
         })
+
+    }
+
+    fileInputListener() {
+        const inputFile = document.getElementById("inputImagem");
+        inputFile.addEventListener("change", async () => {
+            const file = inputFile.files[0];
+            if (file) {
+                const modalImg = document.querySelector(".img-product-modal");
+                modalImg.src = URL.createObjectURL(file);
+            }
+        });
     }
 }

@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../../css_users/bootstrap.min.css">
     <link rel="stylesheet" href="../../css_admin/global.css">
+    <link rel="stylesheet" href="../../css_admin/products-adm.css">
     <link rel="stylesheet" href="../../css_admin/tablesort.css">
     <title>Vendinha Solidária</title>
 </head>
@@ -57,37 +58,34 @@
             </table>
         </div>
 
-                <!-- 1. O BOTÃO GATILHO QUE FAZ O MODAL APARECER -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalImagem">
-        Abrir Modal com Imagem
-        </button>
+        <div class="modal fade" id="modalImg" tabindex="-1" aria-labelledby="modalImgLabel">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div id="modal-body" class="modal-body text-center">
 
-        <!-- 2. A ESTRUTURA DO MODAL (Fica invisível até o botão ser clicado) -->
-        <div class="modal fade" id="modalImagem" tabindex="-1" aria-labelledby="modalImagemLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-            
-            <!-- Cabeçalho do Modal -->
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalImagemLabel">Ação Necessária</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <!-- Corpo do Modal com a sua imagem -->
-            <div class="modal-body text-center">
-                <!-- Substitua pelo caminho real da sua imagem -->
-                <img src="../../assets/imgs/logo-vendinha.png" class="img-fluid rounded" alt="Imagem de demonstração">
-            </div>
-            
-            <!-- Rodapé com as duas opções -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary">Confirmar</button>
-            </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Confirmar</button>
+                </div>
 
+                </div>
             </div>
         </div>
-        </div>
+
+
+    <!-- <label for="inputImagem" class="edit-icon">
+        ✏️
+    </label>
+
+    <input type="file" id="inputImagem" accept="image/*" hidden> -->
+
     </main>
 
     
