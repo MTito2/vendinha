@@ -9,13 +9,36 @@ namespace Vendinha.Routes
         public static void OutflowsRoutes(this WebApplication app)
         {
             var route = app.MapGroup("api/outflows");
-            route.MapGet("", async (VendinhaContext context) =>
+            route.MapGet("place/{place:int}", async (int place, VendinhaContext context) =>
             {
-                var outflows = await context.Outflows
+                var outflows = await context.Outflows.Where(x => x.PlaceId == place)
                     .Include(s => s.Product).ToListAsync();
 
                 return Results.Ok(outflows);
             });
+
+            route.MapPost("", async (OutflowRequest req, VendinhaContext context) =>
+            {
+                var outflow = new OutflowModel(req.date, req.clientName, req.productId, req.totalPrice, req.quantity, req.placeId);
+                await context.Outflows.AddAsync(outflow);
+                await context.SaveChangesAsync();
+
+                return Results.Ok();
+            });
+
+            route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
+            {
+                var outflow = await context.Outflows.FirstOrDefaultAsync(x => x.Id == id);
+                if (outflow == null)
+                {
+                    return Results.NotFound();
+                }
+
+                context.Outflows.Remove(outflow);
+                await context.SaveChangesAsync();
+                return Results.NoContent();
+            });
         }
+
     }
 }

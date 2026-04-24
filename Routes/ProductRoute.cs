@@ -18,7 +18,7 @@ namespace Vendinha.Routes
 
             });
 
-            route.MapPost("", async (ProductRequest req, VendinhaContext context) =>
+            route.MapPost("", async (CreateProductRequest req, VendinhaContext context) =>
             {
                 var product = new ProductModel(req.name, req.price, req.img);
                 await context.Products.AddAsync(product);
@@ -27,9 +27,9 @@ namespace Vendinha.Routes
                 return Results.Ok($"Produto {req.name} adicionado com sucesso");
             });
 
-            route.MapPut("{id:guid}",
+            route.MapPut("{id:int}",
                 
-                async (int id, ProductRequest req, VendinhaContext context) =>
+                async (int id, UpdateProductRequest req, VendinhaContext context) =>
             {
                 var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
 
@@ -38,12 +38,42 @@ namespace Vendinha.Routes
                     return Results.NotFound(); 
                 }
 
+                if (string.IsNullOrEmpty(req.name) || req.price == null || string.IsNullOrEmpty(req.img))
+                {
+                    return Results.BadRequest("Todos os campos são obrigatórios para atualização completa.");
+                }
+
                 product.ChangeName(req.name);
-                product.ChangePrice(req.price);
+                product.ChangePrice(req.price.Value);
                 product.ChangeImg(req.img);
 
                 await context.SaveChangesAsync();
 
+                return Results.Ok(product);
+            });
+
+            route.MapPatch("{id:int}",
+                
+                async (int id, UpdateProductRequest req, VendinhaContext context) =>
+            {
+                var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+                if (product == null)
+                {
+                    return Results.NotFound(); 
+                }
+                if (!string.IsNullOrEmpty(req.name))
+                {
+                    product.ChangeName(req.name);
+                }
+                if (req.price != null)
+                {
+                    product.ChangePrice(req.price.Value);
+                }
+                if (!string.IsNullOrEmpty(req.img))
+                {
+                    product.ChangeImg(req.img);
+                }
+                await context.SaveChangesAsync();
                 return Results.Ok(product);
             });
 
