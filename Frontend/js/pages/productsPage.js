@@ -2,6 +2,7 @@ import { getProducts } from '../api/productApi.js';
 import { setStorage } from '../services/storage.js';
 import { getStorage } from '../services/storage.js';
 
+const API_URL = window.APP_CONFIG.API_URL;
 const productsContainer = document.getElementById('products-container');
 const listProucts = []
 const btnNext = document.getElementById('btn-next');
@@ -116,7 +117,7 @@ function createProductCard(product, id) {
     card.innerHTML = `
         <div id="product-${product.id}" class="product row g-0 align-items-center">
             <div class="col-3 d-flex align-items-center flex-column">
-                <img class="product-img" src="${product.img}">
+                <img class="product-img" src="${API_URL}/${product.img}">
             </div>
 
             <div class="col-6">

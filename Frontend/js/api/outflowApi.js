@@ -1,6 +1,8 @@
+const API_URL = window.APP_CONFIG.API_URL;
+
 export async function sendOutflow(orderData) {
   try {
-    const response = await axios.post('http://localhost:5216/api/outflows', {
+    const response = await axios.post(`${API_URL}/api/outflows`, {
       date: orderData.date,
       clientName: orderData.clientName,
       productId: orderData.productId,
@@ -16,7 +18,7 @@ export async function sendOutflow(orderData) {
 
 export async function getOutflows(placeId) {
     try {
-      const response = await axios.get(`http://localhost:5216/api/outflows/place/${placeId}`)
+      const response = await axios.get(`${API_URL}/api/outflows/place/${placeId}`)
       return response.data
     }
     catch (error){
@@ -26,7 +28,7 @@ export async function getOutflows(placeId) {
 
 export async function deleteOutflow(id) {
     try {
-      const response = await axios.delete(`http://localhost:5216/api/outflows/${id}`)
+      const response = await axios.delete(`${API_URL}/api/outflows/${id}`)
     }
     catch (error){
       console.error(error);

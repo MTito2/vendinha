@@ -1,12 +1,16 @@
 import { getProducts } from "../api/productApi.js";
 import { updateProduct } from "../api/productApi.js";
 import { deleteProduct } from "../api/productApi.js";
+import { sendImage } from "../api/productApi.js";
 import { formatPrice } from "../utils/formatPrice.js";
+
+const API_URL = window.APP_CONFIG.API_URL;
 
 export class ProductsAdmView {
     constructor() {
         this.products = [];
         this.imgSelected = null;
+        this.productCurrentId = null;
     }
 
     async loadProducts() {
@@ -15,6 +19,11 @@ export class ProductsAdmView {
     }
 
     renderTable() {
+        const existingTbody = document.querySelector("#table tbody");
+        if (existingTbody) {
+            existingTbody.remove();
+        }
+
         const table = document.getElementById("table");
         const tableBody = document.createElement("tbody");
 
@@ -37,7 +46,7 @@ export class ProductsAdmView {
             tableDataPrice.setAttribute("data-sort", product.price);
             tableDataPrice.setAttribute("data-field", "price");
 
-            tableDataImg.innerHTML = `<img src="${product.img}" alt="${product.name}" class="img-fluid img-product" data-bs-toggle="modal" data-bs-target="#modalImg">`;
+            tableDataImg.innerHTML = `<img src="${API_URL}${product.img}" alt="${product.name}" class="img-fluid img-product" data-bs-toggle="modal" data-bs-target="#modalImg">`;
             tableDataProduct.textContent = product.name;
             tableDataPrice.textContent = formatPrice(product.price);
             tableDataBtnTrash.innerHTML = `
@@ -133,6 +142,7 @@ export class ProductsAdmView {
         const imgElements = document.querySelectorAll(".img-product");
         imgElements.forEach(img => {
             img.addEventListener("click", () => {
+                this.productCurrentId = parseInt(img.closest("tr").getAttribute("id"));
                 const modalBody = document.getElementById("modal-body");   
                 modalBody.classList.add("position-relative"); 
                 modalBody.innerHTML = "";
@@ -201,7 +211,18 @@ export class ProductsAdmView {
         const formData = new FormData();
 
         btnConfirm.addEventListener("click", async () => {
-            formData.append("img", this.imgSelected);
+            formData.append("file", this.imgSelected);
+            
+            if (this.imgSelected) {
+                try {
+                    await sendImage(this.productCurrentId, formData);
+                    this.renderTable();
+                    this.loadProducts();
+                } catch (error) {
+                    console.error(error);
+                    alert("Erro ao enviar a imagem.");
+                }
+            }
         });
     }
 }

@@ -48,7 +48,7 @@
             <table id="table" class="table table-hover text-center">
                 <thead class="table-light sticky-top">
                     <tr>
-                        <th scope="col">Imagem</th>
+                        <th data-sort-method="none" scope="col">Imagem</th>
                         <th scope="col">Produto</th>
                         <th scope="col">Valor (un)</th>
                         <th data-sort-method="none" scope="col"></th>
@@ -72,23 +72,16 @@
                 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button id="btn-confirm" type="button" class="btn btn-success">Confirmar</button>
+                    <button id="btn-confirm" type="button" class="btn btn-success" data-bs-dismiss="modal">Confirmar</button>
                 </div>
 
                 </div>
             </div>
         </div>
 
-
-    <!-- <label for="inputImagem" class="edit-icon">
-        ✏️
-    </label>
-
-    <input type="file" id="inputImagem" accept="image/*" hidden> -->
-
     </main>
 
-    
+    <script src="../../js/config.js"></script>
     <script src="../../js/libs/bootstrap.bundle.min.js"> </script>
     <script src="../../js/libs/tablesort.min.js"></script>
     <script src="../../js/libs/tablesort.number.js"></script>
