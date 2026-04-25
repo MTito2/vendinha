@@ -1,6 +1,7 @@
 using Vendinha.Data;
 using Vendinha.Routes;
 
+Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();

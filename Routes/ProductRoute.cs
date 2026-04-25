@@ -91,6 +91,27 @@ namespace Vendinha.Routes
                 return Results.NoContent();
 
             });
+
+            route.MapPost("{id:int}", async (IFormFile file, int id, VendinhaContext context) =>
+            {
+                var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+                if (product == null)
+                {
+                    return Results.NotFound();
+                }
+
+                var fileName = $"{Guid.NewGuid()}";
+
+                var filePath = Path.Combine("wwwroot/images", fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+                product.ChangeImg($"/images/{fileName}");
+                await context.SaveChangesAsync();
+                return Results.Ok(product);
+            }).DisableAntiforgery();
+                
         }
     }
 }
