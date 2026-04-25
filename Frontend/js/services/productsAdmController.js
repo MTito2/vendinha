@@ -74,6 +74,7 @@ export class ProductsAdmView {
         this.btnTrashListener();
         this.updateProductListener()
         this.imgListener();
+        this.btnConfirmListener();
     }
 
     updateProductListener() {
@@ -189,7 +190,7 @@ export class ProductsAdmView {
             const file = inputFile.files[0];
             if (file) {
                 const modalImg = document.querySelector(".img-product-modal");
-                imgSelected = file;
+                this.imgSelected =  file;
                 modalImg.src = URL.createObjectURL(file);
             }
         });
@@ -200,7 +201,7 @@ export class ProductsAdmView {
         const formData = new FormData();
 
         btnConfirm.addEventListener("click", async () => {
-            formData.append("img", imgSelected);
+            formData.append("img", this.imgSelected);
         });
     }
 }
