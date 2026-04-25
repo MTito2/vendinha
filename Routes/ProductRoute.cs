@@ -99,8 +99,9 @@ namespace Vendinha.Routes
                 {
                     return Results.NotFound();
                 }
-
-                var fileName = $"{Guid.NewGuid()}";
+                
+                var extension = Path.GetExtension(file.FileName);
+                var fileName = $"{Guid.NewGuid()}{extension}";
 
                 var filePath = Path.Combine("wwwroot/images", fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
