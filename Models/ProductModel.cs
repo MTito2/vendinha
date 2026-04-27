@@ -2,10 +2,11 @@
 {
     public class ProductModel
     {
-        public int Id {  get; init; }
+        public int Id { get; init; }
         public string Name { get; private set; }
         public float Price { get; set; }
         public string Img { get; set; }
+        public bool Active { get; set; } = true;
 
         public ProductModel(string name, float price, string img)
         {

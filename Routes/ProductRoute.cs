@@ -38,7 +38,7 @@ namespace Vendinha.Routes
                     return Results.NotFound(); 
                 }
 
-                if (string.IsNullOrEmpty(req.name) || req.price == null || string.IsNullOrEmpty(req.img))
+                if (string.IsNullOrEmpty(req.name) || req.price == null || string.IsNullOrEmpty(req.img) || req.active == null)
                 {
                     return Results.BadRequest("Todos os campos são obrigatórios para atualização completa.");
                 }
@@ -46,6 +46,7 @@ namespace Vendinha.Routes
                 product.ChangeName(req.name);
                 product.ChangePrice(req.price.Value);
                 product.ChangeImg(req.img);
+                product.Active = req.active;
 
                 await context.SaveChangesAsync();
 
@@ -73,23 +74,13 @@ namespace Vendinha.Routes
                 {
                     product.ChangeImg(req.img);
                 }
+
+                if (req.active != null)
+                {
+                    product.Active = req.active;
+                }
                 await context.SaveChangesAsync();
                 return Results.Ok(product);
-            });
-
-            route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
-            {
-                var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
-                
-                if (product == null)
-                {
-                    return Results.NotFound();
-                }
-
-                context.Products.Remove(product);
-                await context.SaveChangesAsync();
-                return Results.NoContent();
-
             });
 
             route.MapPost("{id:int}", async (IFormFile file, int id, VendinhaContext context) =>
@@ -111,8 +102,7 @@ namespace Vendinha.Routes
                 product.ChangeImg($"/images/{fileName}");
                 await context.SaveChangesAsync();
                 return Results.Ok(product);
-            }).DisableAntiforgery();
-                
+            }).DisableAntiforgery();       
         }
     }
 }
