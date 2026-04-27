@@ -32,6 +32,9 @@ if (app.Environment.IsDevelopment())
 
 app.ProductRoutes();
 app.OutflowsRoutes();
+app.InflowsRoutes();
+app.PlacesRoutes();
+app.StockRoutes();
 
 app.UseHttpsRedirection();
 app.Run();

@@ -77,7 +77,8 @@ namespace Vendinha.Routes
 
                 if (req.active != null)
                 {
-                    product.Active = req.active;
+                    product.Active = req.active
+                    ;
                 }
                 await context.SaveChangesAsync();
                 return Results.Ok(product);

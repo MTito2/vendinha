@@ -3,12 +3,12 @@
     public class ProductModel
     {
         public int Id { get; init; }
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public float Price { get; set; }
-        public string Img { get; set; }
+        public string? Img { get; set; }
         public bool Active { get; set; } = true;
 
-        public ProductModel(string name, float price, string img)
+        public ProductModel(string name, float price, string? img)
         {
             Name = name;
             Price = price;
@@ -20,7 +20,7 @@
             Name = name;
         }
 
-        public void ChangeImg(string img)
+        public void ChangeImg(string? img)
         {
             Img = img;
         }

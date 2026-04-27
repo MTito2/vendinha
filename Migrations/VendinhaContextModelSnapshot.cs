@@ -17,6 +17,31 @@ namespace Vendinha.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
+            modelBuilder.Entity("Vendinha.Models.InflowModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Inflows");
+                });
+
             modelBuilder.Entity("Vendinha.Models.OutflowModel", b =>
                 {
                     b.Property<int>("Id")
@@ -49,6 +74,21 @@ namespace Vendinha.Migrations
                     b.ToTable("Outflows");
                 });
 
+            modelBuilder.Entity("Vendinha.Models.PlaceModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Places");
+                });
+
             modelBuilder.Entity("Vendinha.Models.ProductModel", b =>
                 {
                     b.Property<int>("Id")
@@ -59,7 +99,6 @@ namespace Vendinha.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Img")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -72,6 +111,35 @@ namespace Vendinha.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Vendinha.Models.StockModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CurrentQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Stock");
+                });
+
+            modelBuilder.Entity("Vendinha.Models.InflowModel", b =>
+                {
+                    b.HasOne("Vendinha.Models.ProductModel", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Vendinha.Models.OutflowModel", b =>
