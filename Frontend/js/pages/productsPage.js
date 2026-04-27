@@ -30,8 +30,11 @@ const formattedProducts = products.map(product => {
 
 // Criar os cards dos produtos e adicioná-los ao container
 for (let product of formattedProducts) {
-    const productCard = createProductCard(product, product.id);
-    productsContainer.appendChild(productCard);
+    console.log(product);
+    if (product.active) {
+        const productCard = createProductCard(product, product.id);
+        productsContainer.appendChild(productCard);
+    }
 }
 
 totalProducts();    

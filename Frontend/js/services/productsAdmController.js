@@ -1,6 +1,5 @@
 import { getProducts } from "../api/productApi.js";
 import { updateProduct } from "../api/productApi.js";
-import { deleteProduct } from "../api/productApi.js";
 import { sendImage } from "../api/productApi.js";
 import { formatPrice } from "../utils/formatPrice.js";
 
@@ -33,10 +32,10 @@ export class ProductsAdmView {
             const tableDataImg = document.createElement("td");
             const tableDataProduct = document.createElement("td");
             const tableDataPrice = document.createElement("td");
-            const tableDataBtnTrash = document.createElement("td");
+            const tableDataActive= document.createElement("td");
 
-            tableDataBtnTrash.classList.add("table-cell", "align-middle", "text-center");
-
+            tableDataActive.classList.add("table-cell", "align-middle", "text-center");
+            
             tableDataProduct.classList.add("table-cell", "align-middle");
             tableDataProduct.setAttribute("contenteditable", "true");
             tableDataProduct.setAttribute("data-field", "name");
@@ -49,38 +48,22 @@ export class ProductsAdmView {
             tableDataImg.innerHTML = `<img src="${API_URL}${product.img}" alt="${product.name}" class="img-fluid img-product" data-bs-toggle="modal" data-bs-target="#modalImg">`;
             tableDataProduct.textContent = product.name;
             tableDataPrice.textContent = formatPrice(product.price);
-            tableDataBtnTrash.innerHTML = `
-            <button class="btn-trash">
-                <svg 
-                class="icon-trash" 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="16" 
-                height="16"
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="#464d5c" 
-                stroke-width="2"
-                stroke-linecap="round" 
-                stroke-linejoin="round"
-                >
-                <path d="M10 11v6" />
-                <path d="M14 11v6" />
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                <path d="M3 6h18" />
-                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                </svg>
-            </button>
+            tableDataActive.innerHTML = `
+                <div id="active-${product.id}" class="form-check form-switch table-cell align-middle text-center d-flex justify-content-center">
+                    <input class="form-check-input cursor-pointer" type="checkbox" role="switch" id="statusAtivo${product.id}" ${product.active ? 'checked' : ''}>
+                    <label class="form-check-label" for="statusAtivo${product.id}"></label>
+                </div>
             `;
 
             tableRow.appendChild(tableDataImg);
             tableRow.appendChild(tableDataProduct);
             tableRow.appendChild(tableDataPrice);
-            tableRow.appendChild(tableDataBtnTrash);
+            tableRow.appendChild(tableDataActive);
             tableBody.appendChild(tableRow);
         }
 
         table.appendChild(tableBody);
-        this.btnTrashListener();
+        this.updateActiveListener();
         this.updateProductListener()
         this.imgListener();
         this.btnConfirmListener();
@@ -125,15 +108,19 @@ export class ProductsAdmView {
         });
     }
 
-    btnTrashListener() {
-        const btnTrash = document.querySelectorAll(".btn-trash");
-        btnTrash.forEach(btn => {
-            btn.addEventListener("click", () => {
-                const row = btn.closest("tr");
+    updateActiveListener() {
+        const activeChecks = document.querySelectorAll(".form-check-input");
+        activeChecks.forEach(check => {
+            check.addEventListener("change", async () => {
+                const row = check.closest("tr");
                 const id = parseInt(row.getAttribute("id"));
+                const value = check.checked;
 
-                deleteProduct(id);
-                row.remove();
+                try {
+                    await updateProduct(id, "active", value);
+                } catch (error) {
+                    console.error(error);
+                }
             });
         });
         }
