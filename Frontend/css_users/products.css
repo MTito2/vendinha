@@ -5,6 +5,7 @@
 
 .product-img {
     width: 68px;
+    height: 68px;
     border-radius: 100px;
     object-fit: cover;
     border: #808080d7 solid 1px;
