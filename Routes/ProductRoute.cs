@@ -103,7 +103,19 @@ namespace Vendinha.Routes
                 product.ChangeImg($"/images/{fileName}");
                 await context.SaveChangesAsync();
                 return Results.Ok(product);
-            }).DisableAntiforgery();       
+            }).DisableAntiforgery();     
+            
+            route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
+            {
+                var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+                if (product == null)
+                {
+                    return Results.NotFound();
+                }
+                context.Products.Remove(product);
+                await context.SaveChangesAsync();
+                return Results.NoContent();
+            });
         }
     }
 }

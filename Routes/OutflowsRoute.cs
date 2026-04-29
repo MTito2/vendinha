@@ -9,6 +9,14 @@ namespace Vendinha.Routes
         public static void OutflowsRoutes(this WebApplication app)
         {
             var route = app.MapGroup("api/outflows");
+            route.MapGet("", async (VendinhaContext context) =>
+            {
+                var outflows = await context.Outflows
+                    .Include(s => s.Product).ToListAsync();
+
+                return Results.Ok(outflows);
+            });
+
             route.MapGet("place/{place:int}", async (int place, VendinhaContext context) =>
             {
                 var outflows = await context.Outflows.Where(x => x.PlaceId == place)

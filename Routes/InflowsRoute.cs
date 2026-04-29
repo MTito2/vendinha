@@ -9,6 +9,14 @@ namespace Vendinha.Routes
         public static void InflowsRoutes(this WebApplication app)
         {
             var route = app.MapGroup("api/inflows");
+
+            route.MapGet("", async (VendinhaContext context) =>
+            {
+                var inflows = await context.Inflows.Include(s => s.Product).ToListAsync();
+
+                return Results.Ok(inflows);
+            });
+
             route.MapGet("place/{place:int}", async (int place, VendinhaContext context) =>
             {
                 var inflows = await context.Inflows.Where(x => x.PlaceId == place)
@@ -23,7 +31,7 @@ namespace Vendinha.Routes
 
                 if (req.productId == 0)
                 {
-                    var newProduct = new ProductModel(req.productName!, req.price, null);
+                    var newProduct = new ProductModel(req.productName!, req.price, "/images/b7f9c2d4-6a3e-4f1b-9c8d-2e5a7b6c9d10.jpg");
 
                     var stock = new StockModel
                     {
