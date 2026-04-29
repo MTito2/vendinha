@@ -12,5 +12,10 @@ namespace Vendinha.Models
 		{
 			CurrentQuantity += currentToadd;
 		}
-	}
+
+        public void SubStock(int currentToadd)
+        {
+            CurrentQuantity -= currentToadd;
+        }
+    }
 }
