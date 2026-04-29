@@ -3,15 +3,14 @@ namespace Vendinha.Models
 	public class StockModel
 	{
 		public int Id { get; init; }
-		public int ProductId{ get; set; }
-		public int PlaceId{ get; set; }
-		public int CurrentQuantity { get; set; }
+        public int PlaceId{ get; set; }
+		public int CurrentQuantity { get; set; } = 0;
+		public int? ProductId { get; init; }
+        public ProductModel? Product { get; set; }
 
-		public StockModel(int productId, int placeId, int currentQuantity)
+		public void SumStock(int currentToadd)
 		{
-			ProductId = productId;
-			PlaceId = placeId;
-			CurrentQuantity = currentQuantity;
+			CurrentQuantity += currentToadd;
 		}
 	}
 }

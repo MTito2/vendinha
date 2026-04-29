@@ -20,7 +20,9 @@ namespace Vendinha.Routes
             route.MapPost("", async (OutflowRequest req, VendinhaContext context) =>
             {
                 var outflow = new OutflowModel(req.date, req.clientName, req.productId, req.totalPrice, req.quantity, req.placeId);
+
                 await context.Outflows.AddAsync(outflow);
+                
                 await context.SaveChangesAsync();
 
                 return Results.Ok();

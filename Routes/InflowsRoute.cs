@@ -23,7 +23,14 @@ namespace Vendinha.Routes
 
                 if (req.productId == 0)
                 {
-                    var newProduct = new ProductModel(req.productName, req.price, null);
+                    var newProduct = new ProductModel(req.productName!, req.price, null);
+
+                    var stock = new StockModel
+                    {
+                        Product = newProduct,
+                        PlaceId = req.placeId,
+                        CurrentQuantity = req.quantity
+                    };
 
                     inflow = new InflowModel
                     {
@@ -32,10 +39,27 @@ namespace Vendinha.Routes
                         Quantity = req.quantity,
                         PlaceId = req.placeId
                     };
-                }
 
+                    await context.Stock.AddAsync(stock);
+                }
                 else
                 {
+                    var stockExisting = await context.Stock.FirstOrDefaultAsync(x => x.ProductId == req.productId && x.PlaceId == req.placeId);
+
+                    if (stockExisting != null)
+                    {
+                        stockExisting.SumStock(req.quantity);
+                    }
+                    else
+                    {
+                        var newStock = new StockModel
+                        {
+                            PlaceId = req.placeId,
+                            CurrentQuantity = req.quantity
+                        };
+                        await context.Stock.AddAsync(newStock);
+                    }
+
                     inflow = new InflowModel
                     {
                         Date = req.date,
