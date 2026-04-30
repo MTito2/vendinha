@@ -31,7 +31,6 @@ namespace Vendinha.Routes
                 var currentProductId = req.productId;
                 InflowModel inflow;
 
-                //Se o produto for novo?
                 if (currentProductId == 0)
                 {
                     var productExisting = await context.Products.FirstOrDefaultAsync(x => x.Name == req.productName);
