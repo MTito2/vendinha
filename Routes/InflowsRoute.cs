@@ -26,19 +26,26 @@ namespace Vendinha.Routes
             });
 
             route.MapPost("", async (InflowRequest req, VendinhaContext context) =>
+
             {
+                var currentProductId = req.productId;
                 InflowModel inflow;
 
-                if (req.productId == 0)
+                //Se o produto for novo?
+                if (currentProductId == 0)
                 {
-                    var newProduct = new ProductModel(req.productName!, req.price, "/images/b7f9c2d4-6a3e-4f1b-9c8d-2e5a7b6c9d10.jpg");
+                    var productExisting = await context.Products.FirstOrDefaultAsync(x => x.Name == req.productName);
 
-                    var stock = new StockModel
+                    if (productExisting != null)
                     {
-                        Product = newProduct,
-                        PlaceId = req.placeId,
-                        CurrentQuantity = req.quantity
-                    };
+                        currentProductId = productExisting.Id;
+                    }
+                }
+
+                if (currentProductId == 0)
+                {
+
+                    var newProduct = new ProductModel(req.productName, req.price, "/images/b7f9c2d4-6a3e-4f1b-9c8d-2e5a7b6c9d10.jpg");
 
                     inflow = new InflowModel
                     {
@@ -48,11 +55,21 @@ namespace Vendinha.Routes
                         PlaceId = req.placeId
                     };
 
+                    var stock = new StockModel
+                    {
+                        PlaceId = req.placeId,
+                        CurrentQuantity = req.quantity,
+                        Product = newProduct
+                    };
+
+                    await context.Products.AddAsync(newProduct);
                     await context.Stock.AddAsync(stock);
                 }
+            
+
                 else
                 {
-                    var stockExisting = await context.Stock.FirstOrDefaultAsync(x => x.ProductId == req.productId && x.PlaceId == req.placeId);
+                    var stockExisting = await context.Stock.FirstOrDefaultAsync(x => x.ProductId == currentProductId && x.PlaceId == req.placeId);
 
                     if (stockExisting != null)
                     {
@@ -62,6 +79,7 @@ namespace Vendinha.Routes
                     {
                         var newStock = new StockModel
                         {
+                            ProductId = currentProductId,
                             PlaceId = req.placeId,
                             CurrentQuantity = req.quantity
                         };
@@ -71,16 +89,16 @@ namespace Vendinha.Routes
                     inflow = new InflowModel
                     {
                         Date = req.date,
-                        ProductId = req.productId,
+                        ProductId = currentProductId,
                         Quantity = req.quantity,
                         PlaceId = req.placeId
                     };
                 }
 
-                await context.Inflows.AddAsync(inflow);
-                await context.SaveChangesAsync();
+            await context.Inflows.AddAsync(inflow);
+            await context.SaveChangesAsync();
 
-                return Results.Ok();
+            return Results.Ok();
             });
 
             route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
