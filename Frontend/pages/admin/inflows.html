@@ -11,7 +11,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../../css_users/bootstrap.min.css">
     <link rel="stylesheet" href="../../css_admin/global.css">
-    <link rel="stylesheet" href="../../css_admin/tablesort.css">
+    <link rel="stylesheet" href="../../css_admin/inflows.css">
     <title>Vendinha Solidária</title>
 </head>
 
@@ -32,56 +32,61 @@
                 <div class="collapse navbar-collapse" id="menuNav">
                     <div class="navbar-nav ms-auto gap-2 gap-md-4 ">
                         <a class="nav-link option" href="./products_adm.html">Produtos</a>
-                        <a class="nav-link option" href="./inflows.html">Entradas</a>
-                        <a class="nav-link option" href="#">Saídas</a>
+                        <a class="nav-link option" href="#">Entradas</a>
+                        <a class="nav-link option" href="./outflows.html">Saídas</a>
                         <a class="nav-link option" href="./stock.html">Estoque</a>
                         <a class="nav-link option" href="./nfs.html">N.Fs</a>
                         <a class="nav-link option" href="./login.html">Sair</a>
                     </div>
                 </div>
+
             </div>
         </nav>
     </header>
 
-    <main class="d-flex align-items-center flex-column position-relative">
+    <main class="d-flex align-items-center justify-content-start flex-column">
+        <h1 class="fw-bold h5 my-5">Entrada</h1>
 
-        <h1 class="fw-bold h5 my-5">Saídas</h1>
+        <div class="table-container table-responsive overflow-auto">
 
-        <div class="position-absolute end-0 my-3 mx-5">
-            <button id="btn-place" class="btn-place">
-                <img id="arrow-img" src="../../assets/icons/chevron-down.svg" alt="">
-                <span id="btn-text-place">Doutor</span>
-            </button>
-            <div id="dropdown-menu" class="dropdown-menu text-center">
-            </div>
-        </div>
-
-        <div class="table-container table-responsive overflow-auto mb-5 d-flex flex-column align-items-center">
             <table id="table" class="table table-hover text-center">
                 <thead class="table-light sticky-top">
                     <tr>
-                        <th scope="col">Data</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Produto</th>
+                        <th data-sort-method="none" scope="col">Produto</th>
                         <th scope="col">Valor (un)</th>
-                        <th scope="col">Valor Total</th>
                         <th scope="col">Quantidade</th>
-                        <th data-sort-method="none" scope="col"></th>
+                        <th scope="col">Local</th>
                     </tr>
                 </thead>
+
+                <tbody>
+                    <tr>
+                        <td class="table-cell align-middle text-center" contenteditable="true"></td>
+                        <td class="table-cell align-middle text-center" contenteditable="true"></td>
+                        <td class="table-cell align-middle text-center" contenteditable="true"></td>
+                        <td class="table-cell align-middle text-center" contenteditable="true"></td>
+                    </tr>
+                </tbody>
+
             </table>
+
+
+            <button class="align-middle" id="btn-new-row"><svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-plus-icon lucide-plus">
+                    <path d="M5 12h14" />
+                    <path d="M12 5v14" />
+                </svg> Novo produto</button>
         </div>
 
-        <a class="btn-green" href="#">Download Excel</a>
-        
     </main>
 
     <script src="../../js/config.js"></script>
-    <script src="../../js/libs/bootstrap.bundle.min.js"></script>
-    <script src="../../js/libs/axios.min.js"></script>
-    <script type="module" src="../../js/pages/outflowsPage.js"></script>
+    <script src="../../js/libs/bootstrap.bundle.min.js"> </script>
     <script src="../../js/libs/tablesort.min.js"></script>
     <script src="../../js/libs/tablesort.number.js"></script>
+    <script type="module" src="../../js/pages/InflowCreatePage.js"></script>
+    <script src="../../js/libs/axios.min.js"></script>
 </body>
 
 </html>
