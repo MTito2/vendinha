@@ -26,6 +26,13 @@ td {
     color: #464d5c !important;
 }
 
+[contenteditable="true"]:focus {
+    outline: 2px solid #464d5c34;
+    border-radius: 5px;
+    background-color: rgb(251, 251, 251);
+}
+
+
 .table-container {
     width: 90%;
 }

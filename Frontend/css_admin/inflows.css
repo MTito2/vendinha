@@ -1,8 +1,14 @@
-#btn-new-row {
+#btn-new-product {
     border: none;
     background: transparent;
     color: #a0a3a8 ;
     font-size: 12px;
-    padding: 3px;
- 
+    padding: 3px 10px;
 }
+
+#btn-new-product:hover {
+    background: rgb(251, 251, 251);
+    border-radius: 10px;
+
+}
+
