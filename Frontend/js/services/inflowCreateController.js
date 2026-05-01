@@ -1,7 +1,7 @@
 
 export class InflowCreateView {
     constructor() {
-        
+        this.cellEmpty = true
     }
 
     async loadInflowView() {
@@ -9,8 +9,8 @@ export class InflowCreateView {
     }
 
     renderTable() {
-        this.btnNewProductListener()
-        
+        this.btnNewProductListener();
+        this.btnSaveListener();
     }
 
     btnNewProductListener () {
@@ -32,5 +32,29 @@ export class InflowCreateView {
             const firstCell = row.firstElementChild
             firstCell.focus()
         })
+    }
+
+    btnSaveListener () {
+        const btnSave = document.getElementById("btn-save")
+        btnSave.addEventListener("click", () => {
+            this.checkCellEmpty();
+        })
+    }
+
+    checkCellEmpty () {
+        const cells = document.querySelectorAll(".table-cell")
+
+
+        cells.forEach(cell => {
+            if (cell.textContent === "") {
+                cell.classList.add("empty-cell")
+            }
+            else {
+                cell.classList.remove("cell-empty")
+            }
+
+
+
+        });
     }
 }

@@ -29,9 +29,19 @@ td {
 [contenteditable="true"]:focus {
     outline: 2px solid #464d5c34;
     border-radius: 5px;
+    border-left: #464d5c00 solid 2px;
+    border-right: #464d5c00 solid 2px;
     background-color: rgb(251, 251, 251);
 }
 
+.empty-cell {
+    width: 16px;
+    height: 16px;
+    background-image:url("../assets/icons/circle-alert.svg");
+    background-size: cover;  
+    background-position: center;  
+    background-repeat: no-repeat;
+}
 
 .table-container {
     width: 90%;
