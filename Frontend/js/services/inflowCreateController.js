@@ -14,8 +14,14 @@ export class InflowCreateView {
     }
 
     renderTable() {
+        const tableBodyExisting = document.querySelector("tbody")
+        if (tableBodyExisting) {
+            tableBodyExisting.innerHTML = ""
+        }
+
         const table = document.getElementById("table");
         const tableBody = document.createElement("tbody");
+
         tableBody.setAttribute("id", "tbody")
         const row = this.createRowElement();
         tableBody.appendChild(row)
@@ -42,13 +48,37 @@ export class InflowCreateView {
     }
 
     btnSaveListener () {
+        const main = document.querySelector("main");
+
         const btnSave = document.getElementById("btn-save")
         btnSave.addEventListener("click", () => {
             this.checkCellEmpty();
             this.checkEntryInvalid();
 
+
             if (this.invalidEntry === false) {
-                this.compileInflows()
+                try {
+                    this.compileInflows()
+                    this.renderTable()
+                    const alertDiv = this.createAlertElement("sucess");
+                    main.append(alertDiv)
+                    alertDiv.style.display = "block";
+
+                    setTimeout(() => {
+                        alertDiv.style.display = "none";
+                    }, 3000); 
+                }
+                catch (error) {
+                    const alertDiv = this.createAlertElement("error");
+                    main.append(alertDiv)
+                    alertDiv.style.display = "block";
+
+                    setTimeout(() => {
+                        alertDiv.style.display = "none";
+                    }, 3000); 
+
+                    console.log(error)
+                }
             }
         })
     }
@@ -200,5 +230,25 @@ export class InflowCreateView {
             row.appendChild(cell)
         }
         return row
+    }
+
+    createAlertElement (type) {
+        const alertDiv = document.createElement("div");
+
+        if (type === "sucess") {
+            alertDiv.className = "alert alert-sucess position-absolute text-center m-3 p-2";
+            alertDiv.id = "alert-div-sucess";
+            alertDiv.style.display = "none";
+            alertDiv.textContent = "Produtos adicionados com sucesso.";
+        }
+
+        else if (type === "error") {
+            alertDiv.className = "alert alert-danger position-absolute text-center p-2";
+            alertDiv.id = "alert-div-error";
+            alertDiv.style.display = "none";
+            alertDiv.textContent = "Houve um erro.";
+        }
+
+        return alertDiv
     }
 }

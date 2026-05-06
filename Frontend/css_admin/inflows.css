@@ -11,3 +11,16 @@
     border-radius: 10px;
 }
 
+
+#alert-div-error {
+    bottom: 20px;
+    font-size: 12px;
+    background: rgba(239, 149, 149, 0.475);
+}
+
+#alert-div-sucess {
+    bottom: 20px;
+    font-size: 12px;
+    background: #007d79de;
+    color: white;
+}
