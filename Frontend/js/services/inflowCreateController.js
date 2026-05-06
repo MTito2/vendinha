@@ -14,28 +14,14 @@ export class InflowCreateView {
     renderTable() {
         const table = document.getElementById("table");
         const tableBody = document.createElement("tbody");
-        const row = document.createElement("tr")
-        
-        for (let index = 0; index < 4; index++) {
-            const cell = document.createElement("td")
-            cell.classList.add("table-cell", "align-middle", "text-center")
-            cell.setAttribute("contenteditable", "true");
-
-            if (index === 3) {
-                const select = this.createSelectEl(); 
-                cell.appendChild(select)
-                cell.setAttribute("contenteditable", "false")
-            }
-            
-            row.appendChild(cell)
-        }
-
-        table.appendChild(tableBody)
+        const row = this.createRowElement();
         tableBody.appendChild(row)
-
+        table.appendChild(tableBody)
+        
         this.btnNewProductListener();
         this.btnSaveListener();
         this.cellListener();
+        this.checkTypeInput();
     }
 
     btnNewProductListener () {
@@ -43,27 +29,14 @@ export class InflowCreateView {
         const tableBody = document.querySelector("tbody")
 
         btnNewProduct.addEventListener("click", () => {
-            const row = document.createElement("tr")
-
-            for (let index = 0; index < 4; index++) {
-                const cell = document.createElement("td")
-                cell.classList.add("table-cell", "align-middle", "text-center")
-                cell.setAttribute("contenteditable", "true")
-
-                if (index === 3) {
-                    const select = this.createSelectEl(); 
-                    cell.appendChild(select)
-                    cell.setAttribute("contenteditable", "false")
-                }
-
-                row.appendChild(cell)
-            }
-
+            const row = this.createRowElement();
             tableBody.append(row)
 
             const firstCell = row.firstElementChild
             firstCell.focus()
+            this.checkTypeInput()
         })
+
     }
 
     btnSaveListener () {
@@ -99,6 +72,21 @@ export class InflowCreateView {
         });
     }
 
+    checkTypeInput() {
+        const cells = document.querySelectorAll(".table-cell")
+        cells.forEach(cell => {
+            if (cell.dataset.col.includes("price") || cell.dataset.col.includes("quantity")) {
+                cell.addEventListener("beforeinput", (e) => {
+                    if (e.data && !/^\d+$/.test(e.data)) {
+                        e.preventDefault(); 
+                    }
+                })
+            } 
+
+
+        });
+    }
+
     createSelectEl () {
         const select = document.createElement("select")
         select.classList.add("form-select", "form-select-sm", "mx-auto") 
@@ -117,8 +105,28 @@ export class InflowCreateView {
             select.appendChild(option)
         });
 
-        console.log(select)
-
         return select
+    }
+
+    createRowElement () {
+        const row = document.createElement("tr")
+        
+        for (let index = 0; index < 4; index++) {
+            const cell = document.createElement("td")
+            const cellData = index === 0 ? "product": index === 1 ? "price" : index === 2 ? "quantity" : index === 3 ?  "place" : null
+            cell.dataset.col = cellData
+            cell.classList.add("table-cell", "align-middle", "text-center")
+            cell.setAttribute("contenteditable", "true");
+
+            if (index === 3) {
+                const select = this.createSelectEl(); 
+                cell.appendChild(select)
+                cell.setAttribute("contenteditable", "false")
+            }
+            
+            row.appendChild(cell)
+        }
+        return row
+
     }
 }
