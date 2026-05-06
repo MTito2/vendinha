@@ -1,8 +1,11 @@
 import { getPlaces } from "../api/placeApi.js";
+import { sendInflow } from "../api/inflowApi.js";
+
 
 export class InflowCreateView {
     constructor() {
         this.places = []
+        this.invalidEntry = true
     }
 
     async loadInflowView() {
@@ -13,6 +16,7 @@ export class InflowCreateView {
     renderTable() {
         const table = document.getElementById("table");
         const tableBody = document.createElement("tbody");
+        tableBody.setAttribute("id", "tbody")
         const row = this.createRowElement();
         tableBody.appendChild(row)
         table.appendChild(tableBody)
@@ -35,13 +39,17 @@ export class InflowCreateView {
             firstCell.focus()
             this.checkTypeInput()
         })
-
     }
 
     btnSaveListener () {
         const btnSave = document.getElementById("btn-save")
         btnSave.addEventListener("click", () => {
             this.checkCellEmpty();
+            this.checkEntryInvalid();
+
+            if (this.invalidEntry === false) {
+                this.compileInflows()
+            }
         })
     }
 
@@ -57,10 +65,60 @@ export class InflowCreateView {
         })
     }
 
-    checkCellEmpty () {
+    compileInflows () {
+        const tbody = document.getElementById("tbody");
+        const rows = tbody.querySelectorAll("tr")
+
+        rows.forEach( async row => {
+            const cells = row.querySelectorAll("td")
+            const select = cells[3].querySelector("select") 
+
+            const date = new Date().toISOString()
+            const price = parseFloat(cells[1].textContent.replace(",", "."))
+            const quantity = parseInt(cells[2].textContent)
+            const placeId = parseInt(select.value)
+            
+            const data = {
+                "date": date,
+                "productId": 0,
+                "productName": cells[0].textContent,
+                "price": price,
+                "quantity": quantity,
+                "placeId": placeId
+            }
+
+            await sendInflow(data)
+        });
+    }
+
+    checkEntryInvalid () {
         const cells = document.querySelectorAll(".table-cell")
+        const selects = document.querySelectorAll("select")
+        
+        let counterInvalidSelect = 0
+        let counterInvalidCell = 0
 
         cells.forEach(cell => {
+            if(cell.classList.contains("empty-cell")) {
+                counterInvalidCell ++
+            }
+        });
+
+       selects.forEach(select => {
+            if(select.classList.contains("empty-select")) {
+                counterInvalidSelect ++
+            }
+        });
+
+        this.invalidEntry = counterInvalidCell > 0  || counterInvalidSelect > 0 ? true : false 
+    }
+
+    checkCellEmpty () {
+        const cells = document.querySelectorAll(".table-cell")
+        
+        cells.forEach(cell => {
+            const select = cell.querySelector("select")
+
             if (cell.textContent === "") {
                 cell.classList.add("empty-cell")
             }
@@ -69,26 +127,32 @@ export class InflowCreateView {
             }
 
             if (cell.dataset.col.includes("place")) {
-                const select = cell.querySelector("select")
-
                 if (select.value === "Selecione...") {
-                    select.classList.add("select-empty")
+                    select.classList.add("empty-select")
                 }
-
                 else {
-                    select.classList.remove("select-empty")
+                    select.classList.remove("empty-select")
                 }
             }
-
         });
     }
 
     checkTypeInput() {
         const cells = document.querySelectorAll(".table-cell")
         cells.forEach(cell => {
-            if (cell.dataset.col.includes("price") || cell.dataset.col.includes("quantity")) {
+            if (cell.dataset.col.includes("price")) {
                 cell.addEventListener("beforeinput", (e) => {
-                    if (e.data && !/^\d+$/.test(e.data)) {
+                    const regex = /[\d,]/
+                    if (e.data && regex.test(e.data) === false) {
+                        e.preventDefault(); 
+                    }
+                })
+            } 
+
+            if (cell.dataset.col.includes("quantity")) {
+                cell.addEventListener("beforeinput", (e) => {
+                    const regex = /[\d]/
+                    if (e.data && regex.test(e.data) === false) {
                         e.preventDefault(); 
                     }
                 })
@@ -136,6 +200,5 @@ export class InflowCreateView {
             row.appendChild(cell)
         }
         return row
-
     }
 }
