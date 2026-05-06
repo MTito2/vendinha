@@ -2,7 +2,6 @@ import { getPlaces } from "../api/placeApi.js";
 
 export class InflowCreateView {
     constructor() {
-        this.cellEmpty = true
         this.places = []
     }
 
@@ -69,6 +68,18 @@ export class InflowCreateView {
                 cell.classList.remove("empty-cell")
             }
 
+            if (cell.dataset.col.includes("place")) {
+                const select = cell.querySelector("select")
+
+                if (select.value === "Selecione...") {
+                    select.classList.add("select-empty")
+                }
+
+                else {
+                    select.classList.remove("select-empty")
+                }
+            }
+
         });
     }
 
@@ -82,8 +93,6 @@ export class InflowCreateView {
                     }
                 })
             } 
-
-
         });
     }
 

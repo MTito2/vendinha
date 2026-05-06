@@ -31,12 +31,8 @@ select {
     font-size: 12px !important;
 }
 
-[contenteditable="true"]:focus {
-    outline: 2px solid #464d5c34;
-    border-radius: 5px;
-    border-left: #464d5c00 solid 2px;
-    border-right: #464d5c00 solid 2px;
-    background-color: rgb(251, 251, 251);
+.select-empty {
+    border: red solid 1px;
 }
 
 .empty-cell {
@@ -45,6 +41,15 @@ select {
     background-position: center;  
     background-repeat: no-repeat;
 }
+
+[contenteditable="true"]:focus {
+    outline: 2px solid #464d5c34;
+    border-radius: 5px;
+    border-left: #464d5c00 solid 2px;
+    border-right: #464d5c00 solid 2px;
+    background-color: rgb(251, 251, 251);
+}
+
 
 .table-container {
     width: 90%;
