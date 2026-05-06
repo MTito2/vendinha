@@ -35,10 +35,8 @@ td {
 }
 
 .empty-cell {
-    width: 16px;
-    height: 16px;
-    background-image:url("../assets/icons/circle-alert.svg");
-    background-size: cover;  
+
+    background-image:url("../assets/icons/circle-alert.svg"); 
     background-position: center;  
     background-repeat: no-repeat;
 }
