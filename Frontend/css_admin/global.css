@@ -26,6 +26,11 @@ td {
     color: #464d5c !important;
 }
 
+select {
+    color: #3f4146 !important;
+    font-size: 12px !important;
+}
+
 [contenteditable="true"]:focus {
     outline: 2px solid #464d5c34;
     border-radius: 5px;

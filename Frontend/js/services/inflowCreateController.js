@@ -7,8 +7,8 @@ export class InflowCreateView {
     }
 
     async loadInflowView() {
-        this.renderTable();
         this.places = await getPlaces();
+        this.renderTable();
     }
 
     renderTable() {
@@ -20,6 +20,12 @@ export class InflowCreateView {
             const cell = document.createElement("td")
             cell.classList.add("table-cell", "align-middle", "text-center")
             cell.setAttribute("contenteditable", "true");
+
+            if (index === 3) {
+                const select = this.createSelectEl(); 
+                cell.appendChild(select)
+                cell.setAttribute("contenteditable", "false")
+            }
             
             row.appendChild(cell)
         }
@@ -43,6 +49,13 @@ export class InflowCreateView {
                 const cell = document.createElement("td")
                 cell.classList.add("table-cell", "align-middle", "text-center")
                 cell.setAttribute("contenteditable", "true")
+
+                if (index === 3) {
+                    const select = this.createSelectEl(); 
+                    cell.appendChild(select)
+                    cell.setAttribute("contenteditable", "false")
+                }
+
                 row.appendChild(cell)
             }
 
@@ -84,5 +97,28 @@ export class InflowCreateView {
             }
 
         });
+    }
+
+    createSelectEl () {
+        const select = document.createElement("select")
+        select.classList.add("form-select", "form-select-sm", "mx-auto") 
+
+        const option = document.createElement("option");
+        option.textContent = "Selecione...";
+        option.disabled = true;
+        option.selected = true;
+
+        select.appendChild(option)
+
+        this.places.forEach(place => {
+            const option = document.createElement("option");
+            option.textContent = place.name
+            option.value = place.id
+            select.appendChild(option)
+        });
+
+        console.log(select)
+
+        return select
     }
 }
