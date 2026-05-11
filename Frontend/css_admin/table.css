@@ -1,0 +1,163 @@
+/* CONTAINER GERAL */
+.dt-container {
+    width: 100%;
+}
+
+/* TOPO */
+.dt-layout-start,
+.dt-layout-end {
+    margin-bottom: 15px;
+}
+
+/* LABELS */
+.dt-length label,
+.dt-search label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-bottom: 6px;
+}
+
+/* INPUT PESQUISA */
+.dt-search input {
+    width: 260px !important;
+    height: 42px;
+    border-radius: 12px !important;
+    border: 1px solid #d1d5db !important;
+    padding: 0 14px !important;
+    background-color: white !important;
+    font-size: 12px;
+    transition: 0.2s;
+}
+
+.dt-search ::placeholder {
+    color: #b2b2b2;
+}
+
+.dt-search input:focus {
+    border-color: #0d6efd !important;
+
+    box-shadow:
+        0 0 0 4px rgba(13, 110, 253, 0.15) !important;
+
+    outline: none !important;
+}
+
+/* SELECT */
+.dt-length select {
+    border-radius: 10px !important;
+    border: 1px solid #d1d5db !important;
+
+    padding: 4px 30px 4px 10px !important;
+
+    margin: 0 8px;
+}
+
+/* TABELA */
+table.dataTable {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border-radius: 16px;
+}
+
+/* HEADER */
+table.dataTable thead th {
+    background: #f8fafc !important;
+    text-align: center !important;
+    color: #374151 !important;
+    font-size: 12px;
+    border-bottom: 1px solid #e5e7eb !important;
+    padding: 16px !important;
+    position: sticky !important;
+    top: 0;
+
+    background: #f8fafc !important;
+
+    z-index: 100;
+}
+
+.dt-column-title {
+    font-weight: 600 !important;
+}
+
+table.dataTable thead th {
+    position: relative;
+}
+
+.dt-column-order {
+    width: 14px;
+    min-width: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* LINHAS */
+table.dataTable tbody td {
+    vertical-align: middle;
+    text-align: center !important;
+
+}
+
+.dt-container .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+/* HOVER */
+table.dataTable tbody tr:hover {
+    background-color: #f8fafc !important;
+}
+
+/* PAGINAÇÃO */
+.dt-paging {
+    margin-top: 20px;
+}
+
+.dt-paging .pagination {
+    gap: 6px;
+}
+
+/* BOTÕES */
+.dt-paging .page-link {
+    border: none !important;
+
+    border-radius: 10px !important;
+
+    min-width: 30px;
+    height: 30px;
+    font-size: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #374151 !important;
+
+    background: #f3f4f6 !important;
+
+    transition: 0.2s;
+}
+
+/* HOVER */
+.dt-paging .page-link:hover {
+    background: #e5e7eb !important;
+}
+
+/* ATIVO */
+.dt-paging .active .page-link {
+    background: #111827 !important;
+    color: white !important;
+}
+
+/* DESABILITADO */
+.dt-paging .disabled .page-link {
+    opacity: 0.4;
+}
+
+/* INFO */
+.dt-info {
+    color: #3f4146;
+    font-size: 12px;
+}

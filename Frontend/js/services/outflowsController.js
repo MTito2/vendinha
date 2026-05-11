@@ -5,16 +5,11 @@ import { formatPrice } from "../utils/formatPrice.js";
 export class OutflowsView {
     constructor() {
         this.outflows = [];
-        this.placesDropdown = [];
-        this.activePlaceId = 1;
     }
 
     async loadOutflows() {
-        this.outflows = await getOutflows(this.activePlaceId);
-        this.placesDropdown = ["Campo Grande"];
+        this.outflows = await getOutflows();
         this.renderTable();
-        this.initDropdownButton();
-        this.placeDropdownConfig();
     }
 
     renderTable() {
@@ -28,8 +23,8 @@ export class OutflowsView {
             const tableDataClientName = document.createElement("td");
             const tableDataProduct = document.createElement("td");
             const tableDataPrice = document.createElement("td");
-            const tableDataTotalPrice = document.createElement("td");
             const tableDataQuantity = document.createElement("td");
+            const tableDataPlace = document.createElement("td");
             const tableDataBtnTrash = document.createElement("td");
 
             tableRow.setAttribute("id", outflow.id);
@@ -37,8 +32,8 @@ export class OutflowsView {
             tableDataClientName.textContent = outflow.clientName;
             tableDataProduct.textContent = outflow.product.name;
             tableDataPrice.textContent = formatPrice(outflow.product.price);
-            tableDataTotalPrice.textContent = formatPrice(outflow.totalPrice);
             tableDataQuantity.textContent = outflow.quantity;
+            tableDataPlace.textContent = outflow.place.name;
             tableDataBtnTrash.innerHTML = `
             <button class="btn-trash">
                 <svg 
@@ -66,8 +61,8 @@ export class OutflowsView {
             tableRow.appendChild(tableDataClientName);
             tableRow.appendChild(tableDataProduct);
             tableRow.appendChild(tableDataPrice);
-            tableRow.appendChild(tableDataTotalPrice);
             tableRow.appendChild(tableDataQuantity);
+            tableRow.appendChild(tableDataPlace);
             tableRow.appendChild(tableDataBtnTrash);
 
             tableBody.appendChild(tableRow);
@@ -89,61 +84,6 @@ export class OutflowsView {
                 deleteOutflow(id);
                 row.remove();
             });
-        });
-    }
-
-    placeDropdownConfig() {
-        const dropdownMenu = document.getElementById("dropdown-menu");
-        const btnPlace = document.getElementById("btn-place");
-        const btnTextPlace = document.getElementById("btn-text-place");
-
-        dropdownMenu.innerHTML = "";
-
-        this.placesDropdown.forEach(place => {
-            const dropdownItem = document.createElement("p");
-            const arrowImg = document.getElementById("arrow-img");
-
-
-            dropdownItem.classList.add("place-name");
-            dropdownItem.textContent = place;
-
-            dropdownItem.addEventListener("click", async () => {
-
-                this.activePlaceId = dropdownItem.textContent === "Doutor" ? 1 : dropdownItem.textContent === "Campo Grande" ? 2 : 0;
-                this.outflows = await getOutflows(this.activePlaceId);
-                const tableBody = document.getElementById("table-body");
-                if (tableBody) {
-                    tableBody.remove();
-                }
-                this.renderTable();
-
-                let placeActive = btnPlace.textContent.trim();
-                dropdownItem.textContent = placeActive;
-
-                btnTextPlace.textContent = place;
-
-                this.placesDropdown.push(placeActive);
-                const activeIndex = this.placesDropdown.indexOf(place);
-                this.placesDropdown.splice(activeIndex, 1);
-
-                this.placesDropdown.sort();
-                dropdownMenu.classList.remove("show"); 
-                arrowImg.classList.remove("rotate");
-                this.placeDropdownConfig();
-            });
-
-            dropdownMenu.appendChild(dropdownItem);
-        });
-    }
-
-    initDropdownButton() {
-        const btnPlace = document.getElementById("btn-place");
-        const dropdownMenu = document.getElementById("dropdown-menu");
-        const arrowImg = document.getElementById("arrow-img");
-
-        btnPlace.addEventListener("click", () => {
-            dropdownMenu.classList.toggle("show");
-            arrowImg.classList.toggle("rotate");
         });
     }
 

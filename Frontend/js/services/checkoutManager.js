@@ -34,7 +34,6 @@ export class OrderService {
                 date: this.#date,
                 clientName: this.#fullName,
                 productId: parseInt(product.id),
-                totalPrice: parseFloat(product.price) * parseInt(product.quantity),
                 quantity: parseInt(product.quantity),
                 placeId: this.#placeid
             };

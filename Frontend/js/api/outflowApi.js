@@ -6,7 +6,6 @@ export async function sendOutflow(orderData) {
       date: orderData.date,
       clientName: orderData.clientName,
       productId: orderData.productId,
-      totalPrice: orderData.totalPrice,
       quantity: orderData.quantity,
       placeId: orderData.placeId
     });
@@ -18,7 +17,7 @@ export async function sendOutflow(orderData) {
 
 export async function getOutflows(placeId) {
     try {
-      const response = await axios.get(`${API_URL}/api/outflows/place/${placeId}`)
+      const response = await axios.get(`${API_URL}/api/outflows`)
       return response.data
     }
     catch (error){

@@ -29,7 +29,7 @@ namespace Vendinha.Routes
 
             route.MapPost("", async (OutflowRequest req, VendinhaContext context) =>
             {
-                var outflow = new OutflowModel(req.date, req.clientName, req.productId, req.totalPrice, req.quantity, req.placeId);
+                var outflow = new OutflowModel(req.date, req.clientName, req.productId, req.quantity, req.placeId);
                 var stock = await context.Stock.FirstOrDefaultAsync(x => x.PlaceId == req.placeId && x.ProductId == req.productId);
                 if (stock != null)
                 {

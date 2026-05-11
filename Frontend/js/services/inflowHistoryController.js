@@ -29,7 +29,7 @@ export class InflowsHistoryView {
             tableDataProduct.textContent = inflow.product.name;
             tableDataPrice.textContent = formatPrice(inflow.product.price);
             tableDataQuantity.textContent = inflow.quantity;
-            tableDataPlace.textContent = inflow.placeId
+            tableDataPlace.textContent = inflow.place.name
     
             tableRow.appendChild(tableDataDate);
             tableRow.appendChild(tableDataProduct);

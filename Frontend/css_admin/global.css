@@ -52,6 +52,7 @@ select {
 
 .table-container {
     width: 90%;
+    min-width: 0;
 }
 
 .btn-trash {
