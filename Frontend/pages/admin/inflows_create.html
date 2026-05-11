@@ -32,7 +32,16 @@
                 <div class="collapse navbar-collapse" id="menuNav">
                     <div class="navbar-nav ms-auto gap-2 gap-md-4 ">
                         <a class="nav-link option" href="./products_adm.html">Produtos</a>
-                        <a class="nav-link option" href="#">Entradas</a>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Entradas
+                            </a>
+                            <ul class="dropdown-menu rounded-1 border">
+                                <li><a class="dropdown-item option-entries" href="./inflows_create.html">Nova entrada</a></li>
+                                <li><a class="dropdown-item option-entries" href="./inflows_history.html">Histórico de entradas</a></li>
+                            </ul>
+                        </div>
                         <a class="nav-link option" href="./outflows.html">Saídas</a>
                         <a class="nav-link option" href="./stock.html">Estoque</a>
                         <a class="nav-link option" href="./nfs.html">N.Fs</a>
@@ -45,7 +54,7 @@
     </header>
 
     <main class="d-flex align-items-center justify-content-start flex-column position-relative">
-        <h1 class="fw-bold h5 my-5">Entrada</h1>
+        <h1 class="fw-bold h5 my-5">Nova Entrada</h1>
 
         <div class="table-container table-responsive overflow-auto">
 
@@ -76,7 +85,7 @@
     <script src="../../js/libs/bootstrap.bundle.min.js"> </script>
     <script src="../../js/libs/tablesort.min.js"></script>
     <script src="../../js/libs/tablesort.number.js"></script>
-    <script type="module" src="../../js/pages/InflowCreatePage.js"></script>
+    <script type="module" src="../../js/pages/inflowCreatePage.js"></script>
     <script src="../../js/libs/axios.min.js"></script>
 </body>
 

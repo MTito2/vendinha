@@ -12,7 +12,9 @@ namespace Vendinha.Routes
 
             route.MapGet("", async (VendinhaContext context) =>
             {
-                var inflows = await context.Inflows.Include(s => s.Product).ToListAsync();
+                var inflows = await context.Inflows.Include(t => t.Product)
+                .Include(t => t.Place)
+                .ToListAsync();
 
                 return Results.Ok(inflows);
             });
