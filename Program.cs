@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Vendinha.Data;
 using Vendinha.Routes;
 
@@ -6,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<VendinhaContext>();
+builder.Services.AddDbContext<VendinhaContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.WebHost.UseUrls("http://localhost:5216");
 
 builder.Services.AddCors(options =>
