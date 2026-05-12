@@ -46,6 +46,5 @@ app.InflowsRoutes();
 app.PlacesRoutes();
 app.StockRoutes();
 
-app.UseHttpsRedirection();
 app.MapFallbackToFile("/index.html");
 app.Run();

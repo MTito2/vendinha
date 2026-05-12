@@ -1,3 +1,3 @@
 window.APP_CONFIG = {
-  API_URL: "http://localhost:5216"
+  API_URL: "/api"
 };
