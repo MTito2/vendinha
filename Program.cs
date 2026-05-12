@@ -1,16 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Vendinha.Data;
 using Vendinha.Routes;
 
-Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<VendinhaContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.WebHost.UseUrls("http://localhost:5216");
 
 builder.Services.AddCors(options =>
 {
@@ -24,7 +22,16 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://*:{port}");
+app.UseDefaultFiles();
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(builder.Environment.ContentRootPath, "Frontend")),
+    RequestPath = ""
+});
 app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
@@ -40,4 +47,5 @@ app.PlacesRoutes();
 app.StockRoutes();
 
 app.UseHttpsRedirection();
+app.MapFallbackToFile("/index.html");
 app.Run();

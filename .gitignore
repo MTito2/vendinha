@@ -11,6 +11,7 @@ obj/
 
 ## Configurações locais (não subir)
 appsettings.Development.json
+appsettings_Development.json
 
 ## Banco SQLite (local)
 vendinha.sqlite
