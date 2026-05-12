@@ -26,12 +26,6 @@ var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
 app.Urls.Add($"http://*:{port}");
 app.UseDefaultFiles();
 app.UseStaticFiles();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(builder.Environment.ContentRootPath, "Frontend")),
-    RequestPath = ""
-});
 app.UseCors("AllowAll");
 
 if (app.Environment.IsDevelopment())
