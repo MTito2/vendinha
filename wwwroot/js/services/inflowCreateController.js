@@ -10,6 +10,7 @@ export class InflowCreateView {
 
     async loadInflowView() {
         this.places = await getPlaces();
+        console.log("Valor atual de this.places:", this.places);
         this.renderTable();
     }
 

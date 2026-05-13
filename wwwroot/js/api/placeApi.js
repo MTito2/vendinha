@@ -6,6 +6,7 @@ export async function getPlaces() {
     return response.data;
     
   } catch (error) {
-    console.error(error);
+      console.error("Erro ao buscar places:", error);
+      return []
   }
 }
