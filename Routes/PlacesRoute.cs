@@ -20,7 +20,7 @@ namespace Vendinha.Routes
  
             route.MapPost("", async (PlaceRequest req, VendinhaContext context) =>
             {
-                var place = new PlaceModel(req.name);
+                var place = new PlaceModel(req.name, req.acronym);
                 await context.Places.AddAsync(place);
                 await context.SaveChangesAsync();
 
