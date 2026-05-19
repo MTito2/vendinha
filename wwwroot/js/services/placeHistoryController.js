@@ -1,4 +1,6 @@
 import { getPlaces } from "../api/placeApi.js";
+import { updatePlace } from "../api/placeApi.js";
+import { deletePlace } from "../api/placeApi.js";
 
 export class PlacesView {
     constructor() {
@@ -22,6 +24,14 @@ export class PlacesView {
             const tableDataBtnTrash = document.createElement("td");
 
             tableRow.setAttribute("id", place.id);
+            tableDataPlace.classList.add("table-cell", "align-middle", "text-center");
+            tableDataAcronym.classList.add("table-cell", "align-middle", "text-center");
+
+            tableDataPlace.setAttribute("contenteditable", "true")
+            tableDataPlace.setAttribute("data-field", "name")
+            tableDataAcronym.setAttribute("contenteditable", "true")
+            tableDataAcronym.setAttribute("data-field", "acronym")
+
             tableDataPlace.textContent = place.name;
             tableDataAcronym.textContent = place.acronym;
             tableDataBtnTrash.innerHTML = `
@@ -55,21 +65,48 @@ export class PlacesView {
         }
 
         table.appendChild(tableBody);
-        // this.btnTrashListener();
-
+        this.btnTrashListener();
+        this.updatePlaceListener();
     }
 
-    // btnTrashListener() {
-    //     const btnTrash = document.querySelectorAll(".btn-trash");
-    //     btnTrash.forEach(btn => {
-    //         btn.addEventListener("click", () => {
-    //             console.log("clicou");
-    //             const row = btn.closest("tr");
-    //             const id = parseInt(row.getAttribute("id"));
+    btnTrashListener() {
+        const btnTrash = document.querySelectorAll(".btn-trash");
+        btnTrash.forEach(btn => {
+            btn.addEventListener("click", () => {
+                console.log("clicou");
+                const row = btn.closest("tr");
+                const id = parseInt(row.getAttribute("id"));
 
-    //             deleteOutflow(id);
-    //             row.remove();
-    //         });
-    //     });
-    // }
+                deletePlace(id);
+                row.remove();
+            });
+        });
+    }
+
+    updatePlaceListener() {
+        const editableCells = document.querySelectorAll("[contenteditable]");
+        editableCells.forEach(cell => {
+            const actualText = cell.textContent.trim();
+
+            cell.addEventListener("blur", async () => {
+                const row = cell.closest("tr");
+                const id = parseInt(row.getAttribute("id"));
+                const field = cell.getAttribute("data-field");
+                let value = cell.textContent.trim();
+
+                if (actualText != value) {
+                    try {
+                        if (field === "price") {
+                            await updatePlace(id, field, value);
+
+                        } else {
+                            await updatePlace(id, field, value);
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            });
+        });
+    }
 }

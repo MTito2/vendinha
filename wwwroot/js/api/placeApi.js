@@ -23,3 +23,23 @@ export async function sendPlace(placeData) {
         console.log(error)
      }   
 }
+
+export async function updatePlace(id, field, value) {
+    try {
+        const response = await axios.patch(`${API_URL}/place/${id}`, {
+            [field]: value
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export async function deletePlace(id) {
+    try {
+      const response = await axios.delete(`${API_URL}/place/${id}`)
+    }
+    catch (error){
+      console.error(error);
+    }
+}
