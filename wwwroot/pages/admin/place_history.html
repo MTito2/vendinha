@@ -27,7 +27,7 @@
 
                 <div class="collapse navbar-collapse" id="menuNav">
                     <div class="navbar-nav ms-auto gap-2 gap-md-4 ">
-                        <a class="nav-link option" href="#">Produtos</a>
+                        <a class="nav-link option" href="/pages/admin/products_adm.html">Produtos</a>
                         <div class="nav-item dropdown">
                             <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
@@ -40,6 +40,16 @@
                         </div>
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
                         <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Locais
+                            </a>
+                            <ul class="dropdown-menu rounded-1 border">
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_create.html">Novo local</a></li>
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_history.html">Ver locais</a></li>
+                            </ul>
+                        </div>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
                         <a class="nav-link option" href="/pages/admin/login.html">Sair</a>
                     </div>
@@ -57,6 +67,7 @@
                     <tr>
                         <th scope="col">Local</th>
                         <th scope="col">Sigla</th>
+                        <th data-sort-method="none" scope="col"></th>
                     </tr>
                 </thead>
 
@@ -65,6 +76,7 @@
     </main>
 
     <script src="/js/config.js"></script>
+    <script type="module" src="/js/pages/placeHistoryPage.js"></script>
     <script src="/js/libs/bootstrap.bundle.min.js"> </script>
     <script src="/js/libs/tablesort.min.js"></script>
     <script src="/js/libs/tablesort.number.js"></script>

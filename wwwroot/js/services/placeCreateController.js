@@ -18,6 +18,7 @@ btnSend.addEventListener("click", async () => {
         }
 
         await sendPlace(placeData)
+        window.location.href = "/pages/admin/place_history.html"
     }
 
     else {
@@ -27,16 +28,13 @@ btnSend.addEventListener("click", async () => {
 })
 
 function checkEntry () {
-    const inputPlace = document.getElementById("input-place")
-    const inputAcronym = document.getElementById("input-acronym")
-    const placeValue = inputPlace.value
-    const acronymValue = inputAcronym.value
-
-    if (placeValue === false) {
-        inputPlace.classList.add("input-invalid")
-    }
-
-    else {
-        
-    }
+    const inputs = document.querySelectorAll(".input")
+    inputs.forEach(input => {
+        if (input.value === "") {
+            input.classList.add("input-invalid")
+            input.addEventListener("click", () => {
+                input.classList.remove("input-invalid")
+            })
+        }
+    });
 }
