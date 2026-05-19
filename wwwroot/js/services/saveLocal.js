@@ -10,7 +10,7 @@ const placeResponse = await getPlaces();
 const localsInDataBase = [];
 
 placeResponse.forEach(element => {
-    localsInDataBase.push(element.name.toLowerCase())
+    localsInDataBase.push(element.acronym.toLowerCase())
 });
 
 console.log(localsInDataBase)
