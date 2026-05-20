@@ -15,9 +15,19 @@ export async function sendOutflow(orderData) {
   }
 }
 
-export async function getOutflows(placeId) {
+export async function getOutflows(month = null, year = null) {
     try {
-      const response = await axios.get(`${API_URL}/outflows`)
+
+      let response;
+
+      if (month && year) {
+        response = await axios.get(`${API_URL}/outflows?month=${month}&year=${year}`)
+      }
+
+      else{
+        response = await axios.get(`${API_URL}/outflows`)
+      }
+
       return response.data
     }
     catch (error){
