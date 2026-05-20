@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <link rel="stylesheet" href="/css_admin/global.css">
     <link rel="stylesheet" href="/css_admin/stock.css">
@@ -13,16 +16,18 @@
     <link rel="stylesheet" href="/css_admin/table.css">
     <title>Vendinha Solidária</title>
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark"> 
-            
+        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark">
+
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img class="img-vale" src="/assets/imgs/logo-vale-white.png" alt="Logo">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav" aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -35,8 +40,10 @@
                                 Entradas
                             </a>
                             <ul class="dropdown-menu rounded-1 border">
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_create.html">Nova entrada</a></li>
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_history.html">Histórico de entradas</a></li>
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_create.html">Nova
+                                        entrada</a></li>
+                                <li><a class="dropdown-item option-entries"
+                                        href="/pages/admin/inflows_history.html">Histórico de entradas</a></li>
                             </ul>
                         </div>
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
@@ -47,8 +54,10 @@
                                 Locais
                             </a>
                             <ul class="dropdown-menu rounded-1 border">
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_create.html">Novo local</a></li>
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_history.html">Ver locais</a></li>
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_create.html">Novo
+                                        local</a></li>
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_history.html">Ver
+                                        locais</a></li>
                             </ul>
                         </div>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
@@ -59,20 +68,11 @@
         </nav>
     </header>
 
-    <main class="d-flex align-items-center justify-content-start flex-column">
+    <main class="d-flex align-items-center justify-content-start flex-column position-relative">
         <h1 class="fw-bold h5 my-5">Estoque</h1>
 
-        <div class="position-absolute end-0 my-3 mx-5">
-            <button id="btn-place" class="btn-place">
-                <img id="arrow-img" src="/assets/icons/chevron-down.svg" alt="">
-                <span id="btn-text-place">Doutor</span>
-            </button>
-            <div id="dropdown-menu" class="dropdown-menu text-center">
-            </div>
-        </div>
-
         <div class="table-container table-responsive overflow-auto mb-5">
-            
+
             <table id="table" class="table table-hover text-center">
                 <thead class="table-light sticky-top">
                     <tr>
@@ -87,19 +87,20 @@
         <div class="modal fade" id="modalImg" tabindex="-1" aria-labelledby="modalImgLabel">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                
-                <div id="modal-body" class="modal-body text-center">
 
-                </div>
-                
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button id="btn-confirm" type="button" class="btn btn-success" data-bs-dismiss="modal">Confirmar</button>
-                </div>
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div id="modal-body" class="modal-body text-center">
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button id="btn-confirm" type="button" class="btn btn-success"
+                            data-bs-dismiss="modal">Confirmar</button>
+                    </div>
 
                 </div>
             </div>
@@ -111,9 +112,10 @@
     <script src="/js/libs/tablesort.min.js"></script>
     <script src="/js/libs/tablesort.number.js"></script>
     <script type="module" src="/js/pages/stockPage.js"></script>
-    <script src="/js/libs/axios.min.js" ></script>
+    <script src="/js/libs/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
 </body>
+
 </html>
