@@ -1,21 +1,21 @@
 import { getStockForPlace} from "../api/stockApi.js";
+import { getPlaces} from "../api/placeApi.js";
 
 const API_URL = window.APP_CONFIG.API_URL;
 
 export class StockView {
     constructor() {
         this.stock = [];
-        this.placesDropdown = [];
-        this.activePlaceId = 1;
+        this.placesInDb = [];
+        this.placeId = 0;
+
     }
 
     async loadStock() {
-        this.stock = await getStockForPlace(this.activePlaceId);
-        this.placesDropdown = ["Campo Grande"];
-        console.log(this.stock);
+        this.placesInDb = await getPlaces();
+        this.renderSelectEl();
         this.renderTable();
-        this.initDropdownButton();
-        this.placeDropdownConfig();
+        this.selectListener();
     }
 
     renderTable() {
@@ -44,60 +44,43 @@ export class StockView {
         table.appendChild(tableBody);
     }
 
-    placeDropdownConfig() {
-            const dropdownMenu = document.getElementById("dropdown-menu");
-            const btnPlace = document.getElementById("btn-place");
-            const btnTextPlace = document.getElementById("btn-text-place");
-    
-            dropdownMenu.innerHTML = "";
-    
-            this.placesDropdown.forEach(place => {
-                const dropdownItem = document.createElement("p");
-                const arrowImg = document.getElementById("arrow-img");
-    
-    
-                dropdownItem.classList.add("place-name");
-                dropdownItem.textContent = place;
-    
-                dropdownItem.addEventListener("click", async () => {
-    
-                    this.activePlaceId = dropdownItem.textContent === "Doutor" ? 1 : dropdownItem.textContent === "Campo Grande" ? 2 : 0;
-                    this.stock = await getStockForPlace(this.activePlaceId);
-                    const tableBody = document.getElementById("table-body");
-                    if (tableBody) {
-                        tableBody.remove();
-                    }
-                    this.renderTable();
-    
-                    let placeActive = btnPlace.textContent.trim();
-                    dropdownItem.textContent = placeActive;
-    
-                    btnTextPlace.textContent = place;
-    
-                    this.placesDropdown.push(placeActive);
-                    const activeIndex = this.placesDropdown.indexOf(place);
-                    this.placesDropdown.splice(activeIndex, 1);
-    
-                    this.placesDropdown.sort();
-                    dropdownMenu.classList.remove("show"); 
-                    arrowImg.classList.remove("rotate");
-                    this.placeDropdownConfig();
-                });
-    
-                dropdownMenu.appendChild(dropdownItem);
-            });
-        }
+    renderSelectEl () {
+        const main = document.querySelector("main")
+        const select = document.createElement("select")
+        select.setAttribute("id", "select-place-stock")
+        select.classList.add("form-select", "form-select-sm", "mt-4") 
 
-        initDropdownButton() {
-            const btnPlace = document.getElementById("btn-place");
-            const dropdownMenu = document.getElementById("dropdown-menu");
-            const arrowImg = document.getElementById("arrow-img");
+        const option = document.createElement("option");
+        option.textContent = "Selecione um local...";
+        option.disabled = true;
+        option.selected = true;
 
-            btnPlace.addEventListener("click", () => {
-                dropdownMenu.classList.toggle("show");
-                arrowImg.classList.toggle("rotate");
-            });
+        select.appendChild(option)
+
+        this.placesInDb.forEach(place => {
+            const option = document.createElement("option");
+            option.textContent = place.name
+            option.value = place.id
+            select.appendChild(option)
+        });
+
+        main.prepend(select); 
     }
 
-   
+    selectListener () {
+        const select = document.querySelector("select")
+        
+        select.addEventListener("change",async () => {
+            this.placeId = select.value;
+            this.stock = await getStockForPlace(this.placeId);
+            console.log(this.stock)
+            this.stock.sort((a, b) =>
+                a.product.name.localeCompare(b.product.name)
+            )
+            console.log(this.stock)
+
+            this.renderTable();
+        })
+
+    }   
 }

@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css_admin/inflows.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.0/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="/css_admin/table.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.css">
 
     <title>Vendinha Solidária</title>
 </head>
@@ -46,6 +47,16 @@
                     </div>
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
                         <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Locais
+                            </a>
+                            <ul class="dropdown-menu rounded-1 border">
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_create.html">Novo local</a></li>
+                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_history.html">Ver locais</a></li>
+                            </ul>
+                        </div>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
                         <a class="nav-link option" href="/pages/admin/login.html">Sair</a>
                     </div>
@@ -57,7 +68,25 @@
 
    <main class="d-flex align-items-center flex-column position-relative">
 
-        <h1 class="fw-bold h5 my-5">Histórico de Entradas</h1>
+        <h1 class="fw-bold h5 my-4">Histórico de Entradas</h1>
+
+        <div class="date-input-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="#464d5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-calendar-days-icon lucide-calendar-days">
+                <path d="M8 2v4" />
+                <path d="M16 2v4" />
+                <rect width="18" height="18" x="3" y="4" rx="2" />
+                <path d="M3 10h18" />
+                <path d="M8 14h.01" />
+                <path d="M12 14h.01" />
+                <path d="M16 14h.01" />
+                <path d="M8 18h.01" />
+                <path d="M12 18h.01" />
+                <path d="M16 18h.01" />
+            </svg>
+            <input type="text" id="date-input" autocomplete="off">
+        </div>
 
         <div class="table-container table-responsive overflow-auto mb-5 d-flex flex-column align-items-center">
             <table id="table" class="table text-center">
@@ -86,6 +115,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.js"></script>
 </body>
 
 </html>

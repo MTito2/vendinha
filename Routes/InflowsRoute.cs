@@ -10,12 +10,31 @@ namespace Vendinha.Routes
         {
             var route = app.MapGroup("api/inflows");
 
-            route.MapGet("", async (VendinhaContext context) =>
+            route.MapGet("", async (VendinhaContext context, int? month, int? year) =>
             {
-                var inflows = await context.Inflows.Include(t => t.Product)
+                var query = context.Inflows
                 .Include(t => t.Place)
-                .ToListAsync();
+                .Include(t => t.Product)
+                .AsQueryable();
 
+                if (month.HasValue && year.HasValue)
+                {
+                    var startDate = DateTime.SpecifyKind(
+                        new DateTime(year.Value, month.Value, 1),
+                        DateTimeKind.Utc);
+                    var endDate = startDate.AddMonths(1).AddTicks(-1);
+
+                    query = query.Where(t => t.Date >= startDate && t.Date <= endDate);
+                }
+                else if (month.HasValue || year.HasValue)
+                {
+                    return Results.BadRequest(new
+                    {
+                        erro = "Filtro inválido. O mês e o ano devem ser informados juntos."
+                    });
+                }
+
+                var inflows = await query.ToListAsync();
                 return Results.Ok(inflows);
             });
 

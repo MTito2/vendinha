@@ -10,3 +10,36 @@ export async function getPlaces() {
       return []
   }
 }
+
+export async function sendPlace(placeData) {
+
+    try {
+        const response = await axios.post(`${API_URL}/place`, {
+            name: placeData.name,
+            acronym: placeData.acronym,
+        });
+    }
+     catch (error) {
+        console.log(error)
+     }   
+}
+
+export async function updatePlace(id, field, value) {
+    try {
+        const response = await axios.patch(`${API_URL}/place/${id}`, {
+            [field]: value
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+}
+
+export async function deletePlace(id) {
+    try {
+      const response = await axios.delete(`${API_URL}/place/${id}`)
+    }
+    catch (error){
+      console.error(error);
+    }
+}

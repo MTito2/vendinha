@@ -45,7 +45,7 @@ export class ProductsAdmView {
             tableDataPrice.setAttribute("data-sort", product.price);
             tableDataPrice.setAttribute("data-field", "price");
 
-            tableDataImg.innerHTML = `<img src="${API_URL}${product.img}" alt="${product.name}" class="img-fluid img-product" data-bs-toggle="modal" data-bs-target="#modalImg">`;
+            tableDataImg.innerHTML = `<img src="${product.img}" alt="${product.name}" class="img-fluid img-product" data-bs-toggle="modal" data-bs-target="#modalImg">`;
             tableDataProduct.textContent = product.name;
             tableDataPrice.textContent = formatPrice(product.price);
             tableDataActive.innerHTML = `
@@ -80,7 +80,6 @@ export class ProductsAdmView {
                 const field = cell.getAttribute("data-field");
                 let value = cell.textContent.trim();
 
-                // Validação para o campo de preço
                 if (field === "price") {
                     value = value.replace(/[^0-9,.-]+/g,"").replace(",", ".");
                     

@@ -1,11 +1,21 @@
 import { setStorage } from '../services/storage.js';
 import { getStorage } from '../services/storage.js';
+import { getPlaces } from '../api/placeApi.js';
 
 const params = new URLSearchParams(window.location.search);
 let localInUrl = params.get("local")
 localInUrl = localInUrl ? localInUrl.replace(/%20/g, " ").toLowerCase() : "";
 
-if (localInUrl === "dr" || localInUrl === "cg") {
+const placeResponse = await getPlaces();
+const localsInDataBase = [];
+
+placeResponse.forEach(element => {
+    localsInDataBase.push(element.acronym.toLowerCase())
+});
+
+console.log(localsInDataBase)
+
+if (localsInDataBase.includes(localInUrl)) {
     setStorage("local", localInUrl);
 }
 
