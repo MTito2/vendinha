@@ -31,8 +31,6 @@ const dp = new AirDatepicker('#date-input', {
     dateFormat: 'MMMM yyyy',
     onSelect({ date }) {
         const input = document.querySelector('#date-input')
-        console.log(input)
-        console.log(date)
 
         if (date) {
             input.dataset.month = date.getMonth() + 1

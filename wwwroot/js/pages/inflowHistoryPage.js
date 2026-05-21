@@ -3,8 +3,39 @@ import { InflowsHistoryView } from "../services/inflowHistoryController.js";
 const inflowHistoryView = new InflowsHistoryView();
 await inflowHistoryView.loadInflowView();
 
-new DataTable('#table', {
-    language: {
-        url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json',
+const dp = new AirDatepicker('#date-input', {
+    locale: {
+        days: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+        daysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+        daysMin: ['Do', 'Se', 'Te', 'Qa', 'Qi', 'Se', 'Sa'],
+        months: [
+            'Janeiro', 'Fevereiro', 'Março', 'Abril',
+            'Maio', 'Junho', 'Julho', 'Agosto',
+            'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+        ],
+        monthsShort: [
+            'Jan', 'Fev', 'Mar', 'Abr',
+            'Mai', 'Jun', 'Jul', 'Ago',
+            'Set', 'Out', 'Nov', 'Dez'
+        ],
+        today: 'Hoje',
+        clear: 'Limpar',
+        dateFormat: 'dd/MM/yyyy',
+        timeFormat: 'HH:mm',
+        firstDay: 0
+    },
+
+    view: 'months',
+    minView: 'months',
+    dateFormat: 'MMMM yyyy',
+    onSelect({ date }) {
+        const input = document.querySelector('#date-input')
+
+        if (date) {
+            input.dataset.month = date.getMonth() + 1
+            input.dataset.year = date.getFullYear()
+        }
+        
+        dp.hide()
     }
-});
+})

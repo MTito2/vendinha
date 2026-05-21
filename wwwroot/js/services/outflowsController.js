@@ -5,8 +5,8 @@ import { formatPrice } from "../utils/formatPrice.js";
 export class OutflowsView {
     constructor() {
         this.outflows = [];
-        this.currentMonth = ""
-        this.currentYear = ""
+        this.currentMonth = "";
+        this.currentYear = "";
         this.table = null;
     }
 
