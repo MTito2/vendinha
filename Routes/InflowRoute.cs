@@ -8,7 +8,7 @@ namespace Vendinha.Routes
     {
         public static void InflowsRoutes(this WebApplication app)
         {
-            var route = app.MapGroup("api/inflows");
+            var route = app.MapGroup("api/inflows").RequireAuthorization();
 
             route.MapGet("", async (VendinhaContext context, int? month, int? year) =>
             {

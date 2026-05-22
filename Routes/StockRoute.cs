@@ -8,7 +8,7 @@ namespace Vendinha.Routes
     {
         public static void StockRoutes(this WebApplication app)
         {
-            var route = app.MapGroup("api/stock");
+            var route = app.MapGroup("api/stock").RequireAuthorization();
 
             route.MapGet("", async (VendinhaContext context) =>
             {

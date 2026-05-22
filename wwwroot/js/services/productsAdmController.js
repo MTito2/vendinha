@@ -10,6 +10,7 @@ export class ProductsAdmView {
         this.products = [];
         this.imgSelected = null;
         this.productCurrentId = null;
+        this.table = null;
     }
 
     async loadProducts() {

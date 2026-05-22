@@ -16,8 +16,9 @@ export class OutflowsView {
         this.outflows = await getOutflows(this.currentMonth, this.currentYear);
         
         this.renderDateName();
-        this.renderTable();
         this.dateInputListener();
+
+        await this.activeSpinner();
     }
 
     renderDateName () {
@@ -117,11 +118,54 @@ export class OutflowsView {
             const selectedYear = dateInputListener.dataset.year
 
             if (selectedMonth && selectedYear) {
-                this.outflows = await getOutflows(selectedMonth, selectedYear) 
-                this.renderTable();
+                await this.activeSpinner(
+                    selectedMonth,
+                    selectedYear
+                );
             }
         })
     }
+
+    async activeSpinner(month = this.currentMonth, year = this.currentYear) {
+            const tableContainer = document.querySelector(".table-container");
+    
+            if (this.table) {
+                this.table.clear().draw();
+                this.table.destroy();
+                this.table = null;
+            }
+    
+            tableContainer.querySelector(".sk-chase")?.remove();
+            tableContainer.style.display = "none";
+    
+            const chase = document.createElement("div");
+            chase.className = "sk-chase";
+    
+            for (let i = 0; i < 6; i++) {
+                chase.insertAdjacentHTML(
+                    "beforeend",
+                    '<div class="sk-chase-dot"></div>'
+                );
+            }
+    
+            tableContainer.appendChild(chase);
+    
+            try {
+                const [outflows] = await Promise.all([
+                    getOutflows(month, year),
+                    new Promise(resolve => setTimeout(resolve, 1000))
+                ]);
+    
+                this.outflows = outflows;
+                this.renderTable();
+    
+            } catch (error) {
+                console.error(error);
+            } finally {
+                chase.remove();
+                tableContainer.style.display = "flex";
+            }
+        }
 
     formatDate(dateString) {
         const date = new Date(dateString);

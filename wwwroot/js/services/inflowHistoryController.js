@@ -10,13 +10,13 @@ export class InflowsHistoryView {
     }
 
     async loadInflowView() {
-        this.currentMonth = new Date().getMonth() + 1
-        this.currentYear = new Date().getFullYear()
-        this.inflows = await getInflows(this.currentMonth, this.currentYear);
+        this.currentMonth = new Date().getMonth() + 1;
+        this.currentYear = new Date().getFullYear();
 
         this.renderDateName();
-        this.renderTable();
         this.dateInputListener();
+
+        await this.activeSpinner();
     }
 
     renderDateName () {
@@ -61,17 +61,62 @@ export class InflowsHistoryView {
     }
 
     dateInputListener() {
-        const dateInputListener = document.getElementById("date-input")
+        const dateInputListener = document.getElementById("date-input");
+
         dateInputListener.addEventListener("blur", async () => {
-            const selectedMonth = dateInputListener.dataset.month
-            const selectedYear = dateInputListener.dataset.year
+            const selectedMonth = dateInputListener.dataset.month;
+            const selectedYear = dateInputListener.dataset.year;
 
             if (selectedMonth && selectedYear) {
-                this.inflows = await getInflows(selectedMonth, selectedYear) 
-                this.renderTable();
+                await this.activeSpinner(
+                    selectedMonth,
+                    selectedYear
+                );
             }
-        })
+        });
     }
+
+    async activeSpinner(month = this.currentMonth, year = this.currentYear) {
+        const tableContainer = document.querySelector(".table-container");
+
+        if (this.table) {
+            this.table.clear().draw();
+            this.table.destroy();
+            this.table = null;
+        }
+
+        tableContainer.querySelector(".sk-chase")?.remove();
+        tableContainer.style.display = "none";
+
+        const chase = document.createElement("div");
+        chase.className = "sk-chase";
+
+        for (let i = 0; i < 6; i++) {
+            chase.insertAdjacentHTML(
+                "beforeend",
+                '<div class="sk-chase-dot"></div>'
+            );
+        }
+
+        tableContainer.appendChild(chase);
+
+        try {
+            const [inflows] = await Promise.all([
+                getInflows(month, year),
+                new Promise(resolve => setTimeout(resolve, 1000))
+            ]);
+
+            this.inflows = inflows;
+            this.renderTable();
+
+        } catch (error) {
+            console.error(error);
+        } finally {
+            chase.remove();
+            tableContainer.style.display = "flex";
+        }
+    }
+            
 
     formatDate(dateString) {
         const date = new Date(dateString);

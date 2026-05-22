@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Vendinha.Models;
 
 namespace Vendinha.Data
 {
-    public class VendinhaContext : DbContext
+    public class VendinhaContext : IdentityDbContext<IdentityUser>
     {
         public VendinhaContext(DbContextOptions<VendinhaContext> options) : base(options)
         {
