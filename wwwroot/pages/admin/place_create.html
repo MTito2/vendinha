@@ -33,28 +33,9 @@
                 <div class="collapse navbar-collapse" id="menuNav">
                     <div class="navbar-nav ms-auto gap-2 gap-md-4 ">
                         <a class="nav-link option" href="#">Produtos</a>
-                        <div class="nav-item dropdown">
-                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Entradas
-                            </a>
-                            <ul class="dropdown-menu rounded-1 border">
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_create.html">Nova entrada</a></li>
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_history.html">Histórico de entradas</a></li>
-                            </ul>
-                        </div>
+                        <a class="nav-link option" href="/pages/admin/inflows_history.html">Entradas</a>
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
-                        <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
-                            <div class="nav-item dropdown">
-                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Locais
-                            </a>
-                            <ul class="dropdown-menu rounded-1 border">
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_create.html">Novo local</a></li>
-                                <li><a class="dropdown-item option-entries" href="/pages/admin/place_history.html">Ver locais</a></li>
-                            </ul>
-                        </div>
+                        <a class="nav-link option" href="/pages/admin/place_history.html">Locais</a>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
                         <a class="nav-link option" href="/pages/admin/users.html">Usuários</a>
                         <a class="nav-link option" href="#" id="btn-logout">Sair</a>
@@ -71,7 +52,10 @@
         <div class="gap-4 w-100 d-flex flex-column align-items-center justify-content-center mt-5">
             <input id="input-place" class="input w-75" type="text" placeholder="Local">
             <input id="input-acronym" class="input w-75" type="text" placeholder="Sigla">
-            <a class="btn-green" id="btn-send" href="#">Cadastrar</a>
+            <div class="d-flex gap-4">
+                <a class="btn-green"  href="/pages/admin/place_history.html">Cancelar</a>
+                <a class="btn-green" id="btn-send" href="#">Cadastrar</a>
+            </div>
         </div>
 
     </main>

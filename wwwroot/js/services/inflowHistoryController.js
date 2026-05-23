@@ -78,6 +78,8 @@ export class InflowsHistoryView {
 
     async activeSpinner(month = this.currentMonth, year = this.currentYear) {
         const tableContainer = document.querySelector(".table-container");
+        const btnGroup = document.querySelector(".btn-wrapper");
+        btnGroup.classList.remove("d-flex");
 
         if (this.table) {
             this.table.clear().draw();
@@ -87,6 +89,8 @@ export class InflowsHistoryView {
 
         tableContainer.querySelector(".sk-chase")?.remove();
         tableContainer.style.display = "none";
+        btnGroup.style.display = "none";
+
 
         const chase = document.createElement("div");
         chase.className = "sk-chase";
@@ -114,6 +118,7 @@ export class InflowsHistoryView {
         } finally {
             chase.remove();
             tableContainer.style.display = "flex";
+            btnGroup.style.display = "flex";
         }
     }
             

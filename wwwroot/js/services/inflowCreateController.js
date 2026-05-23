@@ -10,7 +10,6 @@ export class InflowCreateView {
 
     async loadInflowView() {
         this.places = await getPlaces();
-        console.log("Valor atual de this.places:", this.places);
         this.renderTable();
     }
 
@@ -67,7 +66,9 @@ export class InflowCreateView {
 
                     setTimeout(() => {
                         alertDiv.style.display = "none";
-                    }, 3000); 
+                        window.location.href = "/pages/admin/inflows_history.html"
+                    }, 700); 
+
                 }
                 catch (error) {
                     const alertDiv = this.createAlertElement("error");
