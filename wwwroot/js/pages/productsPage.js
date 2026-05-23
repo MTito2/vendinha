@@ -78,8 +78,6 @@ btnNext.addEventListener('click', () => {
         const productQtd = product.querySelector('.qtd').textContent;
         const productId = product.children[0].id.split('-')[1];
 
-        console.log(`Id: ${productId}, Produto: ${productName}, Preço: ${productPrice}, Quantidade: ${productQtd}`);
-
         if (productQtd > 0) {       
             const productData = {
                 id: productId,
@@ -94,7 +92,7 @@ btnNext.addEventListener('click', () => {
     // Salvar a lista de produtos selecionados no localStorage
     localStorage.removeItem("products");
     setStorage("products", listProucts);
-    console.log(getStorage("products"))
+
 
 });
 
@@ -112,14 +110,13 @@ function createProductCard(product, id) {
     const productsInStorage = getStorage("products") || [];
     const productInStorage = productsInStorage.find(p => p.id === id);
     const initialQtd = productInStorage ? productInStorage.quantity : 0;
-
     const card = document.createElement('div');
     card.className = 'card-produto border-0 card mb-3 w-100';
 
     card.innerHTML = `
         <div id="product-${product.id}" class="product row g-0 align-items-center">
             <div class="col-3 d-flex align-items-center flex-column">
-                <img class="product-img" src="${API_URL}/${product.img}">
+                <img class="product-img" src="${product.img}">
             </div>
 
             <div class="col-6">

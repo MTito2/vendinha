@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/css_users/products.css">
     <link rel="stylesheet" href="/css_users/global.css">
-    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <title>Vendinha Solidária</title>
 </head>
+
 <body class="d-flex flex-column min-vh-100">
     <header class="header w-100 d-flex flex-column">
         <h1 class="title text-center fw-bold m-0">Vendinha Solidária</h1>
@@ -30,16 +34,26 @@
         <h2 id="desc" class="h6 fw-bold w-75 text-center lh-sm mt-4 mb-5">Selecione os produtos</h2>
 
         <div class="border-0 card mb-3 w-100">
-            <div id="products-container" class="container vh-100 overflow-auto ">
-                <span id="spinner" class="spinner-border  text-center position-absolute top-50 start-50 text-success role="status" aria-hidden="true"></span>
+            <div id="products-container" class="container vh-100 overflow-auto position-relative">
+
+                <!-- wrapper responsável por centralizar -->
+                <div class="position-absolute top-50 start-50 translate-middle">
+
+                    <!-- spinner fica livre para animar -->
+                    <span id="spinner" class="spinner-border text-success" role="status" aria-hidden="true">
+                    </span>
+
+                </div>
+
                 <!-- HTML será injetado via JS -->
+
             </div>
         </div>
-
         <a href="#" id="btn-next" class="btn-next m-5 mt-auto">Continuar (0)</a>
     </main>
     <script src="/js/config.js"></script>
     <script src="/js/libs/axios.min.js"></script>
     <script type="module" src="/js/pages/productsPage.js"></script>
 </body>
+
 </html>
