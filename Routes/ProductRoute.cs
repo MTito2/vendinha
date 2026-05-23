@@ -100,7 +100,7 @@ namespace Vendinha.Routes
                 {
                     await file.CopyToAsync(stream);
                 }
-                product.ChangeImg($"/images/{fileName}");
+                product.ChangeImg($"/Images/{fileName}");
                 await context.SaveChangesAsync();
                 return Results.Ok(product);
             }).DisableAntiforgery();     
