@@ -7,6 +7,10 @@
   font-style: normal;
 }
 
+.protected-page {
+    display: none !important;
+}
+
 main {
     height: calc(100vh - 66px);
 }

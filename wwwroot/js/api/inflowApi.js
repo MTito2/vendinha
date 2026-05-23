@@ -1,15 +1,15 @@
-const API_URL = window.APP_CONFIG.API_URL;
+import api from "./api.js";
 
 export async function getInflows(month = null, year = null) {
     try {
         let response;
 
         if (month && year) {
-            response = await axios.get(`${API_URL}/inflows?month=${month}&year=${year}`)
+            response = await api.get(`/inflows?month=${month}&year=${year}`)
         }
 
         else{
-            response = await axios.get(`${API_URL}/inflows`)
+            response = await api.get(`/inflows`)
         }
 
         return response.data
@@ -22,7 +22,7 @@ export async function getInflows(month = null, year = null) {
 export async function sendInflow(inflowData) {
 
     try {
-        const response = await axios.post(`${API_URL}/inflows`, {
+        const response = await api.post(`/inflows`, {
             date: inflowData.date,
             productId: 0,
             ProductName: inflowData.productName,

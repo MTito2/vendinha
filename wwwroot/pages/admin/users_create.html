@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,48 +10,41 @@
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <link rel="stylesheet" href="/css_admin/global.css">
-    <link rel="stylesheet" href="/css_admin/inflows.css">
     <link rel="stylesheet" href="/css_admin/table.css">
-    <link rel="stylesheet" href="/css_admin/spinkit.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.css">
-
     <title>Vendinha Solidária</title>
 </head>
-
 <body class="protected-page">
     <header>
-        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark">
-
+        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark"> 
+            
             <div class="container-fluid">
                 <a class="navbar-brand" href="/pages/admin/home.html">
                     <img class="img-vale" src="/assets/imgs/logo-vale-white.png" alt="Logo">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
-                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav" aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="menuNav">
                     <div class="navbar-nav ms-auto gap-2 gap-md-4 ">
-                        <a class="nav-link option" href="/pages/admin/products_adm.html">Produtos</a>
+                        <a class="nav-link option" href="#">Produtos</a>
                         <div class="nav-item dropdown">
-                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Entradas
                             </a>
                             <ul class="dropdown-menu rounded-1 border">
                                 <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_create.html">Nova entrada</a></li>
                                 <li><a class="dropdown-item option-entries" href="/pages/admin/inflows_history.html">Histórico de entradas</a></li>
                             </ul>
-                    </div>
+                        </div>
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
                         <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
-                        <div class="nav-item dropdown">
+                            <div class="nav-item dropdown">
                             <a class="nav-link option dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 Locais
@@ -71,59 +63,28 @@
             </div>
         </nav>
     </header>
+    <main class="d-flex align-items-center justify-content-start flex-column">
 
-   <main class="d-flex align-items-center flex-column position-relative">
+        <h1 class="fw-bold h5 my-4">Cadastrar Usuário</h1>
 
-        <h1 class="fw-bold h5 my-4">Histórico de Entradas</h1>
-
-        <div class="date-input-wrap">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="#464d5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-calendar-days-icon lucide-calendar-days">
-                <path d="M8 2v4" />
-                <path d="M16 2v4" />
-                <rect width="18" height="18" x="3" y="4" rx="2" />
-                <path d="M3 10h18" />
-                <path d="M8 14h.01" />
-                <path d="M12 14h.01" />
-                <path d="M16 14h.01" />
-                <path d="M8 18h.01" />
-                <path d="M12 18h.01" />
-                <path d="M16 18h.01" />
-            </svg>
-            <input type="text" id="date-input" autocomplete="off">
+        <div class="gap-4 w-100 d-flex flex-column align-items-center justify-content-center mt-5">
+            <input type="text" autocomplete="username" style="display:none">
+            <input type="password" autocomplete="current-password" style="display:none">
+            <input id="input-email" name="user_register_email" class="input w-75" type="email" placeholder="Email" autocomplete="off">
+            <input id="input-password" name="user_register_password" class="input w-75" type="password" placeholder="Senha" autocomplete="current-password">
+            <a class="btn-green" id="btn-send" href="#">Cadastrar</a>
         </div>
 
-        <div class="table-container table-responsive overflow-auto mb-5 d-flex flex-column align-items-center">
-            <table id="table" class="table text-center">
-                <thead class="table-light sticky-top">
-                    <tr>
-                        <th scope="col">Data</th>
-                        <th scope="col">Produto</th>
-                        <th scope="col">Valor (un)</th>
-                        <th scope="col">Quantidade</th>
-                        <th scope="col">Local</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-
-        <a class="btn-green" href="#">Download Excel</a>
-        
     </main>
 
     <script src="/js/config.js"></script>
     <script src="/js/libs/bootstrap.bundle.min.js"> </script>
     <script src="/js/libs/tablesort.min.js"></script>
     <script src="/js/libs/tablesort.number.js"></script>
-    <script type="module" src="/js/pages/inflowHistoryPage.js"></script>
-    <script src="/js/libs/axios.min.js"></script>
+    <script src="/js/libs/axios.min.js" ></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.js"></script>
+    <script type="module" src="/js/services/usersCreateController.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
     <script type="module" src="/js/services/logoutController.js"></script>
 </body>
-
 </html>

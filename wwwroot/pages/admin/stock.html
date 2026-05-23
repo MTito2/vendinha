@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/assets/imgs/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/assets/imgs/favicon.svg" />
+    <link rel="shortcut icon" href="/assets/imgs/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/imgs/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -17,12 +22,12 @@
     <title>Vendinha Solidária</title>
 </head>
 
-<body>
+<body class="protected-page">
     <header>
         <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark">
 
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/pages/admin/home.html">
                     <img class="img-vale" src="/assets/imgs/logo-vale-white.png" alt="Logo">
                 </a>
 
@@ -61,7 +66,8 @@
                             </ul>
                         </div>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
-                        <a class="nav-link option" href="/pages/admin/login.html">Sair</a>
+                        <a class="nav-link option" href="/pages/admin/users.html">Usuários</a>
+                        <a class="nav-link option" href="#" id="btn-logout">Sair</a>
                     </div>
                 </div>
             </div>
@@ -114,14 +120,14 @@
     <script type="module" src="/js/pages/stockPage.js"></script>
     <script src="/js/libs/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+
     <script
         type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
-
     <script src="/js/services/emailService.js"></script>
+    <script type="module" src="/js/auth-guard.js"></script>
+    <script type="module" src="/js/services/logoutController.js"></script>
 </body>
 
 </html>

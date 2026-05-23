@@ -1,8 +1,8 @@
-const API_URL = window.APP_CONFIG.API_URL;
+import api from "./api.js";
 
 export async function getStock() {
   try {
-    const response = await axios.get(`${API_URL}/stock`);
+    const response = await api.get(`/stock`);
     return response.data;
     
   } catch (error) {
@@ -12,7 +12,7 @@ export async function getStock() {
 
 export async function getStockForPlace(placeId) {
   try {
-    const response = await axios.get(`${API_URL}/stock/place/${placeId}`);
+    const response = await api.get(`/stock/place/${placeId}`);
     return response.data;
     
   } catch (error) {
