@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/css_admin/global.css">
     <link rel="stylesheet" href="/css_admin/products-adm.css">
     <link rel="stylesheet" href="/css_admin/table.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tablesort@5.7.0/tablesort.css">
     <title>Vendinha Solidária</title>
 </head>
 <body class="protected-page">
@@ -58,7 +59,7 @@
                         <th data-sort-method="none" scope="col">Imagem</th>
                         <th scope="col">Produto</th>
                         <th scope="col">Valor (un)</th>
-                        <th scope="col">Ativo</th>
+                        <th data-sort-method="none" scope="col">Ativo</th>
                     </tr>
                 </thead>
 
@@ -95,8 +96,6 @@
     <script type="module" src="/js/pages/productsAdmPage.js"></script>
     <script src="/js/libs/axios.min.js" ></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
-    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
     <script type="module" src="/js/services/logoutController.js"></script>
 

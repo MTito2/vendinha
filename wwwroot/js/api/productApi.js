@@ -24,7 +24,6 @@ export async function updateProduct(id, field, value) {
 export async function sendImage(id, formData) {
        try {
             const resposta = await axios.post(`${API_URL}/products/${id}`, formData);
-            console.log("Imagem enviada com sucesso!", resposta.data);
 
         } catch (erro) {
             console.error("Erro na comunicação com a API:", erro);
