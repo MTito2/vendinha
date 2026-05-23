@@ -14,7 +14,7 @@ export class OutflowsView {
         this.currentMonth = new Date().getMonth() + 1
         this.currentYear = new Date().getFullYear()
         this.outflows = await getOutflows(this.currentMonth, this.currentYear);
-        
+
         this.renderDateName();
         this.dateInputListener();
 
@@ -77,6 +77,8 @@ export class OutflowsView {
 
         this.table = new DataTable('#table', {
             data: rows,
+
+            order: [[0, 'desc']],
 
             language: {
                 url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json',

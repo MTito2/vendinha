@@ -9,6 +9,7 @@ export class PlacesView {
 
     async loadPlaces() {
         this.places = await getPlaces();
+        this.places.sort((a, b) => a.name.localeCompare(b.name));
         this.renderTable();
     }
 

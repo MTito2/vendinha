@@ -15,6 +15,7 @@ export class ProductsAdmView {
 
     async loadProducts() {
         this.products = await getProducts();
+        this.products.sort((a, b) => a.name.localeCompare(b.name));
         this.renderTable();
     }
 

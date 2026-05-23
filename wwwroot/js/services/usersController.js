@@ -9,6 +9,7 @@ export class UsersView {
 
     async loadUsers() {
         this.users = await getUsers();
+        this.users.sort((a, b) => a.email.localeCompare(b.email));
         this.renderTable();
     }
 
