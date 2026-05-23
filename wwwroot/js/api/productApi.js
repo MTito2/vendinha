@@ -29,4 +29,4 @@ export async function sendImage(id, formData) {
         } catch (erro) {
             console.error("Erro na comunicação com a API:", erro);
         }
-    }
+}

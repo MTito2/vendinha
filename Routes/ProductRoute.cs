@@ -95,7 +95,7 @@ namespace Vendinha.Routes
                 var extension = Path.GetExtension(file.FileName);
                 var fileName = $"{Guid.NewGuid()}{extension}";
 
-                var filePath = Path.Combine("wwwroot/images", fileName);
+                var filePath = Path.Combine("wwwroot/Images", fileName);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);
