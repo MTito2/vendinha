@@ -65,7 +65,7 @@ namespace Vendinha.Routes
                 if (currentProductId == 0)
                 {
 
-                    var newProduct = new ProductModel(req.productName, req.price, "/images/b7f9c2d4-6a3e-4f1b-9c8d-2e5a7b6c9d10.jpg");
+                    var newProduct = new ProductModel(req.productName, req.price, "/Images/b7f9c2d4-6a3e-4f1b-9c8d-2e5a7b6c9d10.jpg");
 
                     inflow = new InflowModel
                     {
