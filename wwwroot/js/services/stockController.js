@@ -32,6 +32,7 @@ export class StockView {
             tableRow.setAttribute("id", item.id);
             const tableDataProduct = document.createElement("td");
             const tableDataQuantity = document.createElement("td");
+            tableDataQuantity.dataset.type = "quantity";
 
             tableDataProduct.textContent = item.product.name;
             tableDataQuantity.textContent = item.currentQuantity;
@@ -67,19 +68,36 @@ export class StockView {
         main.prepend(select); 
     }
 
+    colorizeLowStock() {
+        const rows = document.querySelectorAll("#table tbody tr");
+
+        rows.forEach(row => {
+            const quantityCell = row.querySelector('td[data-type="quantity"]');
+
+            const quantity = parseInt(quantityCell.textContent);
+
+            if (quantity <= 5) {
+                row.classList.add("table-danger");
+            }
+            else if (quantity > 5 && quantity <= 10) {
+                row.classList.add("table-warning");
+            }
+        });
+    }
+
     selectListener () {
         const select = document.querySelector("select")
         
         select.addEventListener("change",async () => {
             this.placeId = select.value;
             this.stock = await getStockForPlace(this.placeId);
-            console.log(this.stock)
+
             this.stock.sort((a, b) =>
                 a.product.name.localeCompare(b.product.name)
             )
-            console.log(this.stock)
 
             this.renderTable();
+            this.colorizeLowStock();
         })
 
     }   

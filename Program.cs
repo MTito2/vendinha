@@ -12,47 +12,34 @@ using Vendinha.Routes;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Description = "Insira o token JWT desta maneira: Bearer {seu_token}",
-        Name = "Authorization",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer"
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            new string[] {}
-        }
-    });
-});
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<VendinhaContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddIdentityCore<IdentityUser>()
-    .AddEntityFrameworkStores<VendinhaContext>();
+    .AddEntityFrameworkStores<VendinhaContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
+
+
     {
+        if (builder.Environment.IsDevelopment())
+        {
+            policy.WithOrigins("http://localhost:8080", "http://127.0.0.1:5500", "http://localhost:5500");
+        }
+        else
+        {
+            policy.WithOrigins("https://vendinha-p0hv.onrender.com");
+        }
+
         policy
-            .AllowAnyOrigin()
             .AllowAnyMethod()
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowCredentials(); 
     });
 });
 
@@ -73,6 +60,18 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+    };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            if (context.Request.Cookies.ContainsKey("jwt_token"))
+            {
+                context.Token = context.Request.Cookies["jwt_token"];
+            }
+            return Task.CompletedTask;
+        }
     };
 });
 
