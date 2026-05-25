@@ -38,7 +38,7 @@ namespace Vendinha.Routes
                     return Results.NotFound(); 
                 }
 
-                if (string.IsNullOrEmpty(req.name) || req.price == null || string.IsNullOrEmpty(req.img) || req.active == null)
+                if (string.IsNullOrEmpty(req.name) || req.price == null || string.IsNullOrEmpty(req.img))
                 {
                     return Results.BadRequest("Todos os campos são obrigatórios para atualização completa.");
                 }
@@ -46,7 +46,11 @@ namespace Vendinha.Routes
                 product.ChangeName(req.name);
                 product.ChangePrice(req.price.Value);
                 product.ChangeImg(req.img);
-                product.Active = req.active;
+
+                if (req.active != null)
+                {
+                    product.Active = req.active.Value;
+                }
 
                 await context.SaveChangesAsync();
 
@@ -77,7 +81,7 @@ namespace Vendinha.Routes
 
                 if (req.active != null)
                 {
-                    product.Active = req.active
+                    product.Active = req.active.Value;
                     ;
                 }
                 await context.SaveChangesAsync();

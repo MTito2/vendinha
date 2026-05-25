@@ -13,6 +13,12 @@ namespace Vendinha.Data
                 var adminEmail = config["AdminConfig:Email"];
                 var adminPassword = config["AdminConfig:Password"];
 
+                if (string.IsNullOrWhiteSpace(adminEmail))
+                    throw new InvalidOperationException("AdminConfig:Email não foi configurado.");
+
+                if (string.IsNullOrWhiteSpace(adminPassword))
+                    throw new InvalidOperationException("AdminConfig:Password não foi configurado.");
+
                 var adminUser = new IdentityUser
                 {
                     UserName = adminEmail,

@@ -131,6 +131,8 @@ export class ProductsAdmView {
         imgElements.forEach(img => {
             img.addEventListener("click", () => {
                 this.productCurrentId = parseInt(img.closest("tr").getAttribute("id"));
+                const modalTitle = document.getElementById("modalImgLabel");
+                modalTitle.textContent = `Editar imagem - ${img.alt}`;
                 const modalBody = document.getElementById("modal-body");   
                 modalBody.classList.add("position-relative"); 
                 modalBody.innerHTML = "";
