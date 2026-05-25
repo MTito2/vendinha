@@ -21,17 +21,12 @@ export async function getInflows(month = null, year = null) {
 
 export async function sendInflow(inflowData) {
 
-    try {
-        const response = await api.post(`/inflows`, {
-            date: inflowData.date,
-            productId: 0,
-            ProductName: inflowData.productName,
-            price: inflowData.price,
-            quantity: inflowData.quantity,
-            placeId: inflowData.placeId
-        });
-    }
-     catch (error) {
-        console.log(error)
-     }   
+    const response = await api.post(`/inflows`, {
+        date: inflowData.date,
+        productId: 0,
+        ProductName: inflowData.productName,
+        price: inflowData.price,
+        quantity: inflowData.quantity,
+        placeId: inflowData.placeId
+    });
 }

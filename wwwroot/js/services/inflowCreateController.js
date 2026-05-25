@@ -51,14 +51,14 @@ export class InflowCreateView {
         const main = document.querySelector("main");
 
         const btnSave = document.getElementById("btn-save")
-        btnSave.addEventListener("click", () => {
+        btnSave.addEventListener("click", async () => {
             this.checkCellEmpty();
             this.checkEntryInvalid();
 
 
             if (this.invalidEntry === false) {
                 try {
-                    this.compileInflows()
+                    await this.compileInflows()
                     this.renderTable()
                     const alertDiv = this.createAlertElement("sucess");
                     main.append(alertDiv)
@@ -97,11 +97,11 @@ export class InflowCreateView {
         })
     }
 
-    compileInflows () {
+    async compileInflows () {
         const tbody = document.getElementById("tbody");
         const rows = tbody.querySelectorAll("tr")
 
-        rows.forEach( async row => {
+        for (const row of rows) {
             const cells = row.querySelectorAll("td")
             const select = cells[3].querySelector("select") 
 
@@ -120,7 +120,7 @@ export class InflowCreateView {
             }
 
             await sendInflow(data)
-        });
+        };
     }
 
     checkEntryInvalid () {
