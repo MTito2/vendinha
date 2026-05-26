@@ -4,7 +4,7 @@ import { getStorage } from "../services/storage.js";
 const nameInput = document.getElementById("name");
 const lastNameInput = document.getElementById("last-name");
 
-const btnReturn = document.getElementById("btn-return") 
+const btnReturn = document.getElementById("btn-return")
 
 // Criar um elemento de alerta para mensagens de erro
 const registerBtn = document.getElementById("register-btn");
@@ -36,18 +36,16 @@ registerBtn.addEventListener("click", (e) => {
 
             setTimeout(() => {
                 alertDiv.style.display = "none";
-            }, 3000); 
-     }
-    }
-});
+            }, 3000);
+        }
 
-addEventListener("click", (e) => {
-    const btn = e.target.closest("#register-btn");
+        else {
 
-    if (btn && nameInput.value !== "" && lastNameInput.value !== "") {
-        window.location.href = "products.html";
+            window.location.href = "products.html";
+        }}   
     }
-});
+);
+
 
 btnReturn.addEventListener("click", () => {
     window.location.href = `/index.html?local=${getStorage("local")}`

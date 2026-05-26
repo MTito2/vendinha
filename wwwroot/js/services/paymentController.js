@@ -120,7 +120,7 @@ export class PaymentController {
             alertDiv.className = "alert alert-success position-fixed w-75 text-center";
             alertDiv.id = "alert-div-sucess";
             alertDiv.style.display = "none";
-            alertDiv.textContent = "Código Pix copiado com sucesso.";
+            alertDiv.textContent = "Código pix copiado.";
         }
 
         else if (type === "error") {
