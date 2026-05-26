@@ -12,8 +12,13 @@ p {
     font-size: 14px;
 }
 
+.app-body {
+    min-height: 100dvh;
+    
+}
+
 #arrow-ico {
-    width: 42px;
+    width: 15px;
     margin: 0 auto;
 }
 
@@ -21,10 +26,10 @@ p {
     background-color: #007D78;
     display: flex;
     border: none;
-    padding: 15px;
+    padding: 20px;
     border-radius: 50%;
-    width: 42px;
-    height: 42px;
+    width: 62px;
+    height: 62px;
 }
 
 .btn-arrow:active {
