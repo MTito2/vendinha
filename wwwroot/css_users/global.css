@@ -13,7 +13,7 @@ p {
 }
 
 #arrow-ico {
-    width: 15px;
+    width: 42px;
     margin: 0 auto;
 }
 
@@ -21,10 +21,10 @@ p {
     background-color: #007D78;
     display: flex;
     border: none;
-    padding: 20px;
+    padding: 15px;
     border-radius: 50%;
-    width: 62px;
-    height: 62px;
+    width: 42px;
+    height: 42px;
 }
 
 .btn-arrow:active {
