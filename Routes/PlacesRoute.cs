@@ -29,15 +29,16 @@ namespace Vendinha.Routes
 
             route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
             {
-                var place = await context.Places.FirstOrDefaultAsync(x => x.Id == id);
-                if (place == null)
+                var rowsAffected = await context.Places
+                    .Where(p => p.Id == id)
+                    .ExecuteUpdateAsync(p => p.SetProperty(x => x.IsDeleted, true));
+
+                if (rowsAffected == 0)
                 {
-                    return Results.NotFound();
+                    return Results.NotFound(new { mensagem = "Local não encontrado." });
                 }
 
-                context.Places.Remove(place);
-                await context.SaveChangesAsync();
-                return Results.NoContent();
+                return Results.Ok(new { mensagem = "Local removido com sucesso!" });
             });
 
             route.MapPut("{id:int}",

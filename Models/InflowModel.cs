@@ -5,7 +5,7 @@ namespace Vendinha.Models
         public int Id { get; init; }
         public DateTime Date { get; set; }
         public int Quantity { get; set; }
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
         public PlaceModel? Place { get; set; }
         public int? ProductId { get; set; }
         public ProductModel? Product { get; set; }

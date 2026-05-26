@@ -8,10 +8,10 @@ namespace Vendinha.Models
         public int Quantity { get; set; }
         public int ProductId { get; set; }
         public ProductModel? Product { get; set; }
-        public int PlaceId { get; set; }
+        public int? PlaceId { get; set; }
         public PlaceModel? Place { get; set; }
 
-        public OutflowModel(DateTime date, string clientName, int productId, int quantity, int placeId)
+        public OutflowModel(DateTime date, string clientName, int productId, int quantity, int? placeId)
         {
             Date = date;
             ClientName = clientName;

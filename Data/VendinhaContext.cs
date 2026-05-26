@@ -15,5 +15,11 @@ namespace Vendinha.Data
         public DbSet<InflowModel> Inflows { get; set; }
         public DbSet<PlaceModel> Places { get; set; }
         public DbSet<StockModel> Stock { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<PlaceModel>().HasQueryFilter(p => !p.IsDeleted);
+        }
     }
 }

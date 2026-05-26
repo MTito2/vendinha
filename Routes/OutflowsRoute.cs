@@ -14,6 +14,7 @@ namespace Vendinha.Routes
                 var query = context.Outflows
                 .Include(t => t.Product)
                 .Include(t => t.Place)
+                .IgnoreQueryFilters()
                 .AsQueryable();
 
                 if (month.HasValue && year.HasValue)

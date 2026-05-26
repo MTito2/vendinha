@@ -14,6 +14,7 @@ namespace Vendinha.Routes
             {
                 var query = context.Inflows
                 .Include(t => t.Place)
+                .IgnoreQueryFilters()
                 .Include(t => t.Product)
                 .AsQueryable();
 
