@@ -4,6 +4,8 @@ import { getStorage } from "../services/storage.js";
 const nameInput = document.getElementById("name");
 const lastNameInput = document.getElementById("last-name");
 
+const btnReturn = document.getElementById("btn-return") 
+
 // Criar um elemento de alerta para mensagens de erro
 const registerBtn = document.getElementById("register-btn");
 const alertDiv = document.createElement("div");
@@ -43,4 +45,8 @@ addEventListener("click", (e) => {
         window.location.href = "products.html";
     }
 });
+console.log(`/index.html?local=${getStorage("local")}`);
 
+btnReturn.addEventListener("click", () => {
+    window.location.href = `/index.html?local=${getStorage("local")}`
+})

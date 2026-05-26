@@ -37,6 +37,10 @@ p {
     font-size: 14px;
 }
 
+.btn-back:hover {
+    cursor: pointer;
+}
+
 .btn-next {
     background-color: #007D78;
     color: #fff;

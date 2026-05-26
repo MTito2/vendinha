@@ -89,10 +89,10 @@ btnNext.addEventListener('click', () => {
             listProucts.push(productData);
         }
     }
+
     // Salvar a lista de produtos selecionados no localStorage
     localStorage.removeItem("products");
     setStorage("products", listProucts);
-
 
 });
 
@@ -108,7 +108,7 @@ function totalProducts() {
 // Função para criar o card do produto
 function createProductCard(product, id) {
     const productsInStorage = getStorage("products") || [];
-    const productInStorage = productsInStorage.find(p => p.id === id);
+    const productInStorage = productsInStorage.find(p => parseInt(p.id) === parseInt(id));
     const initialQtd = productInStorage ? productInStorage.quantity : 0;
     const card = document.createElement('div');
     card.className = 'card-produto border-0 card mb-3 w-100';
@@ -145,3 +145,4 @@ async function activeSpinner() {
         spinner.classList.add('d-none');
     }
 }
+
