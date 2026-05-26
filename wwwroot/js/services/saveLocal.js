@@ -13,8 +13,6 @@ placeResponse.forEach(element => {
     localsInDataBase.push(element.acronym.toLowerCase())
 });
 
-console.log(localsInDataBase)
-
 if (localsInDataBase.includes(localInUrl)) {
     setStorage("local", localInUrl);
 }

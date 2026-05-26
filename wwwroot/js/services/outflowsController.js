@@ -81,7 +81,6 @@ export class OutflowsView {
         const btnTrash = document.querySelectorAll(".btn-trash");
         btnTrash.forEach(btn => {
             btn.addEventListener("click", () => {
-                console.log("clicou");
                 const row = btn.closest("tr");
                 const id = parseInt(row.getAttribute("id"));
 

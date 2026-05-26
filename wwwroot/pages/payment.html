@@ -27,35 +27,23 @@
             <img class="p-1" src="/assets/icons/arrow-green.svg">Voltar
         </a>
 
-        <h2 id="desc" class="h6 fw-bold text-center lh-sm mt-4 mb-3">Realize o pagamento</h2>
-        <img src="/assets/imgs/qrcode-ex.png" alt="">
-        <div class="container p-4">
-            <h3 id="title-about" class="h6">Sobre o QR Code</h3>
-            <div>
-                <div class="d-flex justify-content-between">
-                    <p class="p">Nome</p>
-                    <p class="p">Luciana Lustosa Jardim</p>
-                </div>
-                
-                <div class="d-flex justify-content-between">
-                    <p class="p">Chave Pix</p>
-                    <p class="p">vendinhasolidariamariana@gmail.com</p>
-                </div>
-            </div>
-        </div>
+        <h2 id="desc" class="h6 fw-bold text-center lh-sm mt-4 mb-5">Realize o pagamento</h2>
 
-        <p class="division mb-4"></p>
+        <div id="container-products" class="container px-4 vh-100 overflow-auto"></div>
 
-        <div id="container-products" class="container px-4 vh-100 overflow-auto">
-
-        </div>
-        
         <div class="container d-flex justify-content-between w-100 mt-4 px-4">
             <h3 id="title-total" class="h5">Total</h3>
             <h3 id="title-total-price" class="h5">R$ </h3>
         </div>
 
-        <a href="#" id="btn-checkout" class="btn-next m-5 mt-auto">Confirmar Pagamento</a>
+        
+        <p class="division mb-4"></p>
+
+        <div class="m-5 mt-auto">
+            <a href="#" id="btn-checkout" class="btn-next position-relative">Copiar Código Pix</a>
+        </div>
+
+
         <script src="/js/config.js" ></script>
         <script type="module" src="/js/pages/paymentPage.js"></script>
         <script src="/js/libs/axios.min.js"></script>

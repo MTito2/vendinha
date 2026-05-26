@@ -26,6 +26,9 @@ registerBtn.addEventListener("click", (e) => {
         setStorage("name", name);
         setStorage("lastName", lastName);
 
+        console.log("Nome:", name);
+        console.log("Sobrenome:", lastName);
+
         // Exibir mensagem de erro se algum campo estiver vazio
         if (nameInput.value === "" || lastNameInput.value === "") {
             alertDiv.textContent = "Por favor, preencha todos os campos.";
@@ -45,7 +48,6 @@ addEventListener("click", (e) => {
         window.location.href = "products.html";
     }
 });
-console.log(`/index.html?local=${getStorage("local")}`);
 
 btnReturn.addEventListener("click", () => {
     window.location.href = `/index.html?local=${getStorage("local")}`

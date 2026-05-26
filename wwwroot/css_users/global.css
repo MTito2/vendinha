@@ -86,3 +86,33 @@ p {
 #desc {
     color: #007D78;
 }
+
+.alert {
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+
+    animation: slideToast 3s ease forwards;
+}
+
+@keyframes slideToast {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(100%);
+    }
+}

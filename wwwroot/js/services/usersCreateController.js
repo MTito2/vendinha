@@ -2,16 +2,37 @@ import { registerUser } from "../api/authApi.js";
 
 document.getElementById("btn-send").addEventListener("click", async (event) => {
     event.preventDefault();
-    console.log("Button clicked, attempting to register user...");
+    const inputEmail = document.getElementById("input-email")
+    const inputPassword = document.getElementById("input-password")
 
-    const email = document.getElementById("input-email").value;
-    const password = document.getElementById("input-password").value;
+    const emailValue = inputEmail.value
+    const passwordValue = inputPassword.value
 
-    try {
+    const entryValid = emailValue && passwordValue
+
+    if (entryValid) {
+
+        const email = inputEmail.value;
+        const password = inputPassword.value;
         const response = await registerUser({ email, password });
         window.location.href = "/pages/admin/users.html";
-
-    } catch (error) {
-        console.error("Error registering user:", error);
+    } 
+    else {
+        checkEntry()
     }
-});
+
+})
+
+function checkEntry () {
+    const inputs = document.querySelectorAll(".input")
+    inputs.forEach(input => {
+        const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+
+        if (input.value === "" || !validEmail) {
+            input.classList.add("input-invalid")
+            input.addEventListener("click", () => {
+                input.classList.remove("input-invalid")
+            })
+        }
+    });
+}
