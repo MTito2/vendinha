@@ -1,5 +1,6 @@
 import { getInflows } from "../api/inflowApi.js";
 import { formatPrice} from "../utils/formatPrice.js"
+import { generateReport } from "../utils/reportConfig.js";
 
 export class InflowsHistoryView {
     constructor() {
@@ -14,9 +15,19 @@ export class InflowsHistoryView {
         this.currentYear = new Date().getFullYear();
 
         this.renderDateName();
+        this.btnReportListener();
         this.dateInputListener();
 
         await this.activeSpinner();
+    }
+
+    async btnReportListener() {
+        const btnReport = document.getElementById("btn-download");
+        const data = await getInflows(); 
+
+        btnReport.addEventListener("click", async () => {
+            await generateReport(data, "inflows", "vendinha_relatorio_de_entradas");
+        });
     }
 
     renderDateName () {

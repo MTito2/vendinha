@@ -16,6 +16,17 @@ export async function generateReport(data, dataType, title) {
         }))
     }
 
+    else if (dataType === "inflows") {
+        data = data.map(item => ({
+            Data: formatDate(item.date),
+            Produto: item.product.name,
+            "Valor (un)": item.product.price.toFixed(2).replace(".", ","),
+            "Valor Total": (item.product.price * item.quantity).toFixed(2).replace(".", ","),
+            Quantidade: item.quantity,
+            Local: item.place.name,
+        }))
+    }
+
     // Configurações de imagem e criação do workbook
     const workbook = new ExcelJS.Workbook();
     const response = await fetch("/assets/imgs/logo-vale-white.png");
@@ -27,14 +38,14 @@ export async function generateReport(data, dataType, title) {
         extension: "png"
     });
 
-    const worksheet = workbook.addWorksheet(title);
+    const worksheet = workbook.addWorksheet("Relatório");
     const columns = Object.keys(data[0]);
 
     // Configurações de estilo para o cabeçalho e células
     worksheet.columns = columns.map(column => ({
         header: column,
         key: column,
-        width: 20
+        width: column === "Produto" ? 45 : column === "Cliente" ? 45 : 20
     }));
 
     // Adiciona uma linha vazia no início para a imagem do logo
