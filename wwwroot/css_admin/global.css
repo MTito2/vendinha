@@ -34,12 +34,18 @@ thead.sticky-top {
     z-index: 1 !important;
 }
 
-.date-input-wrap {
+.icons-wrap {
     align-self: end;
     text-align: center;
     margin-right: 115px;
     margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+}
 
+.btn-download {
+    background: none;
+    border: none;
 }
 
 #date-input{

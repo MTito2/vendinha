@@ -1,6 +1,7 @@
 import { getOutflows } from "../api/outflowApi.js";
 import { deleteOutflow } from "../api/outflowApi.js";
 import { formatPrice } from "../utils/formatPrice.js";
+import { generateReport } from "../utils/reportConfig.js";
 
 export class OutflowsView {
     constructor() {
@@ -17,7 +18,7 @@ export class OutflowsView {
 
         this.renderDateName();
         this.dateInputListener();
-
+        this.btnReportListener();
         await this.activeSpinner();
     }
 
@@ -87,6 +88,15 @@ export class OutflowsView {
                 deleteOutflow(id);
                 row.remove();
             });
+        });
+    }
+
+    async btnReportListener() {
+        const btnReport = document.getElementById("btn-download");
+        const data = await getOutflows(); 
+
+        btnReport.addEventListener("click", async () => {
+            await generateReport(data, "outflows", "vendinha_relatorio_de_saidas");
         });
     }
 
