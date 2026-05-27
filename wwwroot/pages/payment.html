@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,10 +13,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="/css_users/payment.css">
     <link rel="stylesheet" href="/css_users/global.css">
-    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <title>Vendinha Solidária</title>
 </head>
+
 <body class="d-flex flex-column app-body">
     <header class="header w-100 d-flex flex-column">
         <h1 class="title text-center fw-bold m-0">Vendinha Solidária</h1>
@@ -36,18 +40,68 @@
             <h3 id="title-total-price" class="h5">R$ </h3>
         </div>
 
-        
         <p class="division mb-4"></p>
 
+        <div class="card shadow-sm p-3" style="max-width: 380px; width: 90%; border-radius: 10px;">
+
+            <!-- Header -->
+            <div class="text-center mb-3">
+                <div class="d-flex justify-content-center align-items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" fill="#14b8a6">
+                        <path fill="#14b8a6"
+                            d="M11.917 11.71a2.046 2.046 0 0 1-1.454-.602l-2.1-2.1a.4.4 0 0 0-.551 0l-2.108 2.108a2.044 2.044 0 0 1-1.454.602h-.414l2.66 2.66c.83.83 2.177.83 3.007 0l2.667-2.668h-.253zM4.25 4.282c.55 0 1.066.214 1.454.602l2.108 2.108a.39.39 0 0 0 .552 0l2.1-2.1a2.044 2.044 0 0 1 1.453-.602h.253L9.503 1.623a2.127 2.127 0 0 0-3.007 0l-2.66 2.66h.414z" />
+                        <path fill="#14b8a6"
+                            d="m14.377 6.496l-1.612-1.612a.307.307 0 0 1-.114.023h-.733c-.379 0-.75.154-1.017.422l-2.1 2.1a1.005 1.005 0 0 1-1.425 0L5.268 5.32a1.448 1.448 0 0 0-1.018-.422h-.9a.306.306 0 0 1-.109-.021L1.623 6.496c-.83.83-.83 2.177 0 3.008l1.618 1.618a.305.305 0 0 1 .108-.022h.901c.38 0 .75-.153 1.018-.421L7.375 8.57a1.034 1.034 0 0 1 1.426 0l2.1 2.1c.267.268.638.421 1.017.421h.733c.04 0 .079.01.114.024l1.612-1.612c.83-.83.83-2.178 0-3.008z" />
+                    </svg>
+                    <h6 class="mb-0 fw-semibold">Pix Copia e Cola</h6>
+                </div>
+            </div>
+
+            <!-- Steps -->
+            <div class="d-flex flex-column gap-2">
+
+                <div class="d-flex gap-3 align-items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#007D78"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12M13.5 8a.75.75 0 0 0-1.191-.607l-2.75 2a.75.75 0 1 0 .882 1.214l1.56-1.134V16a.75.75 0 1 0 1.5 0z" />
+                    </svg>
+                    <div class="small text-muted">Copie o código Pix abaixo</div>
+                </div>
+
+                <div class="d-flex gap-3 align-items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#007D78"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12m8-1.663c0-.579.207-.956.473-1.195c.279-.251.67-.392 1.085-.392s.806.14 1.085.392c.265.239.472.616.472 1.195c0 .862-.564 1.771-1.49 2.704c-.692.698-1.484 1.313-2.195 1.864q-.34.264-.65.51a.75.75 0 0 0 .47 1.335h5a.75.75 0 1 0 0-1.5h-2.84c.433-.357.876-.745 1.28-1.153c.982-.99 1.925-2.271 1.925-3.76c0-.98-.37-1.77-.969-2.31c-.587-.528-1.349-.777-2.088-.777s-1.502.249-2.089.777c-.6.54-.969 1.33-.969 2.31a.75.75 0 0 0 1.5 0" />
+                    </svg>
+                    <div class="small text-muted">Abra seu banco e acesse a área Pix</div>
+                </div>
+
+                <div class="d-flex gap-3 align-items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#007D78"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12m13-2.006c0-.935-.453-1.65-1.097-2.107c-.622-.441-1.408-.637-2.153-.637s-1.531.196-2.153.637c-.643.456-1.097 1.172-1.097 2.107a.75.75 0 1 0 1.5 0c0-.394.172-.675.465-.884c.316-.224.78-.36 1.285-.36s.969.136 1.285.36c.292.207.463.486.465.877l-.002.027c-.003.03-.008.08-.021.141a1.4 1.4 0 0 1-.176.445c-.166.267-.542.65-1.551.65a.75.75 0 0 0 0 1.5c1.01 0 1.385.383 1.551.65a1.4 1.4 0 0 1 .199.613c-.002.39-.173.67-.465.877c-.316.224-.78.36-1.285.36s-.969-.136-1.285-.36c-.293-.209-.465-.49-.465-.884a.75.75 0 1 0-1.5 0c0 .935.454 1.65 1.097 2.107c.622.441 1.408.637 2.153.637s1.531-.196 2.153-.637c.643-.456 1.097-1.172 1.097-2.107v-.002a2.9 2.9 0 0 0-.426-1.398a2.7 2.7 0 0 0-.517-.606c.211-.184.382-.39.517-.606a2.9 2.9 0 0 0 .426-1.398z" />
+                    </svg>
+                    <div class="small text-muted">Selecione a opção Pix copia e cola</div>
+                </div>
+
+                <div class="d-flex gap-3 align-items-start">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                        <path fill="#007D78"
+                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12m11.056-3.8a.75.75 0 1 0-1.445-.4c-.383 1.377-1.16 2.668-1.863 3.633a16 16 0 0 1-1.185 1.44l-.072.075l-.018.018l-.004.004a.75.75 0 0 0 .531 1.28h3V16a.75.75 0 0 0 1.5 0v-1.75h.5a.75.75 0 0 0 0-1.5h-.5V12a.75.75 0 0 0-1.5 0v.75h-1.366q.159-.203.326-.433c.755-1.035 1.645-2.494 2.096-4.116" />
+                    </svg>
+                    <div class="small text-muted">Cole o código</div>
+                </div>
+
+            </div>
+        </div>
         <div class="m-5 mt-auto">
             <a href="#" id="btn-checkout" class="btn-next position-relative">Copiar Código Pix</a>
         </div>
-
-
-        <script src="/js/config.js" ></script>
-        <script type="module" src="/js/pages/paymentPage.js"></script>
-        <script src="/js/libs/axios.min.js"></script>
-
     </main>
+
+    <script src="/js/config.js"></script>
+    <script type="module" src="/js/pages/paymentPage.js"></script>
+    <script src="/js/libs/axios.min.js"></script>
 </body>
+
 </html>

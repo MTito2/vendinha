@@ -20,20 +20,31 @@ p {
 #arrow-ico {
     width: 15px;
     margin: 0 auto;
+    pointer-events: none;
 }
 
 .btn-arrow {
-    background-color: #007D78;
-    display: flex;
-    border: none;
-    padding: 20px;
-    border-radius: 50%;
     width: 62px;
     height: 62px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #007D78;
+    border: none;
+    z-index: 10;
+    touch-action: manipulation;
 }
 
 .btn-arrow:active {
     transform: scale(0.9);
+}
+
+
+#register-btn {
+    position: relative;
+    z-index: 999999;
 }
 
 .btn-back {
@@ -54,6 +65,10 @@ p {
     padding: 17px 33px;
     border-radius: 50px;
     font-weight: 600;
+}
+
+.btn-next:active {
+    transform: scale(0.9);
 }
 
 #wave {

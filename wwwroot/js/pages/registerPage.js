@@ -19,12 +19,13 @@ getStorage("name") ? nameInput.value = getStorage("name") : null;
 getStorage("lastName") ? lastNameInput.value = getStorage("lastName") : null;
 
 // Adicionar evento de clique ao botão de registro
-registerBtn.addEventListener("click", (e) => {
-    if (e.target.id === "register-btn") {
-        const name = nameInput.value;
-        const lastName = lastNameInput.value;
-        setStorage("name", name);
-        setStorage("lastName", lastName);
+registerBtn.addEventListener("click", () => {
+    console.log("Botão de registro clicado");
+
+    const name = nameInput.value;
+    const lastName = lastNameInput.value;
+    setStorage("name", name);
+    setStorage("lastName", lastName);
 
         console.log("Nome:", name);
         console.log("Sobrenome:", lastName);
@@ -42,7 +43,7 @@ registerBtn.addEventListener("click", (e) => {
         else {
 
             window.location.href = "products.html";
-        }}   
+        }
     }
 );
 
