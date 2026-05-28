@@ -198,9 +198,9 @@ export class ProductsAdmView {
 
     btnConfirmListener() {
         const btnConfirm = document.getElementById("btn-confirm");
-        const formData = new FormData();
-
+        
         btnConfirm.addEventListener("click", async () => {
+            const formData = new FormData();
             formData.append("file", this.imgSelected);
             
             if (this.imgSelected) {
