@@ -89,28 +89,45 @@ export class PaymentController {
     checkoutListener() {
         const btnCheckout = document.getElementById("btn-checkout");
 
+        this.sendingOrder = false;
+
         btnCheckout.addEventListener("click", async () => {
+            const alertSucess = this.createAlertElement("sucess");
+            btnCheckout.appendChild(alertSucess);
+            alertSucess.style.display = "block"
+            this.pasteCodPix();
 
             try {
-                if (!this.outflowConcluded) {
-                    await sendOrder();
-                    this.outflowConcluded = true;
-                };
-                
-                this.pasteCodPix();
-                const alertSucess = this.createAlertElement("sucess");
-                btnCheckout.appendChild(alertSucess);
-                alertSucess.style.display = "block";
 
-                setTimeout(() => {
-                    window.location.href = "../pages/grateful.html";
-                }, 300000);
+                // impede múltiplos envios enquanto a request acontece
+                if (!this.outflowConcluded) {
+
+                    if (this.sendingOrder) return;
+
+                    this.sendingOrder = true;
+
+                    await sendOrder();
+
+                    this.outflowConcluded = true;
+                    this.sendingOrder = false;
+
+                    setTimeout(() => {
+                        window.location.href = "../pages/grateful.html";
+                    }, 300000);
+                }
 
             } catch (error) {
+
+                this.sendingOrder = false;
+
                 console.error("Erro ao enviar o pedido:", error);
+
                 const alertError = this.createAlertElement("error");
+
                 btnCheckout.appendChild(alertError);
+
                 alertError.style.display = "block";
+
                 setTimeout(() => {
                     alertError.style.display = "none";
                 }, 3000);
