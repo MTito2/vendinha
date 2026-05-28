@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
+using Microsoft.EntityFrameworkCore;
 using Vendinha.Data;
 using Vendinha.Models;
 
@@ -88,27 +90,42 @@ namespace Vendinha.Routes
                 return Results.Ok(product);
             });
 
-            route.MapPost("{id:int}", async (IFormFile file, int id, VendinhaContext context) =>
+            route.MapPost("{id:int}", async (IFormFile file, int id, VendinhaContext context, Cloudinary cloudinary) =>
             {
                 var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
                 if (product == null)
                 {
                     return Results.NotFound();
                 }
-                
-                var extension = Path.GetExtension(file.FileName);
-                var fileName = $"{Guid.NewGuid()}{extension}";
 
-                var filePath = Path.Combine("wwwroot/Images", fileName);
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                if (file == null || file.Length == 0)
                 {
-                    await file.CopyToAsync(stream);
+                    return Results.BadRequest("Nenhuma imagem enviada.");
                 }
-                product.ChangeImg($"/Images/{fileName}");
+
+                using var stream = file.OpenReadStream();
+
+                var uploadParams = new ImageUploadParams()
+                {
+                    File = new FileDescription(file.FileName, stream),
+                    Folder = "vendinha_solidaria" 
+                };
+
+                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.Error != null)
+                {
+                    return Results.BadRequest($"Erro ao salvar na nuvem: {uploadResult.Error.Message}");
+                }
+
+                product.ChangeImg(uploadResult.SecureUrl.ToString());
+
                 await context.SaveChangesAsync();
+
                 return Results.Ok(product);
-            }).DisableAntiforgery();     
-            
+
+            }).DisableAntiforgery();
+
             route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>
             {
                 var product = await context.Products.FirstOrDefaultAsync(x => x.Id == id);

@@ -2,6 +2,7 @@ import { sendOrder } from "../services/checkoutManager.js";
 
 export class PaymentController {
     #products = [];
+    outflowConcluded = false;
 
     constructor() {
         this.#products = JSON.parse(localStorage.getItem("products")) || [];
@@ -91,7 +92,11 @@ export class PaymentController {
         btnCheckout.addEventListener("click", async () => {
 
             try {
-                await sendOrder();
+                if (!this.outflowConcluded) {
+                    await sendOrder();
+                    this.outflowConcluded = true;
+                };
+                
                 this.pasteCodPix();
                 const alertSucess = this.createAlertElement("sucess");
                 btnCheckout.appendChild(alertSucess);
@@ -99,7 +104,7 @@ export class PaymentController {
 
                 setTimeout(() => {
                     window.location.href = "../pages/grateful.html";
-                }, 3000);
+                }, 300000);
 
             } catch (error) {
                 console.error("Erro ao enviar o pedido:", error);

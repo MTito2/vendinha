@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Vendinha.Data;
 using Vendinha.Routes;
+using Vendinha.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -75,6 +76,7 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCloudinary(builder.Configuration);
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
