@@ -28,6 +28,8 @@ const formattedProducts = products.map(product => {
     };
 });
 
+formattedProducts.sort((a, b) => a.name.localeCompare(b.name));
+
 // Criar os cards dos produtos e adicioná-los ao container
 for (let product of formattedProducts) {
     if (product.active) {
