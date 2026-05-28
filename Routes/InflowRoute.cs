@@ -70,7 +70,7 @@ namespace Vendinha.Routes
                         return Results.BadRequest("Nome do produto é obrigatório.");
                     }
 
-                    var newProduct = new ProductModel(req.productName, req.price, "https://res.cloudinary.com/dcvzrr7co/image/upload/v1779968347/7b0d8b22-66e0-4da2-b073-f8a96ae7f137_smqbrt.jpg");
+                    var newProduct = new ProductModel(req.productName, req.price, "https://res.cloudinary.com/dcvzrr7co/image/upload/v1779973622/vendinha_solidaria/ukgtl2tjophp8p5gngkj.jpg");
 
                     inflow = new InflowModel
                     {
