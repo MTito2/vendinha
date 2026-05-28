@@ -48,82 +48,65 @@ namespace Vendinha.Routes
             });
 
             route.MapPost("", async (InflowRequest req, VendinhaContext context) =>
-
             {
-                var currentProductId = req.productId;
-                InflowModel inflow;
-
-                if (currentProductId == 0)
+                if (string.IsNullOrWhiteSpace(req.productName))
                 {
-                    var productExisting = await context.Products.FirstOrDefaultAsync(x => x.Name == req.productName);
-
-                    if (productExisting != null)
-                    {
-                        currentProductId = productExisting.Id;
-                    }
+                    return Results.BadRequest(new { erro = "Nome do produto é obrigatório." });
                 }
 
-                if (currentProductId == 0)
+                // 1. Busca o produto verificando o NOME e o PREÇO exatos
+                var product = await context.Products
+                    .FirstOrDefaultAsync(p => p.Name == req.productName && p.Price == req.price);
+
+                // 2. Se não existir um produto com esse nome E esse preço, cria um novo
+                if (product == null)
                 {
-                    if (string.IsNullOrWhiteSpace(req.productName))
-                    {
-                        return Results.BadRequest("Nome do produto é obrigatório.");
-                    }
+                    // Mantive a sua versão com a imagem!
+                    product = new ProductModel(req.productName, req.price, "https://res.cloudinary.com/dcvzrr7co/image/upload/v1779973622/vendinha_solidaria/ukgtl2tjophp8p5gngkj.jpg");
+                    await context.Products.AddAsync(product);
+                }
 
-                    var newProduct = new ProductModel(req.productName, req.price, "https://res.cloudinary.com/dcvzrr7co/image/upload/v1779973622/vendinha_solidaria/ukgtl2tjophp8p5gngkj.jpg");
+                // 3. Gerencia o Estoque (MÁGICA DA UNIFICAÇÃO AQUI)
+                // Em vez de buscar pelo product.Id, buscamos se já existe um estoque 
+                // de QUALQUER produto que tenha o mesmo NOME no mesmo local.
+                var stockExisting = await context.Stock
+                    .Include(x => x.Product) // Traz os dados do Produto junto para podermos ler o Nome
+                    .FirstOrDefaultAsync(x => x.Product.Name == req.productName && x.PlaceId == req.placeId);
 
-                    inflow = new InflowModel
-                    {
-                        Date = req.date,
-                        Product = newProduct,
-                        Quantity = req.quantity,
-                        PlaceId = req.placeId
-                    };
-
-                    var stock = new StockModel
+                if (stockExisting != null)
+                {
+                    // Se já existe um estoque para "Chocolate" (mesmo que de outro ID/Preço antigo), 
+                    // apenas soma a quantidade nele. O estoque fica unificado!
+                    stockExisting.SumStock(req.quantity);
+                }
+                else
+                {
+                    // Se é a PRIMEIRA vez na história que entra um "Chocolate" neste local, cria o estoque do zero
+                    var newStock = new StockModel
                     {
                         PlaceId = req.placeId,
                         CurrentQuantity = req.quantity,
-                        Product = newProduct
+                        Product = product
                     };
-
-                    await context.Products.AddAsync(newProduct);
-                    await context.Stock.AddAsync(stock);
+                    await context.Stock.AddAsync(newStock);
                 }
-            
 
-                else
+                // 4. Registra a Entrada no Histórico
+                // A entrada (Inflow) continua apontando para o Produto exato daquele dia, protegendo o seu financeiro!
+                var inflow = new InflowModel
                 {
-                    var stockExisting = await context.Stock.FirstOrDefaultAsync(x => x.ProductId == currentProductId && x.PlaceId == req.placeId);
+                    Date = req.date,
+                    Quantity = req.quantity,
+                    PlaceId = req.placeId,
+                    Product = product,
+                };
 
-                    if (stockExisting != null)
-                    {
-                        stockExisting.SumStock(req.quantity);
-                    }
-                    else
-                    {
-                        var newStock = new StockModel
-                        {
-                            ProductId = currentProductId,
-                            PlaceId = req.placeId,
-                            CurrentQuantity = req.quantity
-                        };
-                        await context.Stock.AddAsync(newStock);
-                    }
+                await context.Inflows.AddAsync(inflow);
 
-                    inflow = new InflowModel
-                    {
-                        Date = req.date,
-                        ProductId = currentProductId,
-                        Quantity = req.quantity,
-                        PlaceId = req.placeId
-                    };
-                }
+                // 5. Salva tudo no banco
+                await context.SaveChangesAsync();
 
-            await context.Inflows.AddAsync(inflow);
-            await context.SaveChangesAsync();
-
-            return Results.Ok();
+                return Results.Ok(new { mensagem = "Entrada registrada e estoque unificado com sucesso!" });
             });
 
             route.MapDelete("{id:int}", async (int id, VendinhaContext context) =>

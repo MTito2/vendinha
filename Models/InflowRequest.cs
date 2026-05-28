@@ -1,3 +1,3 @@
 namespace Vendinha.Models;
 
-public record UpdateUserRequest(string? Email, string? Password);
+public record InflowRequest(DateTime date, int productId, string? productName, float price, int quantity, int placeId);
