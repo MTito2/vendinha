@@ -10,16 +10,12 @@ export async function getProducts() {
     }
 }
 
+
 export async function updateProduct(id, field, value) {
     try {
-        const resposta = await axios.post(`${API_URL}/products/${id}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            withCredentials: true
+        const response = await axios.patch(`${API_URL}/products/${id}`, {
+            [field]: value
         });
-
-        return resposta.data;
     }
     catch (error) {
         console.error(error);
