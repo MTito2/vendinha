@@ -6,7 +6,7 @@
         public string Name { get; set; }
         public float Price { get; set; }
         public string? Img { get; set; }
-        public bool Active { get; set; } = true;
+        public bool Active { get; set; } = false;
 
         public ProductModel(string name, float price, string? img)
         {

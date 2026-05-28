@@ -30,6 +30,16 @@ export async function registerUser(userData) {
     }
 }
 
+export async function editUser(userId, userData) {
+    try {
+        const response = await api.patch(`/auth/users/${userId}`, userData);
+
+    } catch (error) {
+        console.error("Erro ao editar usuário:", error);
+        throw error;
+    }
+}
+
 export async function logoutUser() {
     try {
         const response = await api.post('/auth/logout');

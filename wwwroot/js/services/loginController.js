@@ -1,35 +1,40 @@
 import { loginUser } from '../api/authApi.js';
 
 const btnLogin = document.getElementById("btn-login");
-btnLogin.addEventListener("click", async (event) => {
+
+async function handleLogin(event) {
     event.preventDefault();
 
-    const emailEntry = document.getElementById("input-user").value; 
+    const emailEntry = document.getElementById("input-user").value;
     const passwordEntry = document.getElementById("input-password").value;
 
-    const emailValue = document.getElementById("input-user").value;
-    const passwordValue = document.getElementById("input-password").value;
-
-    const entryValid = emailValue && passwordValue
+    const entryValid = emailEntry && passwordEntry;
 
     if (!entryValid) {
         checkEntry();
         return;
-    }   
-        try { 
-        await loginUser({ 
-            email: emailEntry, 
-            password: passwordEntry 
+    }
+
+    try {
+        await loginUser({
+            email: emailEntry,
+            password: passwordEntry
         });
 
-        window.location.href = '/pages/admin/home.html';
-       }   
+        window.location.href = "/pages/admin/home.html";
 
-        catch (error) {
-            console.error("Error logging in:", error);
-            alert("Login falhou. Verifique suas credenciais e tente novamente.");
-        }   
+    } catch (error) {
+        console.error("Error logging in:", error);
+        alert("Login falhou. Verifique suas credenciais e tente novamente.");
+    }
+}
 
+btnLogin.addEventListener("click", handleLogin);
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+        handleLogin(event);
+    }
 });
 
 function checkEntry () {
