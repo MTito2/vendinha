@@ -199,7 +199,7 @@ export class ProductsAdmView {
     btnConfirmListener() {
         const btnConfirm = document.getElementById("btn-confirm");
         
-        btnConfirm.addEventListener("click", async () => {
+        btnConfirm.onclick = async () => {
             const formData = new FormData();
             formData.append("file", this.imgSelected);
             
@@ -213,6 +213,6 @@ export class ProductsAdmView {
                     alert("Erro ao enviar a imagem.");
                 }
             }
-        });
+        };
     }
 }
