@@ -11,6 +11,10 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 		</Content>
+		<Content Include="Templates\**">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
 		<Content Include="Dockerfile" />
 		<PackageReference Include="CloudinaryDotNet" Version="1.29.1" />
 		<PackageReference Include="FluentEmail.Core" Version="3.0.2" />
