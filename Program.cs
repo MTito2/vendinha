@@ -77,7 +77,18 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddCloudinary(builder.Configuration);
+
+var senderEmail = builder.Configuration["EmailSettings:SenderEmail"];
+var smtpHost = builder.Configuration["EmailSettings:SmtpHost"];
+var smtpPort = builder.Configuration.GetValue<int>("EmailSettings:SmtpPort");
+var smtpUser = builder.Configuration["EmailSettings:SmtpUser"];
+var smtpPassword = builder.Configuration["EmailSettings:SmtpPassword"];
+
+builder.Services.AddFluentEmail(senderEmail)
+    .AddSmtpSender(smtpHost, smtpPort, smtpUser, smtpPassword);
+
 builder.Services.AddAuthorization();
+builder.Services.AddHostedService<Vendinha.Workers.LowStockWorker>();
 
 var app = builder.Build();
 

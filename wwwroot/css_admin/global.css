@@ -12,7 +12,7 @@
 }
 
 main {
-    height: calc(100vh - 66px);
+    height: calc(100dvh - 66px);
 }
 
 thead {
@@ -215,4 +215,20 @@ table {
 
 .input-invalid {
     border: solid red 1px;
+}
+
+.edit-icon:hover{
+    cursor: pointer;
+}
+
+.btn-upload {
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #ececec;
+    display: inline-block;
+}
+
+.d-none {
+    display: none;
 }

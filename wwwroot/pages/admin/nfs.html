@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +11,26 @@
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link
+    href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+    rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap5.css">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <link rel="stylesheet" href="/css_admin/global.css">
-    <link rel="stylesheet" href="/css_admin/nfs.css">
     <title>Vendinha Solidária</title>
 </head>
+
 <body class="protected-page">
     <header>
-        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark"> 
-            
+        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark">
+
             <div class="container-fluid">
                 <a class="navbar-brand" href="/pages/admin/home.html">
                     <img class="img-vale" src="/assets/imgs/logo-vale-white.png" alt="Logo">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav" aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -36,7 +41,7 @@
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
                         <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
                         <a class="nav-link option" href="/pages/admin/place_history.html">Locais</a>
-                        <a class="nav-link option" href="#">N.Fs</a>
+                        <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
                         <a class="nav-link option" href="/pages/admin/users.html">Usuários</a>
                         <a class="nav-link option" href="#" id="btn-logout">Sair</a>
                     </div>
@@ -46,12 +51,40 @@
         </nav>
     </header>
 
-    <main class="d-flex align-items-center justify-content-center flex-column">
-        <img class="img-fluid mb-5 p-5" src="/assets/imgs/logo-vendinha.png" alt="">
+    <main class="d-flex align-items-center flex-column position-relative">
+
+        <h1 class="fw-bold h5 my-4">Notas</h1>
+
+        <div class="table-container mb-5 d-flex flex-column align-items-center">
+            <table id="table" class="table text-center">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th data-sort-method="none" width="100" scope="col"><input type="checkbox"
+                                class="form-check-input" id="check-all"></th>
+                        <th scope="col" width="300">Arquivo</th>
+                        <th scope="col" width="100">Tipo</th>
+                        <th scope="col" width="100">Valor</th>
+                        <th data-sort-method="none" width="80" scope="col"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
     </main>
-    
+
+    <script src="/js/config.js"></script>
     <script src="/js/libs/bootstrap.bundle.min.js"> </script>
+    <script src="/js/libs/tablesort.min.js"></script>
+    <script src="/js/libs/tablesort.number.js"></script>
+    <script src="/js/libs/axios.min.js"></script>
+    <script type="module" src="/js/pages/nfsPage.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.0/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
     <script type="module" src="/js/services/logoutController.js"></script>
+
 </body>
+
 </html>

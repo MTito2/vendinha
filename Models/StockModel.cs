@@ -7,8 +7,9 @@ namespace Vendinha.Models
 		public int CurrentQuantity { get; set; } = 0;
 		public int? ProductId { get; init; }
         public ProductModel? Product { get; set; }
+        public PlaceModel? Place { get; set; }
 
-		public void SumStock(int currentToadd)
+        public void SumStock(int currentToadd)
 		{
 			CurrentQuantity += currentToadd;
 		}
