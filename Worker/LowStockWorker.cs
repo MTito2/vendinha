@@ -92,6 +92,9 @@ namespace Vendinha.Workers
                 var now = DateTime.Now;
                 var nextExecution = new DateTime(now.Year, now.Month, now.Day, 12, 48, 0);
 
+                _logger.LogInformation($"DateTime.Now: {DateTime.Now}");
+                _logger.LogInformation($"DateTime.UtcNow: {DateTime.UtcNow}");
+
                 if (now >= nextExecution)
                 {
                     nextExecution = nextExecution.AddDays(1);
