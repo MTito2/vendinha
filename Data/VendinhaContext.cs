@@ -15,6 +15,7 @@ namespace Vendinha.Data
         public DbSet<InflowModel> Inflows { get; set; }
         public DbSet<PlaceModel> Places { get; set; }
         public DbSet<StockModel> Stock { get; set; }
+        public DbSet<InvoiceModel> Invoices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

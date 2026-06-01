@@ -130,6 +130,7 @@ app.InflowsRoutes();
 app.PlacesRoutes();
 app.StockRoutes();
 app.LoginRoutes();
+app.InvoicesRoutes();
 
 app.MapFallbackToFile("/index.html");
 
