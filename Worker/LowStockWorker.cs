@@ -104,8 +104,8 @@ namespace Vendinha.Workers
 
                 _logger.LogInformation($"Próxima verificação de estoque agendada para: {nextExecution}");
 
-                await Task.Delay(waitTime, stoppingToken);
-                //await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
+                //await Task.Delay(waitTime, stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
 
             }
         }
