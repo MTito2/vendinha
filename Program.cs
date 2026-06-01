@@ -1,14 +1,16 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Microsoft.OpenApi.Models;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net;
+using System.Net.Mail;
+using System.Security.Claims;
+using System.Text;
+using Vendinha.Config;
 using Vendinha.Data;
 using Vendinha.Routes;
-using Vendinha.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,8 +86,14 @@ var smtpPort = builder.Configuration.GetValue<int>("EmailSettings:SmtpPort");
 var smtpUser = builder.Configuration["EmailSettings:SmtpUser"];
 var smtpPassword = builder.Configuration["EmailSettings:SmtpPassword"];
 
+var smtpClient = new SmtpClient(smtpHost, smtpPort)
+{
+    Credentials = new NetworkCredential(smtpUser, smtpPassword),
+    EnableSsl = true
+};
+
 builder.Services.AddFluentEmail(senderEmail)
-    .AddSmtpSender(smtpHost, smtpPort, smtpUser, smtpPassword);
+    .AddSmtpSender(smtpClient);
 
 builder.Services.AddAuthorization();
 builder.Services.AddHostedService<Vendinha.Workers.LowStockWorker>();
