@@ -75,10 +75,20 @@ namespace Vendinha.Workers
                 }
                 catch (Exception ex)
                 {
+                    // 1. Loga a mensagem genérica
                     _logger.LogError($"Erro ao verificar estoque: {ex.Message}");
+
+                    // 2. Procura pela causa raiz (InnerException) e loga se existir
+                    if (ex.InnerException != null)
+                    {
+                        _logger.LogError($"CAUSA RAIZ (InnerException): {ex.InnerException.Message}");
+                    }
+
+                    // 3. Imprime o erro técnico completo no terminal do Render para análise
+                    _logger.LogError(ex, "Detalhes técnicos completos do erro:");
                 }
 
- 
+
                 var now = DateTime.Now;
                 var nextExecution = new DateTime(now.Year, now.Month, now.Day, 7, 0, 0);
 
