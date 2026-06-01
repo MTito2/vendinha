@@ -89,7 +89,8 @@ namespace Vendinha.Workers
                 }
 
 
-                var now = DateTime.Now;
+                var timezone = TimeZoneInfo.FindSystemTimeZoneById("America/Sao_Paulo");
+                var now = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timezone);
                 var nextExecution = new DateTime(now.Year, now.Month, now.Day, 12, 48, 0);
 
                 _logger.LogInformation($"DateTime.Now: {DateTime.Now}");
