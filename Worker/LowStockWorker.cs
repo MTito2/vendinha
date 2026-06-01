@@ -22,7 +22,6 @@ namespace Vendinha.Workers
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation("Verificando produtos com estoque baixo...");
 
                 try
                 {
@@ -32,6 +31,7 @@ namespace Vendinha.Workers
                         var emailService = scope.ServiceProvider.GetRequiredService<IFluentEmail>();
                         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
+                        _logger.LogInformation("Verificando produtos com estoque baixo...");
                         var LowStocks = await context.Stock
                             .Include(s => s.Product)
                             .Include(s => s.Place)
@@ -90,7 +90,7 @@ namespace Vendinha.Workers
 
 
                 var now = DateTime.Now;
-                var nextExecution = new DateTime(now.Year, now.Month, now.Day, 12, 35, 0);
+                var nextExecution = new DateTime(now.Year, now.Month, now.Day, 12, 48, 0);
 
                 if (now >= nextExecution)
                 {
