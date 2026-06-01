@@ -108,7 +108,7 @@ namespace Vendinha.Routes
                 var uploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Folder = "vendinha_solidaria" 
+                    Folder = "vendinha_solidaria/imagens" 
                 };
 
                 var uploadResult = await cloudinary.UploadAsync(uploadParams);

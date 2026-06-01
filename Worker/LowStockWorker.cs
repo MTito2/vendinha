@@ -90,7 +90,7 @@ namespace Vendinha.Workers
 
 
                 var now = DateTime.Now;
-                var nextExecution = new DateTime(now.Year, now.Month, now.Day, 7, 0, 0);
+                var nextExecution = new DateTime(now.Year, now.Month, now.Day, 12, 35, 0);
 
                 if (now >= nextExecution)
                 {
