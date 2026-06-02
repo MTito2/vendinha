@@ -1,5 +1,6 @@
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Vendinha.Data;
 using Vendinha.Models;
@@ -12,43 +13,39 @@ namespace Vendinha.Routes
         {
             var route = app.MapGroup("api/invoices");
 
-            // 1. GET: Retorna tudo, sem filtros [1]
             route.MapGet("", async (VendinhaContext context) =>
             {
                 var invoices = await context.Invoices.ToListAsync();
                 return Results.Ok(invoices);
             });
 
-            // POST: Cria uma nova nota (Invoice)
             route.MapPost("", async (InvoiceRequest request, VendinhaContext context) =>
             {
-                // Como é uma criação, garantimos que os dados obrigatórios foram enviados
-                if (string.IsNullOrWhiteSpace(request.pdf) ||
+
+                if (DateTime.MinValue.Equals(request.date) ||
+                    string.IsNullOrWhiteSpace(request.desc) ||
                     string.IsNullOrWhiteSpace(request.type) ||
                     !request.value.HasValue)
                 {
                     return Results.BadRequest(new { message = "Os campos Pdf, Type e Value são obrigatórios." });
                 }
 
-                // Transforma o Record (InvoiceRequest) no Modelo do Banco (InvoiceModel)
                 var newInvoice = new InvoiceModel
                 {
-                    Pdf = request.pdf,
+                    Desc = request.desc,
                     Type = request.type,
-                    Value = request.value.Value
+                    Value = request.value.Value,
+                    Date = request.date
                 };
 
-                // Adiciona a entidade no contexto e salva no banco de dados
                 context.Invoices.Add(newInvoice);
                 await context.SaveChangesAsync();
 
-                // Retorna 201 Created com a URL do novo recurso e o objeto criado
-                return Results.Created($"/api/inflows/{newInvoice.Id}", newInvoice);
+                return Results.Created($"/api/invoices/{newInvoice.Id}", newInvoice);
             });
 
             route.MapPost("/{id:int}/pdf", async (IFormFile file, int id, VendinhaContext context, Cloudinary cloudinary) =>
             {
-                // 1. Busca a nota fiscal (Invoice) no banco de dados
                 var invoice = await context.Invoices.FindAsync(id);
 
                 if (invoice == null)
@@ -56,24 +53,19 @@ namespace Vendinha.Routes
                     return Results.NotFound(new { message = "Nota não encontrada." });
                 }
 
-                // 2. Valida se o arquivo foi enviado e se não está vazio
                 if (file == null || file.Length == 0)
                 {
                     return Results.BadRequest(new { message = "Nenhum arquivo PDF enviado." });
                 }
 
-                // 3. Prepara o stream do arquivo
                 using var stream = file.OpenReadStream();
 
-                // 4. Parâmetros de upload para o Cloudinary
-                // ATENÇÃO: Usamos RawUploadParams para PDFs e documentos
                 var uploadParams = new RawUploadParams()
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Folder = "vendinha_solidaria/notas" // Dica: pasta separada das imagens para organização
+                    Folder = "vendinha_solidaria/notas" 
                 };
 
-                // 5. Faz o upload para o Cloudinary
                 var uploadResult = await cloudinary.UploadAsync(uploadParams);
 
                 if (uploadResult.Error != null)
@@ -81,16 +73,55 @@ namespace Vendinha.Routes
                     return Results.BadRequest(new { message = $"Erro ao salvar o PDF na nuvem: {uploadResult.Error.Message}" });
                 }
 
-                // 6. Atualiza a propriedade Pdf da nota com a URL segura gerada pelo Cloudinary
-                invoice.Pdf = uploadResult.SecureUrl.ToString();
+                invoice.UrlPdf = uploadResult.SecureUrl.ToString();
 
-                // 7. Salva a alteração no banco de dados do Entity Framework
                 await context.SaveChangesAsync();
 
                 return Results.Ok(invoice);
 
-            }).DisableAntiforgery(); 
+            }).DisableAntiforgery();
 
+            route.MapPut("/{id:int}", async (
+                int id,
+                [FromForm] InvoiceRequest request, // <-- Tudo virá daqui de dentro agora
+                VendinhaContext context,
+                Cloudinary cloudinary) =>
+                        {
+                            var invoice = await context.Invoices.FindAsync(id);
+
+                            if (invoice == null)
+                                return Results.NotFound(new { message = "Nota não encontrada." });
+
+                            if (string.IsNullOrWhiteSpace(request.desc) || string.IsNullOrWhiteSpace(request.type) || !request.value.HasValue)
+                                return Results.BadRequest(new { message = "Descrição, Tipo e Valor são obrigatórios." });
+
+                            invoice.Date = DateTime.SpecifyKind(request.date, DateTimeKind.Utc);
+                            invoice.Desc = request.desc;
+                            invoice.Type = request.type;
+                            invoice.Value = request.value.Value;
+
+                            // Mudança aqui: acessa através de request.invoiceFile
+                            if (request.invoiceFile != null && request.invoiceFile.Length > 0)
+                            {
+                                using var stream = request.invoiceFile.OpenReadStream();
+                                var uploadParams = new RawUploadParams()
+                                {
+                                    File = new FileDescription(request.invoiceFile.FileName, stream),
+                                    Folder = "vendinha_solidaria/notas"
+                                };
+
+                                var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+                                if (uploadResult.Error != null)
+                                    return Results.BadRequest(new { message = $"Erro ao salvar o novo PDF na nuvem: {uploadResult.Error.Message}" });
+
+                                invoice.UrlPdf = uploadResult.SecureUrl.ToString();
+                            }
+                            await context.SaveChangesAsync();
+
+                            return Results.Ok(invoice);
+
+                        }).DisableAntiforgery();
 
             route.MapDelete("/{id:int}", async (int id, VendinhaContext context) =>
             {

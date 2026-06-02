@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Vendinha.Data;
@@ -11,9 +12,11 @@ using Vendinha.Data;
 namespace Vendinha.Migrations
 {
     [DbContext(typeof(VendinhaContext))]
-    partial class VendinhaContextModelSnapshot : ModelSnapshot
+    [Migration("20260601170822_AddColumnName")]
+    partial class AddColumnName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -255,18 +258,15 @@ namespace Vendinha.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Desc")
+                    b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Pdf")
                         .HasColumnType("text");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("UrlPdf")
                         .HasColumnType("text");
 
                     b.Property<decimal>("Value")

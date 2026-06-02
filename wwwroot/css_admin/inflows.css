@@ -24,3 +24,8 @@
     background: #007d79de;
     color: white;
 }
+
+select {
+    color: #3f4146 !important;
+    font-size: 12px !important;
+}

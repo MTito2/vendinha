@@ -1,3 +1,3 @@
 namespace Vendinha.Models;
 
-public record InvoiceRequest(string? pdf, string? type, decimal? value);
+public record InflowRequest(DateTime date, int productId, string? productName, float price, int quantity, int placeId);

@@ -1,3 +1,10 @@
 namespace Vendinha.Models;
 
-public record InflowRequest(DateTime date, int productId, string? productName, float price, int quantity, int placeId);
+public class InvoiceRequest
+{
+    public DateTime date { get; set; }
+    public string desc { get; set; }
+    public string type { get; set; }
+    public decimal? value { get; set; }
+    public IFormFile? invoiceFile { get; set; }
+}

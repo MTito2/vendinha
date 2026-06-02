@@ -63,11 +63,6 @@ thead.sticky-top {
     outline: none;
 }
 
-select {
-    color: #3f4146 !important;
-    font-size: 12px !important;
-}
-
 .empty-select {
     border: red solid 1px;
 }
@@ -116,12 +111,37 @@ table {
     border: none;
 }
 
+.btn-edit {
+    background: none;
+    border: none;
+}
+
+.file-name{
+    color: #464d5c;
+    text-decoration: none;
+}
+
+.file-name:hover {
+    color: #0d6efd;
+    text-decoration: underline;
+}
+
 .icon-trash:hover{
     stroke: rgba(223, 22, 22, 0.856);
 }
 
 .icon-trash {
     stroke: #464d5c;
+}
+
+.icons-container {
+    display: none;
+    align-self: end;
+    text-align: center;
+    margin-right: 115px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
 }
 
 .navbar-options {
