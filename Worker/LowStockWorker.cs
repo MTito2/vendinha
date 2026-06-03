@@ -104,8 +104,26 @@ namespace Vendinha.Workers
                 }
 
                 // Mantém os seus 30 segundos para você ver o teste rodar na hora!
-                _logger.LogInformation("Aguardando 30 segundos para o próximo teste...");
-                await Task.Delay(TimeSpan.FromSeconds(30), stoppingToken);
+                DateTime agoraUtc = DateTime.UtcNow;
+
+                // 2. Criamos o alvo para HOJE às 10:00 da manhã UTC (que equivale às 07:00 de Brasília)
+                DateTime proximaExecucaoUtc = new DateTime(agoraUtc.Year, agoraUtc.Month, agoraUtc.Day, 10, 0, 0, DateTimeKind.Utc);
+
+                // 3. Se as 10:00 UTC de hoje já passaram, agendamos para as 10:00 UTC de AMANHÃ
+                if (agoraUtc >= proximaExecucaoUtc)
+                {
+                    proximaExecucaoUtc = proximaExecucaoUtc.AddDays(1);
+                }
+
+                // 4. Calculamos quantos milissegundos o robô precisa dormir
+                TimeSpan tempoDeEspera = proximaExecucaoUtc - agoraUtc;
+
+                _logger.LogInformation($"[Agendamento] Hora atual no servidor (UTC): {agoraUtc}");
+                _logger.LogInformation($"[Agendamento] Próximo disparo em UTC: {proximaExecucaoUtc} (07:00 Horário de Brasília)");
+                _logger.LogInformation($"[Agendamento] O robô vai dormir por: {tempoDeEspera.Hours}h {tempoDeEspera.Minutes}min");
+
+                // 5. O robô dorme até o horário exato
+                await Task.Delay(tempoDeEspera, stoppingToken);
             }
         }
     }
