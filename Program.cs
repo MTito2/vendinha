@@ -86,14 +86,15 @@ var smtpPort = builder.Configuration.GetValue<int>("EmailSettings:SmtpPort");
 var smtpUser = builder.Configuration["EmailSettings:SmtpUser"];
 var smtpPassword = builder.Configuration["EmailSettings:SmtpPassword"];
 
-var smtpClient = new SmtpClient(smtpHost, smtpPort)
-{
-    Credentials = new NetworkCredential(smtpUser, smtpPassword),
-    EnableSsl = true
-};
 
 builder.Services.AddFluentEmail(senderEmail)
-    .AddSmtpSender(smtpClient);
+    .AddSmtpSender(new SmtpClient(smtpHost)
+    {
+        Port = smtpPort,
+        Credentials = new NetworkCredential(smtpUser, smtpPassword),
+ 
+        EnableSsl = true
+    });
 
 builder.Services.AddAuthorization();
 builder.Services.AddHostedService<Vendinha.Workers.LowStockWorker>();

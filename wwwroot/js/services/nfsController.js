@@ -8,6 +8,7 @@ export class NfsView {
     constructor() {
         this.table = null;
         this.invoices = [];
+        this.formSubmitController = null;
     }
 
     async nfsLoad() {
@@ -206,52 +207,65 @@ export class NfsView {
     }
 
     setupFormSubmit() {
-        const form = document.getElementById('formInvoice');
+    const form = document.getElementById('formInvoice');
+    if (!form) return;
 
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const id = document.getElementById('invoiceId').value;
-            const fileInput = document.getElementById('invoiceFile');
-            const file = fileInput.files[0];
-
-            const rawValue = document.getElementById('invoiceValue').value.toString();
-            const cleanValue = parseFloat(rawValue.replace(',', '.'));
-
-            const selectedDateObj = this.datepickerModal.selectedDates[0];
-            let dateISO = null;
-
-            if (selectedDateObj) {
-                const year = selectedDateObj.getFullYear();
-                const month = String(selectedDateObj.getMonth() + 1).padStart(2, '0');
-                const day = String(selectedDateObj.getDate()).padStart(2, '0');
-                dateISO = `${year}-${month}-${day}T23:59:00Z`;
-            } else {
-                const hoje = new Date();
-                dateISO = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}T23:59:00Z`;
-            }
-
-            const formData = {
-                date: dateISO, 
-                desc: document.getElementById('invoiceDesc').value,
-                type: document.getElementById('invoiceType').value,
-                value: cleanValue
-            };
-
-            if (id) {
-                await this.handleEditInvoice(id, formData, file);
-            } else {
-                await this.handleSubmitInvoice(formData, fileInput);
-            }
-
-            const modalElement = document.getElementById('modalInvoice');
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            modalInstance.hide();
-
-            this.invoices = await getInvoices();
-            this.renderTable();
-        });
+    // 1. Se já existia um listener ativo de um clique anterior, cancela ele
+    if (this.formSubmitController) {
+        this.formSubmitController.abort();
     }
+
+    // 2. Cria um novo controlador para o listener atual
+    this.formSubmitController = new AbortController();
+    const { signal } = this.formSubmitController;
+
+    // 3. Passamos o 'signal' nas opções do evento (no final do bloco)
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const id = document.getElementById('invoiceId').value;
+        const fileInput = document.getElementById('invoiceFile');
+        const file = fileInput.files[0];
+
+        const rawValue = document.getElementById('invoiceValue').value.toString();
+        const cleanValue = parseFloat(rawValue.replace(',', '.'));
+
+        const selectedDateObj = this.datepickerModal.selectedDates[0];
+        let dateISO = null;
+
+        if (selectedDateObj) {
+            const year = selectedDateObj.getFullYear();
+            const month = String(selectedDateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(selectedDateObj.getDate()).padStart(2, '0');
+            dateISO = `${year}-${month}-${day}T23:59:00Z`;
+        } else {
+            const hoje = new Date();
+            dateISO = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}T23:59:00Z`;
+        }
+
+        // Renomeado para invoicePayload para não dar conflito com o FormData de arquivos das outras funções
+        const invoicePayload = {
+            date: dateISO, 
+            desc: document.getElementById('invoiceDesc').value,
+            type: document.getElementById('invoiceType').value,
+            value: cleanValue
+        };
+
+        if (id) {
+            await this.handleEditInvoice(id, invoicePayload, file);
+        } else {
+            await this.handleSubmitInvoice(invoicePayload, fileInput);
+        }
+
+        const modalElement = document.getElementById('modalInvoice');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+
+        this.invoices = await getInvoices();
+        this.renderTable();
+        
+    }, { signal }); // 👈 Vincula esse evento ao sinal de aborto para evitar a duplicação!
+}
 
     async handleSubmitInvoice(textData, fileInput) {
         try {
