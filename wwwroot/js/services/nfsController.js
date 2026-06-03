@@ -14,11 +14,11 @@ export class NfsView {
     async nfsLoad() {
         this.invoices = await getInvoices();
         this.renderTable();
-        this.setupFormSubmit(); 
-        this.setupModalReset(); 
+        this.setupFormSubmit();
+        this.setupModalReset();
         this.btnEditInvoice();
         this.btnDeleteInvoice();
-        this.btnDownloadInvoice();   
+        this.btnDownloadInvoice();
         this.setupBulkActions();
         this.toggleBulkIcons();
 
@@ -32,7 +32,7 @@ export class NfsView {
                 monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
                 today: 'Hoje',
                 clear: 'Limpar',
-                dateFormat: 'dd/MM/yyyy', 
+                dateFormat: 'dd/MM/yyyy',
                 firstDay: 0
             },
             autoClose: true,
@@ -40,7 +40,7 @@ export class NfsView {
     }
 
     renderTable() {
-        this.invoices.sort((a, b) => new Date(b.date) - new Date(a.date)); 
+        this.invoices.sort((a, b) => new Date(b.date) - new Date(a.date));
         const rows = this.invoices.map(invoice => Object.assign([
             `<input type="checkbox" class="form-check-input">`,
             new Date(invoice.date).toLocaleDateString('pt-BR'),
@@ -146,7 +146,7 @@ export class NfsView {
     }
 
     btnDeleteInvoice() {
-        let idParaExcluir = null; 
+        let idParaExcluir = null;
 
         document.getElementById('table').addEventListener('click', (event) => {
             const btnTrash = event.target.closest('.btn-trash');
@@ -156,7 +156,7 @@ export class NfsView {
             event.stopPropagation();
 
             const tr = btnTrash.closest('tr');
-            idParaExcluir = tr.id; 
+            idParaExcluir = tr.id;
 
             const btnConfirmAction = document.getElementById('btn-confirm-delete-action');
             if (btnConfirmAction) delete btnConfirmAction.dataset.mode;
@@ -180,9 +180,9 @@ export class NfsView {
                     if (idsParaExcluir.length > 0) {
                         await this.handleBulkDelete(idsParaExcluir);
                     }
-                    
+
                     delete btnConfirmAction.dataset.mode;
-                    
+
                 } else {
                     if (!idParaExcluir) return;
 
@@ -199,7 +199,7 @@ export class NfsView {
                         console.error("Falha ao excluir nota:", error);
                         alert("Ocorreu um erro ao tentar excluir a nota fiscal.");
                     } finally {
-                        idParaExcluir = null; 
+                        idParaExcluir = null;
                     }
                 }
             });
@@ -207,66 +207,72 @@ export class NfsView {
     }
 
     setupFormSubmit() {
-    const form = document.getElementById('formInvoice');
-    if (!form) return;
+        const form = document.getElementById('formInvoice');
+        if (!form) return;
 
-    // 1. Se já existia um listener ativo de um clique anterior, cancela ele
-    if (this.formSubmitController) {
-        this.formSubmitController.abort();
+        if (this.formSubmitController) {
+            this.formSubmitController.abort();
+        }
+
+        this.formSubmitController = new AbortController();
+        const { signal } = this.formSubmitController;
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            // 1. Busca o botão de salvar e desabilita na hora
+            const submitButton = form.querySelector('[type="submit"]');
+            if (submitButton) submitButton.disabled = true;
+
+            try {
+                const id = document.getElementById('invoiceId').value;
+                const fileInput = document.getElementById('invoiceFile');
+                const file = fileInput.files[0];
+
+                const rawValue = document.getElementById('invoiceValue').value.toString();
+                const cleanValue = parseFloat(rawValue.replace(',', '.'));
+
+                const selectedDateObj = this.datepickerModal.selectedDates[0];
+                let dateISO = null;
+
+                if (selectedDateObj) {
+                    const year = selectedDateObj.getFullYear();
+                    const month = String(selectedDateObj.getMonth() + 1).padStart(2, '0');
+                    const day = String(selectedDateObj.getDate()).padStart(2, '0');
+                    dateISO = `${year}-${month}-${day}T23:59:00Z`;
+                } else {
+                    const hoje = new Date();
+                    dateISO = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}T23:59:00Z`;
+                }
+
+                const invoicePayload = {
+                    date: dateISO,
+                    desc: document.getElementById('invoiceDesc').value,
+                    type: document.getElementById('invoiceType').value,
+                    value: cleanValue
+                };
+
+                if (id) {
+                    await this.handleEditInvoice(id, invoicePayload, file);
+                } else {
+                    await this.handleSubmitInvoice(invoicePayload, fileInput);
+                }
+
+                const modalElement = document.getElementById('modalInvoice');
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                modalInstance.hide();
+
+                this.invoices = await getInvoices();
+                this.renderTable();
+
+            } catch (error) {
+                console.error(error);
+                // 2. Se a API falhar, reabilita o botão para o usuário tentar de novo
+                if (submitButton) submitButton.disabled = false;
+            }
+
+        }, { signal });
     }
-
-    // 2. Cria um novo controlador para o listener atual
-    this.formSubmitController = new AbortController();
-    const { signal } = this.formSubmitController;
-
-    // 3. Passamos o 'signal' nas opções do evento (no final do bloco)
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-
-        const id = document.getElementById('invoiceId').value;
-        const fileInput = document.getElementById('invoiceFile');
-        const file = fileInput.files[0];
-
-        const rawValue = document.getElementById('invoiceValue').value.toString();
-        const cleanValue = parseFloat(rawValue.replace(',', '.'));
-
-        const selectedDateObj = this.datepickerModal.selectedDates[0];
-        let dateISO = null;
-
-        if (selectedDateObj) {
-            const year = selectedDateObj.getFullYear();
-            const month = String(selectedDateObj.getMonth() + 1).padStart(2, '0');
-            const day = String(selectedDateObj.getDate()).padStart(2, '0');
-            dateISO = `${year}-${month}-${day}T23:59:00Z`;
-        } else {
-            const hoje = new Date();
-            dateISO = `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, '0')}-${String(hoje.getDate()).padStart(2, '0')}T23:59:00Z`;
-        }
-
-        // Renomeado para invoicePayload para não dar conflito com o FormData de arquivos das outras funções
-        const invoicePayload = {
-            date: dateISO, 
-            desc: document.getElementById('invoiceDesc').value,
-            type: document.getElementById('invoiceType').value,
-            value: cleanValue
-        };
-
-        if (id) {
-            await this.handleEditInvoice(id, invoicePayload, file);
-        } else {
-            await this.handleSubmitInvoice(invoicePayload, fileInput);
-        }
-
-        const modalElement = document.getElementById('modalInvoice');
-        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-        modalInstance.hide();
-
-        this.invoices = await getInvoices();
-        this.renderTable();
-        
-    }, { signal }); // 👈 Vincula esse evento ao sinal de aborto para evitar a duplicação!
-}
-
     async handleSubmitInvoice(textData, fileInput) {
         try {
             console.log("Enviando dados de cadastro da nota...");
@@ -308,7 +314,7 @@ export class NfsView {
             checkboxes.forEach(cb => {
                 cb.checked = newCheckAll.checked;
             });
-            this.toggleBulkIcons(); 
+            this.toggleBulkIcons();
         });
 
         // Delegação de evento focada no corpo da tabela (funciona mesmo recriando linhas)
@@ -316,7 +322,7 @@ export class NfsView {
         if (tbody) {
             tbody.addEventListener('change', (event) => {
                 if (event.target.classList.contains('form-check-input')) {
-                    this.toggleBulkIcons(); 
+                    this.toggleBulkIcons();
                 }
             });
         }
@@ -329,10 +335,10 @@ export class NfsView {
         const marcados = document.querySelectorAll('#table tbody .form-check-input:checked').length;
 
         if (marcados > 0) {
-            iconsContainer.style.display = 'flex'; 
+            iconsContainer.style.display = 'flex';
         } else {
-            iconsContainer.style.display = 'none'; 
-            
+            iconsContainer.style.display = 'none';
+
             const checkAll = document.getElementById('check-all');
             if (checkAll) checkAll.checked = false;
         }
@@ -385,7 +391,7 @@ export class NfsView {
 
                 const btnConfirmAction = document.getElementById('btn-confirm-delete-action');
                 if (btnConfirmAction) {
-                    btnConfirmAction.dataset.mode = "bulk"; 
+                    btnConfirmAction.dataset.mode = "bulk";
                 }
 
                 const modalElement = document.getElementById('modalDeleteConfirm');
@@ -418,9 +424,9 @@ export class NfsView {
     async handleBulkDelete(ids) {
         try {
             console.log(`Iniciando exclusão em lote de ${ids.length} notas...`);
-            
+
             for (const id of ids) {
-                await deleteInvoice(id); 
+                await deleteInvoice(id);
             }
 
             const iconsContainer = document.querySelector('.icons-container');
@@ -428,10 +434,10 @@ export class NfsView {
 
             const checkAll = document.getElementById('check-all');
             if (checkAll) checkAll.checked = false;
-            
+
             this.invoices = await getInvoices();
             this.renderTable();
-            
+
         } catch (error) {
             console.error("Erro ao excluir alguma das notas em lote:", error);
             alert("Ocorreu um erro ao tentar excluir os itens selecionados.");
