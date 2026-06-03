@@ -2,11 +2,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Claims;
+using FluentEmail.MailKitSmtp;
+using MailKit.Security;
 using System.Text;
 using Vendinha.Config;
 using Vendinha.Data;
@@ -80,22 +77,21 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddCloudinary(builder.Configuration);
 
-var senderEmail = builder.Configuration["EmailSettings:SenderEmail"];
-var smtpHost = builder.Configuration["EmailSettings:SmtpHost"];
-var smtpPort = builder.Configuration.GetValue<int>("EmailSettings:SmtpPort");
-var smtpUser = builder.Configuration["EmailSettings:SmtpUser"];
-var smtpPassword = builder.Configuration["EmailSettings:SmtpPassword"];
+var senderEmail = builder.Configuration["EmailSettings:SenderEmail"] ?? "vendinha.solidaria@gmail.com";
 
+// Alterado para SmtpClientOptions e adicionado ?? "" para evitar warnings de nulo
+var mailKitOptions = new SmtpClientOptions
+{
+    Server = builder.Configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com",
+    Port = builder.Configuration.GetValue<int>("EmailSettings:SmtpPort"),
+    RequiresAuthentication = true,
+    User = builder.Configuration["EmailSettings:SmtpUser"] ?? "",
+    Password = builder.Configuration["EmailSettings:SmtpPassword"] ?? "",
+    SocketOptions = SecureSocketOptions.SslOnConnect
+};
 
 builder.Services.AddFluentEmail(senderEmail)
-    .AddSmtpSender(new SmtpClient(smtpHost)
-    {
-        Port = smtpPort,
-        Credentials = new NetworkCredential(smtpUser, smtpPassword),
- 
-        EnableSsl = true
-    });
-
+    .AddMailKitSender(mailKitOptions);
 builder.Services.AddAuthorization();
 builder.Services.AddHostedService<Vendinha.Workers.LowStockWorker>();
 
