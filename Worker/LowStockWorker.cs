@@ -25,6 +25,35 @@ namespace Vendinha.Workers
 
             while (!stoppingToken.IsCancellationRequested)
             {
+                // =========================================================================
+                // 1. O RELÓGIO VEM PRIMEIRO: VERIFICA SE JÁ É HORA DE RODAR
+                // =========================================================================
+                DateTime agoraUtc = DateTime.UtcNow;
+                DateTime proximaExecucaoUtc = new DateTime(agoraUtc.Year, agoraUtc.Month, agoraUtc.Day, 10, 0, 0, DateTimeKind.Utc); // 10:00 UTC = 07:00 Brasília
+
+                // Se o horário de hoje já passou, calcula para amanhã
+                if (agoraUtc >= proximaExecucaoUtc)
+                {
+                    proximaExecucaoUtc = proximaExecucaoUtc.AddDays(1);
+                }
+
+                TimeSpan tempoDeEspera = proximaExecucaoUtc - agoraUtc;
+
+                // SE FALTA MUITO TEMPO (Mais de 1 minuto), SIGNIFICA QUE O SERVIDOR ACABOU DE LIGAR FORA DO HORÁRIO.
+                // Tolerância de 1 minuto caso o servidor ligue exatamente em cima da hora marcada.
+                if (tempoDeEspera.TotalMinutes > 1 && tempoDeEspera.TotalDays < 0.99)
+                {
+                    _logger.LogInformation($"[Agendamento] Servidor inicializado. Aguardando horário correto.");
+                    _logger.LogInformation($"[Agendamento] O robô vai dormir por: {tempoDeEspera.Hours}h {tempoDeEspera.Minutes}min antes de verificar o estoque.");
+
+                    // Faz o robô dormir primeiro e pula o envio de agora
+                    await Task.Delay(tempoDeEspera, stoppingToken);
+                    continue; // Volta para o início do while após acordar
+                }
+
+                // =========================================================================
+                // 2. PROCESSO DE ENVIO (SÓ EXECUTA SE PASSOU PELA VERIFICAÇÃO ACIMA)
+                // =========================================================================
                 try
                 {
                     using (var scope = _scopeFactory.CreateScope())
@@ -48,7 +77,6 @@ namespace Vendinha.Workers
 
                             if (emailsAdministradores.Any())
                             {
-                                // Monta a lista de produtos em HTML
                                 var itensHtml = string.Join("", LowStocks.Select(e =>
                                     $"<li><b>{e.Product?.Name}</b>: Restam {e.CurrentQuantity} unidades (Local: {e.Place?.Name})</li>"));
 
@@ -56,17 +84,14 @@ namespace Vendinha.Workers
                                 string templateHtml = await File.ReadAllTextAsync(caminhoTemplate, stoppingToken);
                                 templateHtml = templateHtml.Replace("{{ProductList}}", itensHtml);
 
-                                // Pega as configurações do Brevo
                                 var apiKey = configuration["EmailSettings:ApiKey"] ?? "";
                                 var remetente = configuration["EmailSettings:SenderEmail"] ?? "vendinha.solidaria@gmail.com";
 
-                                // Prepara a lista de destinatários no formato que o Brevo exige
                                 var listaDestinatarios = emailsAdministradores
                                     .Where(email => !string.IsNullOrEmpty(email))
                                     .Select(email => new { email = email })
                                     .ToList();
 
-                                // Monta o JSON (o pacotinho de dados) para mandar pro Brevo
                                 var dadosEmail = new
                                 {
                                     sender = new { email = remetente, name = "Vendinha" },
@@ -77,12 +102,10 @@ namespace Vendinha.Workers
 
                                 var jsonPayload = JsonSerializer.Serialize(dadosEmail);
 
-                                // Prepara a requisição HTTP (Simula um navegador acessando o site do Brevo)
                                 var request = new HttpRequestMessage(HttpMethod.Post, "https://api.brevo.com/v3/smtp/email");
                                 request.Headers.Add("api-key", apiKey);
                                 request.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-                                // Envia de verdade
                                 var response = await _httpClient.SendAsync(request, stoppingToken);
 
                                 if (response.IsSuccessStatusCode)
@@ -103,26 +126,14 @@ namespace Vendinha.Workers
                     _logger.LogError($"Erro ao verificar estoque: {ex.Message}");
                 }
 
-                // Mantém os seus 30 segundos para você ver o teste rodar na hora!
-                DateTime agoraUtc = DateTime.UtcNow;
+                // =========================================================================
+                // 3. APÓS ENVIAR, SE ATUALIZA PARA ESPERAR ATÉ O DIA SEGUINTE
+                // =========================================================================
+                agoraUtc = DateTime.UtcNow;
+                proximaExecucaoUtc = new DateTime(agoraUtc.Year, agoraUtc.Month, agoraUtc.Day, 10, 0, 0, DateTimeKind.Utc).AddDays(1);
+                tempoDeEspera = proximaExecucaoUtc - agoraUtc;
 
-                // 2. Criamos o alvo para HOJE às 10:00 da manhã UTC (que equivale às 07:00 de Brasília)
-                DateTime proximaExecucaoUtc = new DateTime(agoraUtc.Year, agoraUtc.Month, agoraUtc.Day, 10, 0, 0, DateTimeKind.Utc);
-
-                // 3. Se as 10:00 UTC de hoje já passaram, agendamos para as 10:00 UTC de AMANHÃ
-                if (agoraUtc >= proximaExecucaoUtc)
-                {
-                    proximaExecucaoUtc = proximaExecucaoUtc.AddDays(1);
-                }
-
-                // 4. Calculamos quantos milissegundos o robô precisa dormir
-                TimeSpan tempoDeEspera = proximaExecucaoUtc - agoraUtc;
-
-                _logger.LogInformation($"[Agendamento] Hora atual no servidor (UTC): {agoraUtc}");
-                _logger.LogInformation($"[Agendamento] Próximo disparo em UTC: {proximaExecucaoUtc} (07:00 Horário de Brasília)");
-                _logger.LogInformation($"[Agendamento] O robô vai dormir por: {tempoDeEspera.Hours}h {tempoDeEspera.Minutes}min");
-
-                // 5. O robô dorme até o horário exato
+                _logger.LogInformation($"[Agendamento] Envio diário concluído. Próximo disparo agendado para amanhã às 07:00 (Brasília).");
                 await Task.Delay(tempoDeEspera, stoppingToken);
             }
         }
