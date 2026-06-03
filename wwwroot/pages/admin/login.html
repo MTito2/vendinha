@@ -31,16 +31,24 @@
         </nav>
     </header>
 
-    <main class="d-flex align-items-center justify-content-start flex-column">
-        <img class="img-fluid logo pt-5 mt-5 px-5" src="/assets/imgs/logo-vendinha.png" alt="">
-        <div class="gap-4 w-100 d-flex flex-column align-items-center justify-content-center mt-5">
-            <input id="input-user" class="input w-75" type="text" placeholder="Usuário">
-            <input id="input-password" class="input w-75 mb-5" type="password" placeholder="Senha">
+    <main class="d-flex align-items-center justify-content-start flex-column vh-75">
+        
+        <div id="login-content" class="w-100 d-flex flex-column align-items-center">
+            <img class="img-fluid logo pt-5 mt-5 px-5" src="/assets/imgs/logo-vendinha.png" alt="">
+            <div class="gap-4 w-100 d-flex flex-column align-items-center justify-content-center mt-5">
+                <input id="input-user" class="input w-75" type="text" placeholder="Usuário">
+                <input id="input-password" class="input w-75 mb-5" type="password" placeholder="Senha">
+            </div>
+            <a id="btn-login" class="btn-green" href="#">Entrar</a>
         </div>
 
-        <a id="btn-login" class="btn-green" href="#">Entrar</a>
+        <div id="loading-container" class="d-none flex-column align-items-center justify-content-center my-auto">
+            <div class="spinner-border text-success" role="status" style="width: 3rem; height: 3rem;">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+        </div>
 
-    </main> 
+    </main>
     <script src="/js/config.js"></script>
     <script src="/js/libs/axios.min.js"></script>
     <script type="module" src="/js/services/loginController.js"></script>
