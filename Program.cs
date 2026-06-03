@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using FluentEmail.MailKitSmtp;
-using MailKit.Security;
 using System.Text;
 using Vendinha.Config;
 using Vendinha.Data;
@@ -75,24 +73,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization();
 builder.Services.AddCloudinary(builder.Configuration);
 
+var brevoApiKey = builder.Configuration["EmailSettings:ApiKey"];
 var senderEmail = builder.Configuration["EmailSettings:SenderEmail"] ?? "vendinha.solidaria@gmail.com";
 
-// Alterado para SmtpClientOptions e adicionado ?? "" para evitar warnings de nulo
-var mailKitOptions = new SmtpClientOptions
-{
-    Server = builder.Configuration["EmailSettings:SmtpHost"] ?? "smtp.gmail.com",
-    Port = builder.Configuration.GetValue<int>("EmailSettings:SmtpPort"),
-    RequiresAuthentication = true,
-    User = builder.Configuration["EmailSettings:SmtpUser"] ?? "",
-    Password = builder.Configuration["EmailSettings:SmtpPassword"] ?? "",
-    SocketOptions = SecureSocketOptions.SslOnConnect
-};
-
-builder.Services.AddFluentEmail(senderEmail)
-    .AddMailKitSender(mailKitOptions);
-builder.Services.AddAuthorization();
 builder.Services.AddHostedService<Vendinha.Workers.LowStockWorker>();
 
 var app = builder.Build();
