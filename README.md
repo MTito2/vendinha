@@ -68,7 +68,6 @@ Os compradores podem acessar a plataforma para realizar seus pedidos.
 3. Define as quantidades.
 4. O sistema calcula o valor total do pedido.
 5. É gerado um link de pagamento.
-6. Após a confirmação do pagamento, a venda é processada.
 
 ---
 
@@ -150,9 +149,8 @@ Somente usuários autorizados podem acessar as áreas administrativas do sistema
 1. Registrar entradas de produtos.
 2. Receber pedidos dos compradores.
 3. Gerar links de pagamento.
-4. Confirmar pagamentos.
-5. Registrar saídas automaticamente.
-6. Consultar estoque.
+4. Registrar saídas automaticamente.
+5. Consultar estoque.
 
 ## Controle Administrativo
 
