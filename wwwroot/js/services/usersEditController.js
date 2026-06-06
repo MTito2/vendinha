@@ -40,30 +40,32 @@ document.addEventListener("DOMContentLoaded", () => {
             const isAdmin = inputAdmin.value === "true"; 
 
             const updateData = { isAdmin };
-
             try {
                 // Inclui as propriedades no payload se elas tiverem valor
                 if (username) updateData.username = username;
                 if (email) updateData.email = email;
                 if (password) updateData.password = password;
 
+                // IMPORTANTE: Antes de fazer qualquer alteração, guardamos quem ESTÁ LOGADO de verdade
+                const currentLoggedIsAdmin = localStorage.getItem("userIsAdmin") === "Sim";
+                const currentLoggedId = localStorage.getItem("userId");
+
                 const response = await editUser(userId, updateData);
 
-                // Atualiza o localStorage com os novos valores após o sucesso da API
-                if (username) {
-                    localStorage.setItem("userUsername", username);
+                // SÓ atualiza o localStorage se o usuário estiver editando o PRÓPRIO perfil
+                if (userId === currentLoggedId) {
+                    if (username) localStorage.setItem("userUsername", username);
+                    if (email) localStorage.setItem("userEmail", email);
+                    localStorage.setItem("userIsAdmin", inputAdmin.value === "true" ? "Sim" : "Não");
                 }
-                if (email) {
-                    localStorage.setItem("userEmail", email);
-                }
-                
-                localStorage.setItem("userIsAdmin", inputAdmin.value === "true" ? "Sim" : "Não");
 
-                // CONDICIONAL DE REDIRECIONAMENTO ADICIONADA:
-                if (!isAdmin) {
-                    window.location.href = "/pages/admin/home.html";
-                } else {
+                // REDIRECIONAMENTO CORRETO baseando-se em quem está navegando no sistema
+                if (currentLoggedIsAdmin) {
+                    // Se quem está editando é um Admin, ele SEMPRE volta para a lista de usuários
                     window.location.href = "/pages/admin/users.html";
+                } else {
+                    // Se for um usuário comum editando a si mesmo, vai para a home
+                    window.location.href = "/pages/admin/home.html";
                 }
 
            } catch (error) {
