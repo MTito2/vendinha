@@ -1,3 +1,3 @@
 ﻿namespace Vendinha.Models;
-public record LoginRequest(string Email, string Password);
+public record LoginRequest(string Email, string Username, string Password , bool IsAdmin);
 

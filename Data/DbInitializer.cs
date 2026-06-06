@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+
 namespace Vendinha.Data
 {
     public static class DbInitializer
@@ -6,8 +7,17 @@ namespace Vendinha.Data
         public static async Task InitializeAsync(IServiceProvider serviceProvider)
         {
             var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            // 1. Injetamos o RoleManager para lidar com os perfis
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var config = serviceProvider.GetRequiredService<IConfiguration>();
 
+            // 2. Garantimos que a Role "Admin" exista no banco de dados antes de tentar usá-la
+            if (!await roleManager.RoleExistsAsync("Admin"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+            }
+
+            // Verifica se não há usuários no banco
             if (!userManager.Users.Any())
             {
                 var adminEmail = config["AdminConfig:Email"];
@@ -25,7 +35,14 @@ namespace Vendinha.Data
                     Email = adminEmail
                 };
 
-                await userManager.CreateAsync(adminUser, adminPassword);
+                // Cria o usuário
+                var result = await userManager.CreateAsync(adminUser, adminPassword);
+
+                // 3. Se o usuário foi criado com sucesso, adicionamos ele à Role "Admin"
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(adminUser, "Admin");
+                }
             }
         }
     }

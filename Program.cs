@@ -15,9 +15,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<VendinhaContext>(options =>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentityCore<IdentityUser>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<VendinhaContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Adicione o caractere de espaço " " no final da string de permitidos
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";
+});
 
 builder.Services.AddCors(options =>
 {
@@ -27,7 +33,7 @@ builder.Services.AddCors(options =>
     {
         if (builder.Environment.IsDevelopment())
         {
-            policy.WithOrigins("http://localhost:8080", "http://127.0.0.1:5500", "http://localhost:5500");
+            policy.WithOrigins("http://localhost:8080", "http://127.0.0.1:5500", "http://localhost:5500", "http://127.0.0.1:5501", "http://localhost:5501");
         }
         else
         {
