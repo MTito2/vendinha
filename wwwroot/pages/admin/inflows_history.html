@@ -46,8 +46,20 @@
                         <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
                         <a class="nav-link option" href="/pages/admin/place_history.html">Locais</a>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
-                        <a class="nav-link option" href="/pages/admin/users.html">Usuários</a>
-                        <a class="nav-link option" href="#" id="btn-logout">Sair</a>
+                        <a class="nav-link option" id="menu-users" href="/pages/admin/users.html">Usuários</a>
+                        <li class="nav-item dropdown">
+                            <a id="username-display" class="nav-link option dropdown-toggle small" href="#"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end small">
+                                <li><a id="btn-edit-profile" class="dropdown-item py-1" href="#">Editar Perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider my-1">
+                                </li>
+                                <li><a class="dropdown-item text-danger py-1" href="#" id="btn-logout">Sair</a></li>
+                            </ul>
+                        </li>
                     </div>
                 </div>
 
@@ -55,15 +67,15 @@
         </nav>
     </header>
 
-   <main class="d-flex align-items-center flex-column position-relative">
+    <main class="d-flex align-items-center flex-column position-relative">
 
         <h1 class="fw-bold h5 my-4">Histórico de Entradas</h1>
 
-         <div class="icons-wrap">
+        <div class="icons-wrap">
             <div>
                 <button id="btn-download" class="btn-download">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#464d5c"
-                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="#464d5c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-download-icon lucide-download">
                         <path d="M12 15V3" />
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -108,7 +120,7 @@
         <div class="d-flex gap-3 mb-5 btn-wrapper">
             <a class="btn-green" href="/pages/admin/inflows_create.html">Nova Entrada</a>
         </div>
-        
+
     </main>
 
     <script src="/js/config.js"></script>

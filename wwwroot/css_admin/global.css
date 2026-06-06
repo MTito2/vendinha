@@ -252,3 +252,25 @@ table {
 .d-none {
     display: none;
 }
+
+
+/* 2. Reduz o tamanho global da caixa do dropdown */
+.dropdown-menu {
+    min-width: 130px !important; /* Deixa a caixinha mais estreita */
+    padding: 4px 0 !important;   /* Diminui o espaço em branco no topo e na base */
+    border-radius: 6px;          /* Deixa os cantos ligeiramente mais suaves */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra mais leve e moderna */
+}
+
+/* 3. Ajusta o tamanho da fonte e reduz drasticamente o padding dos itens */
+.dropdown-menu .dropdown-item {
+    font-size: 13px !important;     /* Letras mais discretas e profissionais */
+    padding: 6px 12px !important;   /* Compacta o espaçamento vertical e horizontal */
+    font-weight: 400;
+}
+
+/* 4. Ajusta a linha divisória para não criar um espaço gigante entre as opções */
+.dropdown-divider {
+    margin: 4px 0 !important;
+    opacity: 0.15;
+}

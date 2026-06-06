@@ -59,3 +59,13 @@ export async function getUsers() {
         throw error;
     }
 }
+
+export async function deleteUser(userId) {
+    try {
+        const response = await api.delete(`/auth/users/${userId}`);
+        return response.data;
+    } catch (error) {
+        console.error("Erro ao deletar usuário:", error);
+        throw error;
+    }
+}

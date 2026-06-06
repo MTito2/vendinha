@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,35 +11,52 @@
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <link rel="stylesheet" href="/css_admin/global.css">
     <link rel="stylesheet" href="/css_admin/home.css">
     <title>Vendinha Solidária</title>
 </head>
+
 <body class="protected-page">
     <header>
-        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark"> 
-            
+        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark">
+
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <img class="img-vale" src="/assets/imgs/logo-vale-white.png" alt="Logo">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav" aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="menuNav">
-                    <div class="navbar-nav ms-auto gap-2 gap-md-4 ">
+                    <div class="navbar-nav ms-auto gap-2 gap-md-4">
+
                         <a class="nav-link option" href="/pages/admin/products_adm.html">Produtos</a>
                         <a class="nav-link option" href="/pages/admin/inflows_history.html">Entradas</a>
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
                         <a class="nav-link option" href="/pages/admin/stock.html">Estoque</a>
                         <a class="nav-link option" href="/pages/admin/place_history.html">Locais</a>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
-                        <a class="nav-link option" href="/pages/admin/users.html">Usuários</a>
-                        <a class="nav-link option" href="#" id="btn-logout">Sair</a>
+                        <a class="nav-link option" id="menu-users" href="/pages/admin/users.html">Usuários</a>
+
+                        <li class="nav-item dropdown">
+                            <a id="username-display" class="nav-link option dropdown-toggle small" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end small">
+                                <li><a id="btn-edit-profile" class="dropdown-item py-1" href="#">Editar Perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider my-1">
+                                </li>
+                                <li><a class="dropdown-item text-danger py-1" href="#" id="btn-logout">Sair</a></li>
+                            </ul>
+                        </li>
                     </div>
                 </div>
 
@@ -49,7 +67,7 @@
     <main class="d-flex align-items-center justify-content-center flex-column">
         <img class="img-fluid mb-5 p-5" src="/assets/imgs/logo-vendinha.png" alt="">
     </main>
-    
+
 
     <script src="/js/config.js"></script>
     <script src="/js/libs/axios.min.js"></script>
@@ -57,4 +75,5 @@
     <script type="module" src="/js/services/logoutController.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
 </body>
+
 </html>

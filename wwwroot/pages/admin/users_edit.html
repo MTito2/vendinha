@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +11,26 @@
     <meta name="apple-mobile-web-app-title" content="MyWebSite" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Happy+Monkey&family=Istok+Web:ital,wght@0,400;0,700;1,400;1,700&family=Itim&family=Orbitron:wght@400..900&family=Rammetto+One&family=Work+Sans:ital,wght@0,100..900;1,100..900&family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="/css_users/bootstrap.min.css">
     <link rel="stylesheet" href="/css_admin/global.css">
     <link rel="stylesheet" href="/css_admin/table.css">
     <title>Vendinha Solidária</title>
 </head>
+
 <body class="protected-page">
     <header>
-        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark"> 
-            
+        <nav class="navbar navbar-expand-lg px-3 px-md-4 navbar-options navbar-dark">
+
             <div class="container-fluid">
                 <a class="navbar-brand" href="/pages/admin/home.html">
                     <img class="img-vale" src="/assets/imgs/logo-vale-white.png" alt="Logo">
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav" aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav"
+                    aria-controls="menuNavegacao" aria-expanded="false" aria-label="Alternar navegação">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -36,8 +41,20 @@
                         <a class="nav-link option" href="/pages/admin/outflows.html">Saídas</a>
                         <a class="nav-link option" href="/pages/admin/place_history.html">Locais</a>
                         <a class="nav-link option" href="/pages/admin/nfs.html">N.Fs</a>
-                        <a class="nav-link option" href="/pages/admin/users.html">Usuários</a>
-                        <a class="nav-link option" href="#" id="btn-logout">Sair</a>
+                        <a class="nav-link option" id="menu-users" href="/pages/admin/users.html">Usuários</a>
+                        <li class="nav-item dropdown">
+                            <a id="username-display" class="nav-link option dropdown-toggle small" href="#"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-end small">
+                                <li><a id="btn-edit-profile" class="dropdown-item py-1" href="#">Editar Perfil</a></li>
+                                <li>
+                                    <hr class="dropdown-divider my-1">
+                                </li>
+                                <li><a class="dropdown-item text-danger py-1" href="#" id="btn-logout">Sair</a></li>
+                            </ul>
+                        </li>
                     </div>
                 </div>
 
@@ -49,15 +66,30 @@
         <h1 class="fw-bold h5 my-4">Editar Usuário</h1>
 
         <div class="gap-4 w-100 d-flex flex-column align-items-center justify-content-center mt-5">
-            <input type="text" autocomplete="username" style="display:none">
-            <input type="password" autocomplete="current-password" style="display:none">
-            <input id="input-email" name="user_register_email" class="input w-75" type="email" placeholder="Email" autocomplete="off">
-            <input id="input-password" name="user_register_password" class="input w-75" type="password" placeholder="Senha" autocomplete="current-password">
+
+            <input id="input-username" name="user_register_username" class="input w-75" type="text"
+                placeholder="Nome de Usuário" autocomplete="username">
+
+            <input id="input-email" name="user_register_email" class="input w-75" type="email" placeholder="Email"
+                autocomplete="email">
+
+            <input id="input-password" name="user_register_password" class="input w-75" type="password"
+                placeholder="Nova Senha" autocomplete="new-password">
+
+            <select id="input-admin" name="user_register_admin" class="input w-75"
+                style="line-height: 1; padding-top: 0; padding-bottom: 0; padding-right: 20px; appearance: none; -webkit-appearance: none; -moz-appearance: none; background: url('data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'24\' height=\'24\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23666\' stroke-width=\'2\' stroke-linecap=\'round\' stroke-linejoin=\'round\'><polyline points=\'6 9 12 15 18 9\'></polyline></svg>') no-repeat right 15px center; background-size: 14px;">
+                <option value="" disabled selected>Administrador? (Sim / Não)</option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>
+
             <div class="d-flex gap-4">
                 <a class="btn-green" href="/pages/admin/users.html">Cancelar</a>
                 <a class="btn-green" id="btn-send" href="#">Salvar</a>
             </div>
         </div>
+
+        <div id="container-erro-main" class="w-75 mt-4"></div>
 
     </main>
 
@@ -65,10 +97,11 @@
     <script src="/js/libs/bootstrap.bundle.min.js"> </script>
     <script src="/js/libs/tablesort.min.js"></script>
     <script src="/js/libs/tablesort.number.js"></script>
-    <script src="/js/libs/axios.min.js" ></script>
+    <script src="/js/libs/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script type="module" src="/js/services/usersEditController.js"></script>
     <script type="module" src="/js/auth-guard.js"></script>
     <script type="module" src="/js/services/logoutController.js"></script>
 </body>
+
 </html>
