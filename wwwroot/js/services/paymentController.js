@@ -113,7 +113,7 @@ export class PaymentController {
 
                     setTimeout(() => {
                         window.location.href = "../pages/grateful.html";
-                    }, 300000);
+                    }, 30000); // 30 segundos
                 }
 
             } catch (error) {
